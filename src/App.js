@@ -1,5 +1,6 @@
 import "./App.css";
 import TicketCard from "./components/Card/TicketCard";
+import   "./cssStyles/table.css"
 
 import { makeStyles } from "@material-ui/styles";
 
