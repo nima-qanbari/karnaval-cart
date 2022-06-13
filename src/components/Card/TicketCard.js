@@ -136,8 +136,8 @@ const TicketCard = () => {
           <table className="table">
             <tbody>
               <tr >
-                <td className="table-bordered "><Typography variant="body2">نام تعاونی</Typography></td>
-                <td className="table-bordered "><Typography variant="body2">شرکت تی بی تی- تعاونى شماره 15 پايانه جنوب</Typography></td>
+                <td className="table-bordered "><Typography variant="body2" className={classes.tdTable}>نام تعاونی</Typography></td>
+                <td className="table-bordered "><Typography variant="body2" className={classes.tdTable}>شرکت تی بی تی- تعاونى شماره 15 پايانه جنوب</Typography></td>
               </tr>
             </tbody>
           </table>
