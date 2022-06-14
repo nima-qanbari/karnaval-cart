@@ -10,6 +10,10 @@ const useStyles = makeStyles((theme) => {
     max: {
       maxWidth:"900px",
       margin: "0 auto",
+
+      [theme.breakpoints.down("sm")]:{
+        padding: theme.spacing(0, 2.5),
+      }
     }
   };
 });

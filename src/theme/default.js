@@ -1,8 +1,18 @@
 import { createTheme } from "@material-ui/core";
-import dana from "../font/dana.css"
+import dana from "../font/dana.css";
 
 let theme = createTheme({
   direction: "rtl",
+
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 1024,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
   palette: {
     primary: {
       light: "#ff6161",
@@ -12,12 +22,11 @@ let theme = createTheme({
     },
   },
   shape: {
-    borderRadius: 30
+    borderRadius: 30,
   },
   typography: {
-      fontFamily:"dana", 
+    fontFamily: dana,
   },
-  
 });
 
-export {theme} ;
+export { theme };
