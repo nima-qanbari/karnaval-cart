@@ -4,7 +4,6 @@ export const useStyles = makeStyles(
   (theme) => {
     return {
       paper: {
-        margin: theme.spacing(8, 0),
         position: "relative",
         padding: theme.spacing(1.5),
         "&:hover": {

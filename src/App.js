@@ -4,12 +4,13 @@ import   "./cssStyles/table.css"
 
 import { makeStyles } from "@material-ui/styles";
 import CardSkeleton from "./components/CardSkeleton/CardSkeleton";
+import Travel from "./pages/Travel";
 
 const useStyles = makeStyles((theme) => {
   console.log(theme);
   return {
     max: {
-      maxWidth:"900px",
+      maxWidth:"1200px",
       margin: "0 auto",
 
       [theme.breakpoints.down("sm")]:{
@@ -22,10 +23,7 @@ function App() {
   const classes = useStyles()
   return(
   <div className={classes.max}>
-    <TicketCard />
-
-
-    <CardSkeleton />
+      <Travel />
   </div>
   )
 }
