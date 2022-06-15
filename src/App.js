@@ -3,6 +3,7 @@ import TicketCard from "./components/Card/TicketCard";
 import   "./cssStyles/table.css"
 
 import { makeStyles } from "@material-ui/styles";
+import CardSkeleton from "./components/CardSkeleton/CardSkeleton";
 
 const useStyles = makeStyles((theme) => {
   console.log(theme);
@@ -22,6 +23,9 @@ function App() {
   return(
   <div className={classes.max}>
     <TicketCard />
+
+
+    <CardSkeleton />
   </div>
   )
 }
