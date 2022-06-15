@@ -17,17 +17,23 @@ const Sidebar = () => {
       <Grid container direction="column">
         <Grid item className={classes.filter}>
           <div>
-            <Typography variant="body2" className={classes.filterText}>فیلتر</Typography>
+            <Typography variant="body2" className={classes.filterText}>
+              فیلتر
+            </Typography>
           </div>
           <div>
-            <Typography variant="body2" className={classes.commonText}>7 نتیجه</Typography>
+            <Typography variant="body2" className={classes.commonText}>
+              7 نتیجه
+            </Typography>
           </div>
         </Grid>
         <Grid item className={classes.checkboxContainer}>
           <div>
             <div>
               <div>
-                <Typography variant="body2" className={classes.titleText}>ساعت حرکت</Typography>
+                <Typography variant="body2" className={classes.titleText}>
+                  ساعت حرکت
+                </Typography>
               </div>
 
               <div>
@@ -37,7 +43,7 @@ const Sidebar = () => {
                       control={<Checkbox name="item" disableRipple />}
                       label=" ۱۲ تا ۱۵ (۱) "
                       className={classes.checkbox}
-                     classes={{label: classes.commonText}}
+                      classes={{ label: classes.commonText }}
                     />
                   </li>
                 </ul>
@@ -46,43 +52,61 @@ const Sidebar = () => {
 
             <div>
               <div>
-                <Typography variant="body2" className={classes.titleText}>ترمینال مبدا</Typography>
+                <Typography variant="body2" className={classes.titleText}>
+                  ترمینال مبدا
+                </Typography>
               </div>
               <div>
-                <FormControlLabel
-                  control={<Checkbox name="item" disableRipple />}
-                  label="پایانه شرق(تهران) (7)"
-                  className={classes.checkbox}
-                  classes={{label: classes.commonText}}
-                />
-              </div>
-            </div>
-
-            <div>
-              <div>
-                <Typography variant="body2" className={classes.titleText}>ترمینال مقصد</Typography>
-              </div>
-              <div>
-                <FormControlLabel
-                  control={<Checkbox name="item" disableRipple />}
-                  label="اصفهان (7)"
-                  className={classes.checkbox}
-                  classes={{label: classes.commonText}}
-                />
+                <ul>
+                  <li>
+                    <FormControlLabel
+                      control={<Checkbox name="item" disableRipple />}
+                      label="پایانه شرق(تهران) (7)"
+                      className={classes.checkbox}
+                      classes={{ label: classes.commonText }}
+                    />
+                  </li>
+                </ul>
               </div>
             </div>
 
             <div>
               <div>
-                <Typography variant="body2" className={classes.titleText}>شرکت مسافربری </Typography>
+                <Typography variant="body2" className={classes.titleText}>
+                  ترمینال مقصد
+                </Typography>
               </div>
               <div>
-                <FormControlLabel
-                  control={<Checkbox name="item" disableRipple />}
-                  label="شرکت تی بی تی- تعاونى شماره 15 پايانه جنوب (7)"
-                  className={classes.checkbox}
-                  classes={{label: classes.commonText}}
-                />
+                <ul>
+                  <li>
+                    <FormControlLabel
+                      control={<Checkbox name="item" disableRipple />}
+                      label="اصفهان (7)"
+                      className={classes.checkbox}
+                      classes={{ label: classes.commonText }}
+                    />
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div>
+              <div>
+                <Typography variant="body2" className={classes.titleText}>
+                  شرکت مسافربری
+                </Typography>
+              </div>
+              <div>
+                <ul>
+                  <li>
+                    <FormControlLabel
+                      control={<Checkbox name="item" disableRipple />}
+                      label="شرکت تی بی تی- تعاونى شماره 15 پايانه جنوب (7)"
+                      className={classes.checkbox}
+                      classes={{ label: classes.commonText }}
+                    />
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
