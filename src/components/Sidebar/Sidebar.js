@@ -51,7 +51,7 @@ const Sidebar = ({ data }) => {
             </div>
             {data.map((item) => {
               return (
-                <div>
+                <div  key={item.label}>
                   <div>
                     <Typography variant="body2" className={classes.titleText}>
                       {item.label}
