@@ -17,6 +17,7 @@ export const useStyles = makeStyles(
       },
 
       firstDiv: {
+        position: "relative",
         padding: 8,
         [theme.breakpoints.down("sm")]: {
           width: "100%",
@@ -63,7 +64,7 @@ export const useStyles = makeStyles(
           marginRight: theme.spacing(1),
         },
 
-        "& $p": {
+        "& p": {
           lineHeight: 2,
           fontSize: 11,
           fontWeight: 500,
@@ -257,11 +258,11 @@ export const useStyles = makeStyles(
       bottom: {
         display: "flex",
         position: "absolute",
-        bottom: 0,
+        bottom: -12,
         right: 30,
         paddingBottom:theme.spacing(0.5),
 
-        "& $p": {
+        "& p": {
           display: "flex",
           alignItems: "center",
           fontSize: 11,
@@ -271,7 +272,7 @@ export const useStyles = makeStyles(
           userSelect: "none",
         },
 
-        "& $SVG": {
+        "& SVG": {
           fontSize: 16,
         },
 
@@ -280,15 +281,19 @@ export const useStyles = makeStyles(
           justifyContent: "space-around",
           margin: theme.spacing(2, 0, -1, 0),
 
-          "& $p": {
+          "& p": {
             justifyContent: "center",
             maxWidth: " 33.3%",
             flexBasis: " 33.3%",
           },
-          "& $p:not(:last-child)": {
+          "& p:not(:last-child)": {
             borderLeft: "1px solid #ccc",
           },
         },
+      },
+
+      direction: {
+        direction: "ltr",
       },
 
       cancel: {
@@ -298,7 +303,7 @@ export const useStyles = makeStyles(
       },
 
       dropdown: {
-        margin: theme.spacing(2, 0),
+      marginTop: theme.spacing(3),
       },
 
       cancelDiv: {

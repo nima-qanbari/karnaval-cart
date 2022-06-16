@@ -1,13 +1,32 @@
 import React from "react";
 import clsx from "clsx";
+import moment from "moment-jalaali";
 
 import { Paper, Typography, Button, Grid } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
+//Hooks
 import { useDetails } from "../../hooks/useHook";
+
+//Utils
+import { formaMoney } from "../../Utils/money";
 
 import { useStyles } from "./styles";
 
-const TicketCard = () => {
+const TicketCard = ({
+  logo,
+  title,
+  subtitle,
+  departure,
+  arrival,
+  origin,
+  destination,
+  originTerminal,
+  destinationTerminal,
+  vehicle,
+  price,
+  remain,
+}) => {
   const [activeDetails, setActiveDetails] = useDetails();
   const classes = useStyles();
   return (
@@ -24,20 +43,12 @@ const TicketCard = () => {
             <Grid container spacing={1} className={classes.detailsBreakpoints}>
               <Grid item md={2} className={classes.details}>
                 <div className={classes.imgContainer}>
-                  <img
-                    className={classes.img}
-                    src={require("../../image/download.png")}
-                    alt="bus"
-                  />
+                  <img className={classes.img} src={logo} alt="bus" />
                 </div>
 
                 <div className={classes.info}>
-                  <Typography variant="body2">
-                    شرکت تی بی تی- تعاونى شماره 15 پايانه جنوب
-                  </Typography>
-                  <Typography variant="body2">
-                    VIPتخت شو+پذیرائی +ماسک
-                  </Typography>
+                  <Typography variant="body2">{title}</Typography>
+                  <Typography variant="body2">{subtitle}</Typography>
                 </div>
               </Grid>
               <Grid item xs={12} md={10}>
@@ -47,26 +58,29 @@ const TicketCard = () => {
                   className={classes.lineContainerBreakpoints}
                 >
                   <Grid item className={classes.alignment}>
-                    <Typography variant="body2" className={classes.bold}>
-                      08:30
+                    <Typography
+                      variant="body2"
+                      className={clsx(classes.bold, classes.direction)}
+                    >
+                      {moment(departure).format("hh : mm")}
                     </Typography>
                     <Typography
                       variant="body2"
                       className={clsx(classes.bold, classes.margin)}
                     >
-                      تهران
+                      {origin}
                     </Typography>
                     <Typography variant="body2" className={classes.grayFont}>
-                      پایانه شرق(تهران)
+                      {originTerminal}
                     </Typography>
                   </Grid>
 
                   <Grid item md xs className={classes.lineContainer}>
                     <Typography variant="body2" className={classes.count}>
-                      اسکانیا ۳۱ نفره کلاسیک
+                      {vehicle}
                     </Typography>
                     <Typography variant="body2" className={classes.dateDesktop}>
-                      پنجشنبه ۲۶ خرداد ۱۴۰۱
+                      {moment(departure).format("dddd jDD jMMMM jYYYY")}
                     </Typography>
                     <div className={classes.lineContainer}>
                       <span className={classes.circle1}></span>
@@ -76,21 +90,26 @@ const TicketCard = () => {
                         variant="body2"
                         className={classes.dateMobile}
                       >
-                        پنجشنبه ۲۶ خرداد ۱۴۰۱
+                        {moment(departure).format("dddd jDD jMMMM jYYYY")}
                       </Typography>
                     </div>
                   </Grid>
 
                   <Grid item className={classes.alignment}>
-                    <Typography variant="body2">&nbsp;</Typography>
+                    <Typography
+                      variant="body2"
+                      className={clsx(classes.bold, classes.direction)}
+                    >
+                      {arrival ? moment(arrival).format("hh : mm") : "a"}
+                    </Typography>
                     <Typography
                       variant="body2"
                       className={clsx(classes.bold, classes.margin)}
                     >
-                      اصفهان
+                      {destination}
                     </Typography>
                     <Typography variant="body2" className={classes.grayFont}>
-                      اصفهان
+                      {destinationTerminal}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -105,7 +124,7 @@ const TicketCard = () => {
                 </Typography>
                 <div className={classes.priceContainer}>
                   <Typography variant="h5" className={classes.price}>
-                    ۹۸۰۰۰
+                    {formaMoney(price)}
                   </Typography>
                   <Typography variant="body2" className={classes.mobilePrice}>
                     تومان
@@ -114,7 +133,7 @@ const TicketCard = () => {
               </div>
               <div>
                 <Typography variant="body2" className={classes.mobileCounter}>
-                  ۲۹ بلیط باقی مانده
+                  {remain}بلیط باقی مانده
                 </Typography>
                 <Button
                   color="primary"
@@ -124,47 +143,47 @@ const TicketCard = () => {
                   انتخاب صندلی و خرید
                 </Button>
                 <Typography variant="body2" className={classes.desktopCounter}>
-                  ۲۹ بلیط باقی مانده
+                  {remain}بلیط باقی مانده
                 </Typography>
               </div>
             </div>
           </Grid>
         </Grid>
+        <div className={classes.bottom}>
+          <Typography
+            variant="body2"
+            className={classes.informationDesktop}
+            onClick={() => setActiveDetails(activeDetails === 1 ? null : 1)}
+          >
+            اطلاعات تعاونی و مسیر
+            <ExpandMoreIcon />
+          </Typography>
+
+          <Typography
+            variant="body2"
+            className={classes.informationMobile}
+            onClick={() => setActiveDetails(activeDetails === 1 ? null : 1)}
+          >
+            اطلاعات
+            <ExpandMoreIcon />
+          </Typography>
+          <Typography
+            variant="body2"
+            onClick={() => setActiveDetails(activeDetails === 2 ? null : 2)}
+          >
+            قوانین کنسلی
+            <ExpandMoreIcon />
+          </Typography>
+          <Typography
+            variant="body2"
+            onClick={() => setActiveDetails(activeDetails === 3 ? null : 3)}
+          >
+            پیش فاکتور
+            <ExpandMoreIcon />
+          </Typography>
+        </div>
       </div>
 
-      <div className={classes.bottom}>
-        <Typography
-          variant="body2"
-          className={classes.informationDesktop}
-          onClick={() => setActiveDetails(activeDetails === 1 ? null : 1)}
-        >
-          اطلاعات تعاونی و مسیر
-          <ExpandMoreIcon />
-        </Typography>
-
-        <Typography
-          variant="body2"
-          className={classes.informationMobile}
-          onClick={() => setActiveDetails(activeDetails === 1 ? null : 1)}
-        >
-          اطلاعات
-          <ExpandMoreIcon />
-        </Typography>
-        <Typography
-          variant="body2"
-          onClick={() => setActiveDetails(activeDetails === 2 ? null : 2)}
-        >
-          قوانین کنسلی
-          <ExpandMoreIcon />
-        </Typography>
-        <Typography
-          variant="body2"
-          onClick={() => setActiveDetails(activeDetails === 3 ? null : 3)}
-        >
-          پیش فاکتور
-          <ExpandMoreIcon />
-        </Typography>
-      </div>
       {activeDetails === 1 && (
         <div className={classes.dropdown}>
           <table className="table">
@@ -177,7 +196,7 @@ const TicketCard = () => {
                 </td>
                 <td className="table-bordered ">
                   <Typography variant="body2" className={classes.tdTable}>
-                    شرکت تی بی تی- تعاونى شماره 15 پايانه جنوب
+                    {title}
                   </Typography>
                 </td>
               </tr>
@@ -237,12 +256,12 @@ const TicketCard = () => {
                 </td>
                 <td className="table-bordered ">
                   <Typography variant="body2" className={classes.tdTable}>
-                    ۹۸۰۰۰ تومان
+                    {formaMoney(price)} تومان
                   </Typography>
                 </td>
                 <td className="table-bordered ">
                   <Typography variant="body2" className={classes.tdTable}>
-                    ۹۸۰۰۰ تومان
+                    {formaMoney(price)} تومان
                   </Typography>
                 </td>
               </tr>
@@ -254,7 +273,7 @@ const TicketCard = () => {
                 </td>
                 <td className="table-bordered ">
                   <Typography variant="body2" className={classes.tdTable}>
-                    ۹۸۰۰۰ تومان
+                    {formaMoney(price)} تومان
                   </Typography>
                 </td>
               </tr>

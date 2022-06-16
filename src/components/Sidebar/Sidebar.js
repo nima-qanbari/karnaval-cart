@@ -10,7 +10,7 @@ import {
 
 import { useStyles } from "./styles";
 
-const Sidebar = () => {
+const Sidebar = ({ data }) => {
   const classes = useStyles();
   return (
     <Paper>
@@ -49,47 +49,33 @@ const Sidebar = () => {
                 </ul>
               </div>
             </div>
-
-            <div>
-              <div>
-                <Typography variant="body2" className={classes.titleText}>
-                  ترمینال مبدا
-                </Typography>
-              </div>
-              <div>
-                <ul>
-                  <li>
-                    <FormControlLabel
-                      control={<Checkbox name="item" disableRipple />}
-                      label="پایانه شرق(تهران) (7)"
-                      className={classes.checkbox}
-                      classes={{ label: classes.commonText }}
-                    />
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div>
-              <div>
-                <Typography variant="body2" className={classes.titleText}>
-                  ترمینال مقصد
-                </Typography>
-              </div>
-              <div>
-                <ul>
-                  <li>
-                    <FormControlLabel
-                      control={<Checkbox name="item" disableRipple />}
-                      label="اصفهان (7)"
-                      className={classes.checkbox}
-                      classes={{ label: classes.commonText }}
-                    />
-                  </li>
-                </ul>
-              </div>
-            </div>
-
+            {data.map((item) => {
+              return (
+                <div>
+                  <div>
+                    <Typography variant="body2" className={classes.titleText}>
+                      {item.label}
+                    </Typography>
+                  </div>
+                  <div>
+                    <ul>
+                      {item.items.map((item) => {
+                        return (
+                          <li key={item.id}>
+                            <FormControlLabel
+                              control={<Checkbox name="item" disableRipple />}
+                              label={`${item.label} (${item.count})`}
+                              className={classes.checkbox}
+                              classes={{ label: classes.commonText }}
+                            />
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </div>
+              );
+            })}
             <div>
               <div>
                 <Typography variant="body2" className={classes.titleText}>

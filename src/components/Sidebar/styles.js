@@ -37,7 +37,7 @@ export const useStyles = makeStyles((theme) => ({
 
   checkbox: {
     margin: theme.spacing(0),
-    "& $svg": {
+    "& svg": {
       fontSize: 20,
     },
   },
