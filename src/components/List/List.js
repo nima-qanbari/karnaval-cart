@@ -1,4 +1,10 @@
+import React,  { useState } from "react";
+
 import {Grid, Typography } from "@material-ui/core";
+
+//modal
+import FilterModal from "../filterModal/FilterModal";
+import SortModal from "../SortModal/SortModal";
 
 import FilterListIcon from "@material-ui/icons/FilterList";
 import ImportExportIcon from '@material-ui/icons/ImportExport';
@@ -42,14 +48,36 @@ background: "#fff",
 
 const List = ({ cart, sidebar }) => {
   const classes = useStyles();
+  const [openFilter, setOpenFilter] = useState(false)
+  const [openSort, setOpenSort] = useState(false)
+
+  const openFilterHandler = () => {
+    setOpenFilter(true)
+  }  
+  const closeFilterHandler = () => {
+    setOpenFilter(false)
+  }
+
+  const openSortHandler = () => {
+    setOpenSort(true)
+  }
+
+  const closeSortHandler = () => {
+    setOpenSort(false)
+  }
+
+
+  
   return (
     <Grid container spacing={2}>
+    <FilterModal handleClose={closeFilterHandler} open={openFilter}/>   
+    <SortModal  handleClose={closeSortHandler} open={openSort}/>
       <Grid item xs={12} className={classes.mobileFilter}>
-        <Typography className={classes.alignment}>
+        <Typography className={classes.alignment} onClick= {openFilterHandler}>
           <FilterListIcon />
           فیلتر
         </Typography>
-        <Typography className={classes.alignment}>
+        <Typography className={classes.alignment} onClick={openSortHandler}>
             <ImportExportIcon />
             ترتیب
         </Typography>
