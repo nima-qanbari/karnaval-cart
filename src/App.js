@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => {
     max: {
       maxWidth:"1200px",
       margin: "0 auto",
+      marginTop: theme.spacing(8),
 
       [theme.breakpoints.down("sm")]:{
         padding: theme.spacing(0, 2.5),
