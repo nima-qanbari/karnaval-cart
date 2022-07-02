@@ -10,7 +10,7 @@ import {
 
 import { useStyles } from "./styles";
 
-const Sidebar = ({ data }) => {
+const Sidebar = ({ data, onChange, isChecked }) => {
   const classes = useStyles();
   return (
     <Paper>
@@ -29,29 +29,9 @@ const Sidebar = ({ data }) => {
         </Grid>
         <Grid item className={classes.checkboxContainer}>
           <div>
-            <div>
-              <div>
-                <Typography variant="body2" className={classes.titleText}>
-                  ساعت حرکت
-                </Typography>
-              </div>
-
-              <div>
-                <ul>
-                  <li>
-                    <FormControlLabel
-                      control={<Checkbox name="item" disableRipple />}
-                      label=" ۱۲ تا ۱۵ (۱) "
-                      className={classes.checkbox}
-                      classes={{ label: classes.commonText }}
-                    />
-                  </li>
-                </ul>
-              </div>
-            </div>
             {data.map((item) => {
               return (
-                <div  key={item.label}>
+                <div key={item.label}>
                   <div>
                     <Typography variant="body2" className={classes.titleText}>
                       {item.label}
@@ -63,7 +43,14 @@ const Sidebar = ({ data }) => {
                         return (
                           <li key={item.id}>
                             <FormControlLabel
-                              control={<Checkbox name="item" disableRipple />}
+                              control={
+                                <Checkbox
+                                  value={item.id}
+                                  onChange={onChange}
+                                  checked={isChecked(item.id)}
+                                  disableRipple
+                                />
+                              }
                               label={`${item.label} (${item.count})`}
                               className={classes.checkbox}
                               classes={{ label: classes.commonText }}
@@ -76,25 +63,6 @@ const Sidebar = ({ data }) => {
                 </div>
               );
             })}
-            <div>
-              <div>
-                <Typography variant="body2" className={classes.titleText}>
-                  شرکت مسافربری
-                </Typography>
-              </div>
-              <div>
-                <ul>
-                  <li>
-                    <FormControlLabel
-                      control={<Checkbox name="item" disableRipple />}
-                      label="شرکت تی بی تی- تعاونى شماره 15 پايانه جنوب (7)"
-                      className={classes.checkbox}
-                      classes={{ label: classes.commonText }}
-                    />
-                  </li>
-                </ul>
-              </div>
-            </div>
           </div>
         </Grid>
       </Grid>

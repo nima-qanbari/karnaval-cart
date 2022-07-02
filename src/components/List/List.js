@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Grid, Typography } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 
 //modal
 import FilterModal from "../FilterModal/FilterModal";
@@ -63,9 +63,20 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(2),
     },
   },
+
+  hasMoreBtn: {
+    textAlign: "center",
+    margin: theme.spacing(2, 0 ,0),
+
+    "& > button": {
+      fontSize: 20,
+      fontWeight: "bold",
+      padding: theme.spacing(.5, 6),
+    }
+  }
 }));
 
-const List = ({ data, sidebar }) => {
+const List = ({ data, sidebar, moreOnclick, hasMore, loading, onChangeCheckbox, isChecked  }) => {
   const classes = useStyles();
   const [openFilter, setOpenFilter] = useState(false);
   const [openSort, setOpenSort] = useState(false);
@@ -84,11 +95,11 @@ const List = ({ data, sidebar }) => {
   const closeSortHandler = () => {
     setOpenSort(false);
   };
-
-  return (
+  const sidebarJSX= (<Sidebar data={sidebar} onChange={onChangeCheckbox } isChecked={isChecked }/>)
+   return (
     <Grid container spacing={2} className={classes.paddingContainer}>
       <FilterModal handleClose={closeFilterHandler} open={openFilter}>
-        {<Sidebar data={sidebar} />}
+        {sidebarJSX}
       </FilterModal>
       <SortModal handleClose={closeSortHandler} open={openSort} />
       <Grid item xs={12}>
@@ -104,7 +115,7 @@ const List = ({ data, sidebar }) => {
         </div>
       </Grid>
       <Grid item md={3} className={classes.none}>
-        {<Sidebar data={sidebar} />}
+        {sidebarJSX}
       </Grid>
       <Grid item xs={12} md={9}>
         <div className={classes.items}>
@@ -127,6 +138,18 @@ const List = ({ data, sidebar }) => {
               />
             );
           })}
+        </div>
+        <div className={classes.hasMoreBtn}>
+          {hasMore ? (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={moreOnclick}
+              disabled={loading}
+            >
+              بیشتر
+            </Button>
+          ) : null}
         </div>
       </Grid>
     </Grid>
