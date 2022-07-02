@@ -38,8 +38,8 @@ const CardSkeleton = () => {
                 >
                   <Skeleton
                     width={"100%"}
-                    height={70}
-                    style={{ borderRadius: 10 }}
+                    height={74}
+                    style={{ borderRadius: 10}}
                     className={classes.loading1}
                   />
                 </Grid>

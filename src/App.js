@@ -6,7 +6,6 @@ import Travel from "./pages/Travel";
 
 
 const useStyles = makeStyles((theme) => {
-  console.log(theme);
   return {
     max: {
       maxWidth:"1200px",
