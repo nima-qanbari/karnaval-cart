@@ -1,86 +1,97 @@
-import React,  { useState } from "react";
+import React, { useState } from "react";
 
-import {Grid, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 
 //modal
-import FilterModal from "../filterModal/FilterModal";
+import FilterModal from "../FilterModal/FilterModal";
 import SortModal from "../SortModal/SortModal";
 
 import FilterListIcon from "@material-ui/icons/FilterList";
-import ImportExportIcon from '@material-ui/icons/ImportExport';
+import ImportExportIcon from "@material-ui/icons/ImportExport";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles((theme) => ({
+  paddingContainer: {
+    padding: theme.spacing(),
+  },
   none: {
     [theme.breakpoints.down("sm")]: {
       display: "none",
+    },
+  },
+
+  alignment: {
+    display: "flex",
+    alignItems: "center",
+    fontSize: 14,
+    fontWeight: 500,
+    cursor: "pointer",
+
+    "& svg": {
+      marginLeft: "5px",
+      color: "#ada6a6",
+      fontSize: 20,
+      fontWeight: "bold",
+    },
+  },
+
+  mobileFilter: {
+    display: "none",
+    borderRadius: theme.shape.borderRadius,
+    background: "#fff",
+   
+
+    "& p":{
+    display: "flex",
+    justifyContent: "center",
+     width: "48%",
+     padding: theme.spacing(2, 0),
     
     },
-},
-
-alignment: {
-  display: "flex",
-  alignItems: "center",
-  fontSize: 14,
-  fontWeight: 500,
-  padding: theme.spacing(1,0),
-
-  "& svg": {
-    marginLeft: "5px",
-    color: "#ada6a6",
-    fontSize: 20,
-    fontWeight: "bold"
-  }
-},
-
-mobileFilter: {
-  display: "none",
-  borderRadius: theme.shape.borderRadius,
-background: "#fff",
-
-  [theme.breakpoints.down("sm")]: {
-    display: "flex",
-    justifyContent: "space-around",
-
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      justifyContent: "space-around",
+    },
   },
-},
 }));
 
 const List = ({ cart, sidebar }) => {
   const classes = useStyles();
-  const [openFilter, setOpenFilter] = useState(false)
-  const [openSort, setOpenSort] = useState(false)
+  const [openFilter, setOpenFilter] = useState(false);
+  const [openSort, setOpenSort] = useState(false);
 
   const openFilterHandler = () => {
-    setOpenFilter(true)
-  }  
+    setOpenFilter(true);
+  };
   const closeFilterHandler = () => {
-    setOpenFilter(false)
-  }
+    setOpenFilter(false);
+  };
 
   const openSortHandler = () => {
-    setOpenSort(true)
-  }
+    setOpenSort(true);
+  };
 
   const closeSortHandler = () => {
-    setOpenSort(false)
-  }
+    setOpenSort(false);
+  };
 
-
-  
   return (
-    <Grid container spacing={2}>
-    <FilterModal handleClose={closeFilterHandler} open={openFilter}/>   
-    <SortModal  handleClose={closeSortHandler} open={openSort}/>
-      <Grid item xs={12} className={classes.mobileFilter}>
-        <Typography className={classes.alignment} onClick= {openFilterHandler}>
-          <FilterListIcon />
-          فیلتر
-        </Typography>
-        <Typography className={classes.alignment} onClick={openSortHandler}>
+    <Grid container spacing={2} className={classes.paddingContainer}>
+      <FilterModal handleClose={closeFilterHandler} open={openFilter}>
+        {sidebar}
+      </FilterModal>
+      <SortModal handleClose={closeSortHandler} open={openSort} />
+      <Grid item xs={12} justifyContent="center">
+        <div className={classes.mobileFilter}>
+          <Typography className={classes.alignment} onClick={openFilterHandler}>
+            <FilterListIcon />
+            فیلتر
+          </Typography>
+          <Typography className={classes.alignment} onClick={openSortHandler}>
             <ImportExportIcon />
             ترتیب
-        </Typography>
+          </Typography>
+        </div>
       </Grid>
       <Grid item md={3} className={classes.none}>
         {sidebar}

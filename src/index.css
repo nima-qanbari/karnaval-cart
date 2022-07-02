@@ -3,11 +3,11 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  font-family: "dana";
 }
 
 body {
   margin: 0;
-  font-family: "dana";
   background-color:#f2f6fc;
 }
 

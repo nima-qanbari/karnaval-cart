@@ -14,6 +14,10 @@ export const useStyles = makeStyles(
             background: "#ff6161",
           },
         },
+
+        [theme.breakpoints.down("sm")]: {
+          padding: theme.spacing(1.5, 1.5, 0),
+        }
       },
 
       firstDiv: {
@@ -258,10 +262,9 @@ export const useStyles = makeStyles(
       bottom: {
         display: "flex",
         position: "absolute",
-        bottom: -12,
         right: 30,
-        paddingBottom:theme.spacing(0.5),
-
+        bottom: theme.spacing(-1.5),
+      
         "& p": {
           display: "flex",
           alignItems: "center",
@@ -270,6 +273,7 @@ export const useStyles = makeStyles(
           marginLeft: theme.spacing(1),
           cursor: "pointer",
           userSelect: "none",
+          padding: theme.spacing(.5 , 0),
         },
 
         "& SVG": {
