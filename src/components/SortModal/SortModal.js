@@ -24,20 +24,20 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(),
     },
     "& :not(:last-child)": {
-      borderBottom: "1px solid #ccc",
+      borderBottom: `1px solid ${theme.palette.divider}`,
     },
   },
 
-  active :{
+  active: {
     fontWeight: "bold",
-  }
+  },
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function SortModal({ open, handleClose, sort, sortHandler , selectSortItem }) {
+function SortModal({ open, handleClose, sort, sortHandler, selectedSortItem }) {
   const classes = useStyles();
   return (
     <Dialog
@@ -51,16 +51,22 @@ function SortModal({ open, handleClose, sort, sortHandler , selectSortItem }) {
       keepMounted
       onClose={handleClose}
     >
-      {sort.map((item) => {
-        const Icon = item.icon;
-        return (
-          <ul className={classes.list} key={item.value}>       
-              <li onClick={() => sortHandler(item.value)} className={selectSortItem === item.value ? classes.active : undefined}>
-                <Icon color="action" /> {item.label}
-              </li>
-          </ul>
-        );
-      })}
+      <ul className={classes.list}>
+        {sort.map((item) => {
+          const Icon = item.icon;
+          return (
+            <li
+              key={item.value}
+              onClick={() => sortHandler(item.value)}
+              className={
+                selectedSortItem === item.value ? classes.active : undefined
+              }
+            >
+              <Icon color="action" /> {item.label}
+            </li>
+          );
+        })}
+      </ul>
     </Dialog>
   );
 }

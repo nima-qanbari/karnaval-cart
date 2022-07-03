@@ -11,13 +11,13 @@ export const useStyles = makeStyles(
             transform: "translateX(0)",
           },
           "& $circle1, $circle2": {
-            background: "#ff6161",
+            background: theme.palette.primary.main,
           },
         },
 
         [theme.breakpoints.down("sm")]: {
           padding: theme.spacing(1.5, 1.5, 0),
-        }
+        },
       },
 
       firstDiv: {
@@ -35,7 +35,7 @@ export const useStyles = makeStyles(
       },
 
       imgContainer: {
-        border: "1px solid #ccc",
+        border: `1px solid ${theme.palette.divider}`,
         borderRadius: "50%",
         margin: "auto",
         width: 60,
@@ -105,10 +105,10 @@ export const useStyles = makeStyles(
       mobilePrice: {
         fontSize: 14,
         fontWeight: 400,
+        textAlign: "center",
 
         [theme.breakpoints.down("sm")]: {
           fontSize: 10,
-          textAlign: "start",
         },
       },
 
@@ -160,7 +160,7 @@ export const useStyles = makeStyles(
 
       count: {
         width: "fit-content",
-        border: "1px solid #ccc",
+        border: `1px solid ${theme.palette.divider}`,
         fontSize: 11,
         margin: "auto",
         padding: theme.spacing(0.5),
@@ -177,7 +177,7 @@ export const useStyles = makeStyles(
 
       grayFont: {
         fontSize: 12,
-        color: "rgba(0, 0, 0, 0.54)",
+        color: theme.palette.text.secondary,
 
         [theme.breakpoints.down("sm")]: {
           display: "none",
@@ -187,7 +187,7 @@ export const useStyles = makeStyles(
       desktopCounter: {
         textAlign: "center",
         fontSize: 12,
-        color: "rgba(0, 0, 0, 0.54)",
+        color: theme.palette.text.secondary,
 
         [theme.breakpoints.down("sm")]: {
           display: "none",
@@ -197,7 +197,7 @@ export const useStyles = makeStyles(
       mobileCounter: {
         fontSize: 11,
         textAlign: "center",
-        color: "rgba(0, 0, 0, 0.54)",
+        color: theme.palette.text.secondary,
         display: "none",
 
         [theme.breakpoints.down("sm")]: {
@@ -208,7 +208,7 @@ export const useStyles = makeStyles(
       circle1: {
         display: "flex",
         borderRadius: "50%",
-        background: "#ccc",
+        background: theme.palette.grey[400],
         width: "10px",
         height: "10px",
         position: "absolute",
@@ -220,7 +220,7 @@ export const useStyles = makeStyles(
       circle2: {
         display: "flex",
         borderRadius: "50%",
-        background: "#ccc",
+        background: theme.palette.grey[400],
         width: "10px",
         height: "10px",
         position: "absolute",
@@ -233,7 +233,7 @@ export const useStyles = makeStyles(
       line: {
         width: "100%",
         height: "2px",
-        background: "#ccc",
+        background: theme.palette.grey[400],
         position: "relative",
         overflow: "hidden",
 
@@ -245,7 +245,7 @@ export const useStyles = makeStyles(
           height: "100%",
           content: "''",
           transform: "translateX(100%)",
-          backgroundColor: "#ff6161",
+          backgroundColor: theme.palette.primary.main,
           transition: "all 800ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
         },
       },
@@ -264,16 +264,16 @@ export const useStyles = makeStyles(
         position: "absolute",
         right: 30,
         bottom: theme.spacing(-1.5),
-      
+
         "& p": {
           display: "flex",
           alignItems: "center",
           fontSize: 11,
-          color: "rgba(0, 0, 0, 0.54)",
+          color: theme.palette.text.secondary,
           marginLeft: theme.spacing(1),
           cursor: "pointer",
           userSelect: "none",
-          padding: theme.spacing(.5 , 0),
+          padding: theme.spacing(0.5, 0),
         },
 
         "& SVG": {
@@ -291,7 +291,7 @@ export const useStyles = makeStyles(
             flexBasis: " 33.3%",
           },
           "& p:not(:last-child)": {
-            borderLeft: "1px solid #ccc",
+            borderLeft: `1px solid ${theme.palette.divider}`,
           },
         },
       },
@@ -307,7 +307,7 @@ export const useStyles = makeStyles(
       },
 
       dropdown: {
-      marginTop: theme.spacing(3),
+        marginTop: theme.spacing(3),
       },
 
       cancelDiv: {
@@ -338,7 +338,7 @@ export const useStyles = makeStyles(
         },
       },
       yellowText: {
-        color: "#ff9800",
+        color: theme.palette.error.main,
         fontSize: 16,
         fontWeight: "bold",
         margin: theme.spacing(1, 0),
@@ -354,7 +354,6 @@ export const useStyles = makeStyles(
       thTable: {
         fontSize: 11,
         fontWeight: "bold",
-        color: "rgba(0, 0, 0, 0.54)",
       },
 
       tdTable: {
@@ -378,8 +377,6 @@ export const useStyles = makeStyles(
       loading1: {
         margin: "9.5px 0",
       },
-
-
     };
   },
   { index: 10 }

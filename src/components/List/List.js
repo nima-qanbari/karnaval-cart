@@ -2,6 +2,9 @@ import React, { useState } from "react";
 
 import { Button, Grid, Typography } from "@material-ui/core";
 
+//sort dekstop
+import SortDesktop from "../SortDesktop/SortDesktop";
+
 //modal
 import FilterModal from "../FilterModal/FilterModal";
 import SortModal from "../SortModal/SortModal";
@@ -29,13 +32,13 @@ const useStyles = makeStyles((theme) => ({
   alignment: {
     display: "flex",
     alignItems: "center",
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: 500,
     cursor: "pointer",
 
     "& svg": {
-      marginLeft: "5px",
-      color: "#ada6a6",
+      marginLeft: theme.spacing(.7),
+      color: theme.palette.text.secondary,
       fontSize: 20,
       fontWeight: "bold",
     },
@@ -44,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   mobileFilter: {
     display: "none",
     borderRadius: theme.shape.borderRadius,
-    background: "#fff",
+    background: theme.palette.background.paper,
 
     "& p": {
       display: "flex",
@@ -80,7 +83,7 @@ const List = ({
   data,
   sidebar,
   sort,
-  selectSortItem,
+  selectedSortItem,
   sortHandler,
   moreOnclick,
   hasMore,
@@ -122,8 +125,8 @@ const List = ({
           sortHandler(id);
           closeSortHandler();
         }}
-        
-        selectSortItem={selectSortItem}
+
+        selectedSortItem={selectedSortItem}
       />
       <Grid item xs={12}>
         <div className={classes.mobileFilter}>
@@ -141,6 +144,7 @@ const List = ({
         {sidebarJSX}
       </Grid>
       <Grid item xs={12} md={9}>
+        <SortDesktop  sort={sort} sortHandler={sortHandler} selectedSortItem={selectedSortItem}/>
         <div className={classes.items}>
           {data.map((item, index) => {
             return (

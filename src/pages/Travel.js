@@ -105,7 +105,7 @@ const Travel = () => {
       loading={loading}
       data={data}
       sort={sortItems}
-      selectSortItem = {sortItem}
+      selectedSortItem = {sortItem}
       sortHandler = {sortHandler}
       onChangeCheckbox={sidebarCheckboxOnchange}
       isChecked = { isSidebarChecked }

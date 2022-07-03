@@ -30,7 +30,7 @@ export const useStyles = makeStyles((theme) => ({
         paddingBottom: theme.spacing(1)
     },
     "& >  div >  div:not(:first-child)": {
-      borderTop: "1px solid #ccc",
+      borderTop: `1px solid ${theme.palette.divider}`,
       padding: theme.spacing(2, 0),
     },
   },
