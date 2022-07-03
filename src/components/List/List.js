@@ -66,17 +66,28 @@ const useStyles = makeStyles((theme) => ({
 
   hasMoreBtn: {
     textAlign: "center",
-    margin: theme.spacing(2, 0 ,0),
+    margin: theme.spacing(2, 0, 0),
 
     "& > button": {
       fontSize: 20,
       fontWeight: "bold",
-      padding: theme.spacing(.5, 6),
-    }
-  }
+      padding: theme.spacing(0.5, 6),
+    },
+  },
 }));
 
-const List = ({ data, sidebar, moreOnclick, hasMore, loading, onChangeCheckbox, isChecked  }) => {
+const List = ({
+  data,
+  sidebar,
+  sort,
+  selectSortItem,
+  sortHandler,
+  moreOnclick,
+  hasMore,
+  loading,
+  onChangeCheckbox,
+  isChecked,
+}) => {
   const classes = useStyles();
   const [openFilter, setOpenFilter] = useState(false);
   const [openSort, setOpenSort] = useState(false);
@@ -95,13 +106,25 @@ const List = ({ data, sidebar, moreOnclick, hasMore, loading, onChangeCheckbox, 
   const closeSortHandler = () => {
     setOpenSort(false);
   };
-  const sidebarJSX= (<Sidebar data={sidebar} onChange={onChangeCheckbox } isChecked={isChecked }/>)
-   return (
+  const sidebarJSX = (
+    <Sidebar data={sidebar} onChange={onChangeCheckbox} isChecked={isChecked} />
+  );
+  return (
     <Grid container spacing={2} className={classes.paddingContainer}>
       <FilterModal handleClose={closeFilterHandler} open={openFilter}>
         {sidebarJSX}
       </FilterModal>
-      <SortModal handleClose={closeSortHandler} open={openSort} />
+      <SortModal
+        handleClose={closeSortHandler}
+        open={openSort}
+        sort={sort}
+        sortHandler={(id) => {
+          sortHandler(id);
+          closeSortHandler();
+        }}
+        
+        selectSortItem={selectSortItem}
+      />
       <Grid item xs={12}>
         <div className={classes.mobileFilter}>
           <Typography className={classes.alignment} onClick={openFilterHandler}>

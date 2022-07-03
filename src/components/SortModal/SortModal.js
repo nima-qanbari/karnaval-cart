@@ -1,9 +1,6 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
-import TimerIcon from "@material-ui/icons/Timer";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 
 import { makeStyles } from "@material-ui/styles";
 
@@ -23,20 +20,24 @@ const useStyles = makeStyles((theme) => ({
       alignItems: "center",
     },
 
-    "& > li > svg" : {
-      marginLeft: theme.spacing()
+    "& > li > svg": {
+      marginLeft: theme.spacing(),
     },
     "& :not(:last-child)": {
-      borderBottom: "1px solid #ccc"
-    }
+      borderBottom: "1px solid #ccc",
+    },
   },
+
+  active :{
+    fontWeight: "bold",
+  }
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function SortModal({ open, handleClose }) {
+function SortModal({ open, handleClose, sort, sortHandler , selectSortItem }) {
   const classes = useStyles();
   return (
     <Dialog
@@ -50,20 +51,16 @@ function SortModal({ open, handleClose }) {
       keepMounted
       onClose={handleClose}
     >
-      <ul className={classes.list}>
-        <li>
-          <TimerIcon color="action"/> از صبح به شب
-        </li>
-        <li>
-          <TimerIcon color="action"/> از شب به صبح
-        </li>
-        <li>
-          <ArrowDownwardIcon color="action"/> ارزان ترین
-        </li>
-        <li>
-          <ArrowUpwardIcon color="action"/> گران ترین
-        </li>
-      </ul>
+      {sort.map((item) => {
+        const Icon = item.icon;
+        return (
+          <ul className={classes.list} key={item.value}>       
+              <li onClick={() => sortHandler(item.value)} className={selectSortItem === item.value ? classes.active : undefined}>
+                <Icon color="action" /> {item.label}
+              </li>
+          </ul>
+        );
+      })}
     </Dialog>
   );
 }

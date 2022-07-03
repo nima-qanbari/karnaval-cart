@@ -1,10 +1,22 @@
 import React, { useState } from "react";
 import List from "../components/List/List";
 
+import TimerIcon from "@material-ui/icons/Timer";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+
 const Travel = () => {
   const [visible, setVisible] = useState(1);
   const [loading, setLoading] = useState(false);
   const [sidebarChecked, setSidebarChecked] = useState([]);
+  const [sortItem, setSortItem] = useState(null)
+
+  const sortItems = [
+    {label: "از صبح به شب", value:1, icon: TimerIcon},
+    {label: "از شب به صبح", value:2,  icon: TimerIcon},
+    {label:"ارزان ترین" , value: 3 , icon: ArrowDownwardIcon},
+    {label: "گران ترین" , value: 4 , icon: ArrowUpwardIcon}
+]
 
   const originalData = [
     {
@@ -71,7 +83,6 @@ const Travel = () => {
       ];
       setSidebarChecked(result);
     } else {
-
       //add item to array
       const result = [...sidebarChecked, value];
       setSidebarChecked(result);
@@ -81,12 +92,21 @@ const Travel = () => {
   const isSidebarChecked = (id) => {
       return sidebarChecked.includes(id)
   }
+
+  const sortHandler = (id) => {
+    setSortItem(sortItem === id ? null : id)
+  }
+
+
   return (
     <List
       hasMore={visible < originalData.length}
       moreOnclick={moreOnclick}
       loading={loading}
       data={data}
+      sort={sortItems}
+      selectSortItem = {sortItem}
+      sortHandler = {sortHandler}
       onChangeCheckbox={sidebarCheckboxOnchange}
       isChecked = { isSidebarChecked }
       sidebar={[
