@@ -27,6 +27,13 @@ let theme = createTheme({
   typography: {
     fontFamily: dana,
   },
+  overrides: {
+    MuiPaper: {
+      root: {
+        overflow: "hidden",
+      }
+    }
+  }
 });
 
 export { theme };

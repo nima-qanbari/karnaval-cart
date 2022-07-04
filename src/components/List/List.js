@@ -2,6 +2,9 @@ import React, { useState } from "react";
 
 import { Button, Grid, Typography } from "@material-ui/core";
 
+//Toolbar
+import Toolbar from "../Toolbar/Toolbar";
+
 //sort dekstop
 import SortDesktop from "../SortDesktop/SortDesktop";
 
@@ -37,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
 
     "& svg": {
-      marginLeft: theme.spacing(.7),
+      marginLeft: theme.spacing(0.7),
       color: theme.palette.text.secondary,
       fontSize: 20,
       fontWeight: "bold",
@@ -125,10 +128,11 @@ const List = ({
           sortHandler(id);
           closeSortHandler();
         }}
-
         selectedSortItem={selectedSortItem}
       />
       <Grid item xs={12}>
+        <Toolbar />
+
         <div className={classes.mobileFilter}>
           <Typography className={classes.alignment} onClick={openFilterHandler}>
             <FilterListIcon />
@@ -144,7 +148,11 @@ const List = ({
         {sidebarJSX}
       </Grid>
       <Grid item xs={12} md={9}>
-        <SortDesktop  sort={sort} sortHandler={sortHandler} selectedSortItem={selectedSortItem}/>
+        <SortDesktop
+          sort={sort}
+          sortHandler={sortHandler}
+          selectedSortItem={selectedSortItem}
+        />
         <div className={classes.items}>
           {data.map((item, index) => {
             return (
