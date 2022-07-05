@@ -3,6 +3,7 @@ import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
 import OriginDestinationInput from "../OriginDestinationInput/OriginDestinationInput";
+import { useSyncExternalStore } from "react";
 
 const useStyles = makeStyles((theme) => ({
   ToolbarContainer: {
@@ -33,33 +34,53 @@ const Toolbar = () => {
   const classes = useStyles();
   const [originItems, setOriginItems] = useState(null);
   const [destinationItems, setDestinationItems] = useState(null);
+  const [originValue, setOriginValue] = useState(null);
+  const [destinationValue, setDestinationValue] = useState(null);
+
   const [loading, setLoading] = useState(false);
 
-  const onChangOriginInput = (text) => {
+  console.log(originValue);
+  const onChangOriginInput = (text) => {   //show suggestions to user when typing in input
     setLoading(true);
     setTimeout(() => {
-         setOriginItems( text ? [
-            { label: "مشهد", id: 2 },
-            { label: "اهواز", id: 3 },
-            { label: "رشت", id: 4 },
-            { label: "تبریز", id: 5 },
-          ] : null);
+      setOriginItems(
+        text
+          ? [
+              { label: "مشهد", id: 2 },
+              { label: "اهواز", id: 3 },
+              { label: "رشت", id: 4 },
+              { label: "تبریز", id: 5 },
+            ]
+          : null
+      );
       setLoading(false);
     }, 2000);
   };
 
-  const onChangDestinationInput = (text) => {
+
+  const onChangDestinationInput = (text) => {   
     setLoading(true);
     setTimeout(() => {
-
-        setDestinationItems(text ? [
-            { label: "اهواز", id: 3 },
-            { label: "مشهد", id: 2 },
-            { label: "تبریز", id: 5 },
-            { label: "رشت", id: 4 },
-          ] : null);
+      setDestinationItems(
+        text
+          ? [
+              { label: "اهواز", id: 3 },
+              { label: "مشهد", id: 2 },
+              { label: "تبریز", id: 5 },
+              { label: "رشت", id: 4 },
+            ]
+          : null
+      );
       setLoading(false);
     }, 2000);
+  };
+
+  const onChangeOrigin = (item) => {
+    setOriginValue(item);
+  };
+
+  const onChangeDestination = (item) => {
+    setDestinationValue(item);
   };
   return (
     <div className={classes.ToolbarContainer}>
@@ -73,6 +94,10 @@ const Toolbar = () => {
             destinationItems={destinationItems}
             onChangOriginInput={onChangOriginInput}
             onChangDestinationInput={onChangDestinationInput}
+            onChangeOrigin={onChangeOrigin}
+            onChangeDestination ={onChangeDestination}
+            originValue={originValue}
+            destinationValue={destinationValue}
           />
         </Grid>
         <Grid item xs={12} md={4}></Grid>

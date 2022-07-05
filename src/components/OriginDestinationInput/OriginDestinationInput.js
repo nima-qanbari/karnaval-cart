@@ -118,8 +118,10 @@ const OriginDestinationInput = ({
   onChangOriginInput,
   onChangDestinationInput,
   loading,
-  onChangeOriginId,
-  onChangeDestinationId,
+  onChangeOrigin,
+  onChangeDestination,
+  originValue,
+  destinationValue,
 }) => {
   const [originInput, setOriginInput] = useState("");
   const [destinationInput, setDestinationInput] = useState("");
@@ -134,29 +136,50 @@ const OriginDestinationInput = ({
 
   const focusHandlerOrigin = () => {
     setFocusedInput("origin");
+    setOriginInput("")
   };
   const focusHandlerDestination = () => {
     setFocusedInput("destination");
+    setDestinationInput("")
   };
+
   const blurHandler = (event) => {
-    console.log(paperRef.current);
-    console.log(event.relatedTarget);
-    console.log(event);
+    //close
     if (!paperRef.current.contains(event.relatedTarget)) {
+      setFocusedInput(null);
+      switch (focusedInput) {
+        case "origin":
+          setOriginInput(originValue?.label || "");
+          break;
+
+        case "destination":
+          setDestinationInput(destinationValue?.label || "");
+          break;
+
+        default:
+          break;
+      }
+    }
+  };
+
+  const onClickOriginItem = (item) => {
+    onChangeOrigin(item);
+    setOriginInput(item.label);
+    if (!destinationValue) {
+      destinationRef.current.focus();
+    } else {
       setFocusedInput(null);
     }
   };
 
-  const onClickOriginItem = (id) => {
-    console.log(destinationRef.current.focus());
-    destinationRef.current.focus();
-    onChangeOriginId(id);
-  };
-
-  const onClickDestinationItem = (id) => {
-    console.log(destinationRef.current.focus());
-    originRef.current.focus();
-    onChangeDestinationId(id);
+  const onClickDestinationItem = (item) => {
+    onChangeDestination(item);
+    setDestinationInput(item.label);
+    if (!originValue) {
+      originRef.current.focus();
+    } else {
+      setFocusedInput(null);
+    }
   };
 
   return (
@@ -200,7 +223,7 @@ const OriginDestinationInput = ({
       <Popper
         open={Boolean(focusedInput)}
         anchorEl={containerRef.current}
-        style={{zIndex: 1000}}
+        style={{ zIndex: 1000 }}
       >
         <Paper
           ref={paperRef}
@@ -225,10 +248,7 @@ const OriginDestinationInput = ({
           ) : originItems && focusedInput === "origin" ? (
             originItems.map((item) => {
               return (
-                <MenuItem
-                  onClick={() => onClickOriginItem(item.id)}
-                  key={item.id}
-                >
+                <MenuItem onClick={() => onClickOriginItem(item)} key={item.id}>
                   {item.label}
                 </MenuItem>
               );
@@ -237,7 +257,7 @@ const OriginDestinationInput = ({
             destinationItems.map((item) => {
               return (
                 <MenuItem
-                  onClick={() => onClickDestinationItem(item.id)}
+                  onClick={() => onClickDestinationItem(item)}
                   key={item.id}
                 >
                   {item.label}
