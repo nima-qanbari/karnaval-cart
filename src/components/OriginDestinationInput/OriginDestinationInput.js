@@ -136,11 +136,11 @@ const OriginDestinationInput = ({
 
   const focusHandlerOrigin = () => {
     setFocusedInput("origin");
-    setOriginInput("")
+    setOriginInput("");
   };
   const focusHandlerDestination = () => {
     setFocusedInput("destination");
-    setDestinationInput("")
+    setDestinationInput("");
   };
 
   const blurHandler = (event) => {
@@ -183,7 +183,7 @@ const OriginDestinationInput = ({
   };
 
   return (
-    <div className={classes.container} ref={containerRef}>
+    <div className={classes.container} ref={containerRef} data-test="container">
       <div className={classes.firstInputContainer}>
         <TextField
           type="text"
@@ -194,6 +194,7 @@ const OriginDestinationInput = ({
           InputProps={{ classes: { input: classes.padding } }}
           value={originInput}
           inputRef={originRef}
+          inputProps={{ "data-test": "originInput" }}
           onChange={(e) => {
             setOriginInput(e.target.value);
             onChangOriginInput(e.target.value);
@@ -210,6 +211,7 @@ const OriginDestinationInput = ({
         placeholder={destinationPlaceholder}
         className={classes.secondInput}
         InputProps={{ classes: { input: classes.padding } }}
+        inputProps={{ "data-test": "destinationInput" }}
         onBlur={blurHandler}
         value={destinationInput}
         inputRef={destinationRef}
@@ -226,12 +228,13 @@ const OriginDestinationInput = ({
         style={{ zIndex: 1000 }}
       >
         <Paper
+          data-test="paper"
           ref={paperRef}
           className={classes.paper}
           style={{ width: containerRef.current?.offsetWidth }}
         >
           {loading ? (
-            <div>
+            <div data-test="loading">
               <MenuItem>
                 <Skeleton width={200} height={20}></Skeleton>
               </MenuItem>
@@ -248,7 +251,11 @@ const OriginDestinationInput = ({
           ) : originItems && focusedInput === "origin" ? (
             originItems.map((item) => {
               return (
-                <MenuItem onClick={() => onClickOriginItem(item)} key={item.id}>
+                <MenuItem
+                  onClick={() => onClickOriginItem(item)}
+                  key={item.id}
+                  data-test="originItems"
+                >
                   {item.label}
                 </MenuItem>
               );
@@ -257,6 +264,7 @@ const OriginDestinationInput = ({
             destinationItems.map((item) => {
               return (
                 <MenuItem
+                  data-test="destinationItems"
                   onClick={() => onClickDestinationItem(item)}
                   key={item.id}
                 >
@@ -271,13 +279,17 @@ const OriginDestinationInput = ({
                   شهرهای پر تردد
                 </Typography>
                 <div className={classes.cityContainer}>
-                  {suggestions.map((item) => {
-                    return (
-                      <Typography key={item.id} className={classes.firstItems}>
-                        {item.label}
-                      </Typography>
-                    );
-                  })}
+                  {Array.isArray(suggestions) &&
+                    suggestions.map((item) => {
+                      return (
+                        <Typography
+                          key={item.id}
+                          className={classes.firstItems}
+                        >
+                          {item.label}
+                        </Typography>
+                      );
+                    })}
                 </div>
               </Grid>
               <Grid item xs={6} className={classes.secondDiv}>
@@ -285,15 +297,16 @@ const OriginDestinationInput = ({
                   مسیرهای پر تردد
                 </Typography>
                 <div className={classes.btnContainer}>
-                  {routeSuggestions.map((item) => {
-                    return (
-                      <div key={item.id}>
-                        <Button size="small" className={classes.btn}>
-                          {item.label}
-                        </Button>
-                      </div>
-                    );
-                  })}
+                  {Array.isArray(routeSuggestions) &&
+                    routeSuggestions.map((item) => {
+                      return (
+                        <div key={item.id}>
+                          <Button size="small" className={classes.btn}>
+                            {item.label}
+                          </Button>
+                        </div>
+                      );
+                    })}
                 </div>
               </Grid>
             </Grid>

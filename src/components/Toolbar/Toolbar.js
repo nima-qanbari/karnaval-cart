@@ -3,7 +3,6 @@ import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
 import OriginDestinationInput from "../OriginDestinationInput/OriginDestinationInput";
-import { useSyncExternalStore } from "react";
 
 const useStyles = makeStyles((theme) => ({
   ToolbarContainer: {
@@ -39,7 +38,6 @@ const Toolbar = () => {
 
   const [loading, setLoading] = useState(false);
 
-  console.log(originValue);
   const onChangOriginInput = (text) => {   //show suggestions to user when typing in input
     setLoading(true);
     setTimeout(() => {
