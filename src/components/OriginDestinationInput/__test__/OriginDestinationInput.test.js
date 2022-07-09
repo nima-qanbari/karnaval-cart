@@ -275,6 +275,42 @@ describe("OriginDestinationInput", () => {
       const suggestion = screen.getByTitle("suggestion");
       expect(suggestion).toBeInTheDocument();
     });
+
+    test("when origin focused,when click on item, should choose item", () => {
+      const onChangeOrigin = jest.fn();
+      render(
+        <ThemeProvider theme={theme}>
+          <OriginDestinationInput
+            suggestions={[{ label: "تبریز", id: 1 }]}
+            onChangeOrigin ={onChangeOrigin}
+          />
+        </ThemeProvider>
+      );
+      const originInput = screen.getByPlaceholderText("مبدا");
+      fireEvent.focus(originInput);
+      const suggestion = screen.getByTitle("suggestions");
+      fireEvent.click(suggestion);
+
+      expect(onChangeOrigin).toHaveBeenCalled();
+    });
+
+    test("when destination focused, when click on item, should choose item", () => {
+      const onChangeDestination = jest.fn();
+      render(
+        <ThemeProvider theme={theme}>
+          <OriginDestinationInput
+            suggestions={[{ label: "تبریز", id: 1 }]}
+            onChangeDestination={onChangeDestination}
+          />
+        </ThemeProvider>
+      );
+      const destinationInput = screen.getByPlaceholderText("مبدا");
+      fireEvent.focus(destinationInput);
+      const suggestions = screen.getByTitle("suggestions");
+      fireEvent.click(suggestions);
+
+      expect(onChangeDestination).toHaveBeenCalled();
+    });
   });
 
   describe("given routeSuggestions", () => {

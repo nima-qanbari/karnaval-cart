@@ -281,7 +281,12 @@ const OriginDestinationInput = ({
                     suggestions.map((item) => {
                       return (
                         <Typography
-                          title={"suggestion"}
+                          onClick={() =>
+                            focusedInput === "origin"
+                              ? onClickOriginItem(item)
+                              : onClickDestinationItem(item)
+                          }
+                          title={"suggestions"}
                           key={item.id}
                           className={classes.firstItems}
                         >
@@ -300,7 +305,11 @@ const OriginDestinationInput = ({
                     routeSuggestions.map((item) => {
                       return (
                         <div key={item.id} title="routeSuggestions">
-                          <Button size="small" className={classes.btn}>
+                          <Button
+                            size="small"
+                            className={classes.btn}
+                            onClick={() => onClickDestinationItem(item)}
+                          >
                             {item.label}
                           </Button>
                         </div>
