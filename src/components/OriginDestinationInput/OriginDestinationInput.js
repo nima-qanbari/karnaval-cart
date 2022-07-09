@@ -108,8 +108,6 @@ const useStyles = makeStyles((theme) => ({
 const OriginDestinationInput = ({
   suggestions,
   routeSuggestions,
-  originId,
-  destinationId,
   destinationItems,
   originItems,
   originPlaceholder,
@@ -183,7 +181,7 @@ const OriginDestinationInput = ({
   };
 
   return (
-    <div className={classes.container} ref={containerRef} data-test="container">
+    <div className={classes.container} ref={containerRef} title="container">
       <div className={classes.firstInputContainer}>
         <TextField
           type="text"
@@ -194,7 +192,6 @@ const OriginDestinationInput = ({
           InputProps={{ classes: { input: classes.padding } }}
           value={originInput}
           inputRef={originRef}
-          inputProps={{ "data-test": "originInput" }}
           onChange={(e) => {
             setOriginInput(e.target.value);
             onChangOriginInput(e.target.value);
@@ -211,7 +208,6 @@ const OriginDestinationInput = ({
         placeholder={destinationPlaceholder}
         className={classes.secondInput}
         InputProps={{ classes: { input: classes.padding } }}
-        inputProps={{ "data-test": "destinationInput" }}
         onBlur={blurHandler}
         value={destinationInput}
         inputRef={destinationRef}
@@ -228,13 +224,13 @@ const OriginDestinationInput = ({
         style={{ zIndex: 1000 }}
       >
         <Paper
-          data-test="paper"
+          title="paper"
           ref={paperRef}
           className={classes.paper}
           style={{ width: containerRef.current?.offsetWidth }}
         >
           {loading ? (
-            <div data-test="loading">
+            <div title={"loading"}>
               <MenuItem>
                 <Skeleton width={200} height={20}></Skeleton>
               </MenuItem>
@@ -254,7 +250,8 @@ const OriginDestinationInput = ({
                 <MenuItem
                   onClick={() => onClickOriginItem(item)}
                   key={item.id}
-                  data-test="originItems"
+                  title="originItem"
+                  data-testid={"id-1"}
                 >
                   {item.label}
                 </MenuItem>
@@ -264,7 +261,8 @@ const OriginDestinationInput = ({
             destinationItems.map((item) => {
               return (
                 <MenuItem
-                  data-test="destinationItems"
+                  title="destinationItem"
+                  data-testid={"id-2"}
                   onClick={() => onClickDestinationItem(item)}
                   key={item.id}
                 >
@@ -283,6 +281,7 @@ const OriginDestinationInput = ({
                     suggestions.map((item) => {
                       return (
                         <Typography
+                          title={"suggestion"}
                           key={item.id}
                           className={classes.firstItems}
                         >
@@ -300,7 +299,7 @@ const OriginDestinationInput = ({
                   {Array.isArray(routeSuggestions) &&
                     routeSuggestions.map((item) => {
                       return (
-                        <div key={item.id}>
+                        <div key={item.id} title="routeSuggestions">
                           <Button size="small" className={classes.btn}>
                             {item.label}
                           </Button>
