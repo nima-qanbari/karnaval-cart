@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PaperModal from "../PaperModal/PaperModal";
 
 import SyncAltIcon from "@material-ui/icons/SyncAlt";
 
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.grey[100],
     color: theme.palette.grey[600],
     cursor: "pointer",
+    zIndex: 3,
 
     "& svg": {
       fontSize: 18,
@@ -120,6 +122,7 @@ const OriginDestinationInput = ({
   onChangeDestination,
   originValue,
   destinationValue,
+  useDialog,
 }) => {
   const [originInput, setOriginInput] = useState("");
   const [destinationInput, setDestinationInput] = useState("");
@@ -141,29 +144,33 @@ const OriginDestinationInput = ({
     setDestinationInput("");
   };
 
+  const onCloseHandler = () => {
+    setFocusedInput(null);
+    switch (focusedInput) {
+      case "origin":
+        setOriginInput(originValue?.label || "");
+        break;
+
+      case "destination":
+        setDestinationInput(destinationValue?.label || "");
+        break;
+
+      default:
+        break;
+    }
+  };
+
   const blurHandler = (event) => {
     //close
-    if (!paperRef.current.contains(event.relatedTarget)) {
-      setFocusedInput(null);
-      switch (focusedInput) {
-        case "origin":
-          setOriginInput(originValue?.label || "");
-          break;
-
-        case "destination":
-          setDestinationInput(destinationValue?.label || "");
-          break;
-
-        default:
-          break;
-      }
+    if (paperRef.current && !paperRef.current.contains(event.relatedTarget)) {
+      onCloseHandler();
     }
   };
 
   const onClickOriginItem = (item) => {
     onChangeOrigin(item);
     setOriginInput(item.label);
-    if (!destinationValue) {
+    if (!destinationValue && !useDialog) {
       destinationRef.current.focus();
     } else {
       setFocusedInput(null);
@@ -173,12 +180,111 @@ const OriginDestinationInput = ({
   const onClickDestinationItem = (item) => {
     onChangeDestination(item);
     setDestinationInput(item.label);
-    if (!originValue) {
+    if (!originValue && !useDialog) {
       originRef.current.focus();
     } else {
       setFocusedInput(null);
     }
   };
+
+  const swapHandler = () => {
+    onChangeOrigin(destinationValue);
+    onChangeDestination(originValue);
+    setOriginInput(destinationValue?.label || "");
+    setDestinationInput(originValue?.label || "");
+  };
+  const loadingJSX = (
+    <div title={"loading"}>
+      <MenuItem>
+        <Skeleton width={200} height={20}></Skeleton>
+      </MenuItem>
+      <MenuItem>
+        <Skeleton width={200} height={20}></Skeleton>
+      </MenuItem>
+      <MenuItem>
+        <Skeleton width={200} height={20}></Skeleton>
+      </MenuItem>
+      <MenuItem>
+        <Skeleton width={200} height={20}></Skeleton>
+      </MenuItem>
+    </div>
+  );
+
+  const originItemsJSX = Array.isArray(originItems)
+    ? originItems.map((item) => {
+        return (
+          <MenuItem
+            onClick={() => onClickOriginItem(item)}
+            key={item.id}
+            title="originItem"
+            data-testid={"id-1"}
+          >
+            {item.label}
+          </MenuItem>
+        );
+      })
+    : null;
+
+  const destinationItemsJSX = Array.isArray(destinationItems)
+    ? destinationItems.map((item) => {
+        return (
+          <MenuItem
+            title="destinationItem"
+            data-testid={"id-2"}
+            onClick={() => onClickDestinationItem(item)}
+            key={item.id}
+          >
+            {item.label}
+          </MenuItem>
+        );
+      })
+    : null;
+
+  const suggestionJSX = (
+    <Grid container>
+      <Grid item xs={6} className={classes.firstDivContainer}>
+        <Typography className={classes.title}>شهرهای پر تردد</Typography>
+        <div className={classes.cityContainer}>
+          {Array.isArray(suggestions) &&
+            suggestions.map((item) => {
+              return (
+                <Typography
+                  onClick={() =>
+                    focusedInput === "origin"
+                      ? onClickOriginItem(item)
+                      : onClickDestinationItem(item)
+                  }
+                  title={"suggestions"}
+                  key={item.id}
+                  className={classes.firstItems}
+                >
+                  {item.label}
+                </Typography>
+              );
+            })}
+        </div>
+      </Grid>
+      <Grid item xs={6} className={classes.secondDiv}>
+        <Typography className={classes.title}>مسیرهای پر تردد</Typography>
+        <div className={classes.btnContainer}>
+          {Array.isArray(routeSuggestions) &&
+            routeSuggestions.map((item) => {
+              return (
+                <div key={item.id} title="routeSuggestions">
+                  <Button
+                    size="small"
+                    className={classes.btn}
+                    onClick={() => onClickDestinationItem(item)}
+                  >
+                    {item.label}
+                  </Button>
+                </div>
+              );
+            })}
+        </div>
+      </Grid>
+    </Grid>
+  );
 
   return (
     <div className={classes.container} ref={containerRef} title="container">
@@ -198,7 +304,11 @@ const OriginDestinationInput = ({
           }}
           onFocus={focusHandlerOrigin}
         />
-        <div className={classes.circle}>
+        <div
+          onClick={swapHandler}
+          title="swapButton"
+          className={classes.circle}
+        >
           <SyncAltIcon />
         </div>
       </div>
@@ -217,110 +327,59 @@ const OriginDestinationInput = ({
         }}
         onFocus={focusHandlerDestination}
       />
-
-      <Popper
-        open={Boolean(focusedInput)}
-        anchorEl={containerRef.current}
-        style={{ zIndex: 1000 }}
-      >
-        <Paper
-          title="paper"
-          ref={paperRef}
-          className={classes.paper}
-          style={{ width: containerRef.current?.offsetWidth }}
+      {useDialog === true ? (
+        <>
+          <PaperModal
+            value={originInput}
+            setOriginInput={setOriginInput}
+            onChangOriginInput={onChangOriginInput}
+            placeholder={originPlaceholder}
+            open={focusedInput === "origin"}
+            handleClose={onCloseHandler}
+          >
+            {loading
+              ? loadingJSX
+              : originItems && focusedInput === "origin"
+              ? originItemsJSX
+              : suggestionJSX}
+          </PaperModal>
+          <PaperModal
+            value={destinationInput}
+            setOriginInput={setDestinationInput}
+            onChangOriginInput={onChangDestinationInput}
+            placeholder={destinationPlaceholder}
+            open={focusedInput === "destination"}
+            handleClose={onCloseHandler}
+          >
+            {loading
+              ? loadingJSX
+              : destinationItems && focusedInput === "destination"
+              ? destinationItemsJSX
+              : suggestionJSX}
+          </PaperModal>
+        </>
+      ) : (
+        <Popper
+          open={Boolean(focusedInput)}
+          anchorEl={containerRef.current}
+          style={{ zIndex: 1000 }}
         >
-          {loading ? (
-            <div title={"loading"}>
-              <MenuItem>
-                <Skeleton width={200} height={20}></Skeleton>
-              </MenuItem>
-              <MenuItem>
-                <Skeleton width={200} height={20}></Skeleton>
-              </MenuItem>
-              <MenuItem>
-                <Skeleton width={200} height={20}></Skeleton>
-              </MenuItem>
-              <MenuItem>
-                <Skeleton width={200} height={20}></Skeleton>
-              </MenuItem>
-            </div>
-          ) : originItems && focusedInput === "origin" ? (
-            originItems.map((item) => {
-              return (
-                <MenuItem
-                  onClick={() => onClickOriginItem(item)}
-                  key={item.id}
-                  title="originItem"
-                  data-testid={"id-1"}
-                >
-                  {item.label}
-                </MenuItem>
-              );
-            })
-          ) : destinationItems && focusedInput === "destination" ? (
-            destinationItems.map((item) => {
-              return (
-                <MenuItem
-                  title="destinationItem"
-                  data-testid={"id-2"}
-                  onClick={() => onClickDestinationItem(item)}
-                  key={item.id}
-                >
-                  {item.label}
-                </MenuItem>
-              );
-            })
-          ) : (
-            <Grid container>
-              <Grid item xs={6} className={classes.firstDivContainer}>
-                <Typography className={classes.title}>
-                  شهرهای پر تردد
-                </Typography>
-                <div className={classes.cityContainer}>
-                  {Array.isArray(suggestions) &&
-                    suggestions.map((item) => {
-                      return (
-                        <Typography
-                          onClick={() =>
-                            focusedInput === "origin"
-                              ? onClickOriginItem(item)
-                              : onClickDestinationItem(item)
-                          }
-                          title={"suggestions"}
-                          key={item.id}
-                          className={classes.firstItems}
-                        >
-                          {item.label}
-                        </Typography>
-                      );
-                    })}
-                </div>
-              </Grid>
-              <Grid item xs={6} className={classes.secondDiv}>
-                <Typography className={classes.title}>
-                  مسیرهای پر تردد
-                </Typography>
-                <div className={classes.btnContainer}>
-                  {Array.isArray(routeSuggestions) &&
-                    routeSuggestions.map((item) => {
-                      return (
-                        <div key={item.id} title="routeSuggestions">
-                          <Button
-                            size="small"
-                            className={classes.btn}
-                            onClick={() => onClickDestinationItem(item)}
-                          >
-                            {item.label}
-                          </Button>
-                        </div>
-                      );
-                    })}
-                </div>
-              </Grid>
-            </Grid>
-          )}
-        </Paper>
-      </Popper>
+          <Paper
+            title="paper"
+            ref={paperRef}
+            className={classes.paper}
+            style={{ width: containerRef.current?.offsetWidth }}
+          >
+            {loading
+              ? loadingJSX
+              : originItems && focusedInput === "origin"
+              ? originItemsJSX
+              : destinationItems && focusedInput === "destination"
+              ? destinationItemsJSX
+              : suggestionJSX}
+          </Paper>
+        </Popper>
+      )}
     </div>
   );
 };

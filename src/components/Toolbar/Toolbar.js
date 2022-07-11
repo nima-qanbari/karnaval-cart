@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
@@ -37,6 +40,9 @@ const Toolbar = () => {
   const [destinationValue, setDestinationValue] = useState(null);
 
   const [loading, setLoading] = useState(false);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const onChangOriginInput = (text) => {   //show suggestions to user when typing in input
     setLoading(true);
@@ -96,6 +102,8 @@ const Toolbar = () => {
             onChangeDestination ={onChangeDestination}
             originValue={originValue}
             destinationValue={destinationValue}
+            useDialog={isMobile}
+            
           />
         </Grid>
         <Grid item xs={12} md={4}></Grid>
