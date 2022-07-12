@@ -3,7 +3,7 @@ import PaperModal from "../PaperModal/PaperModal";
 
 import SyncAltIcon from "@material-ui/icons/SyncAlt";
 
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/styles"; 
 import {
   Button,
   Grid,
@@ -40,6 +40,7 @@ const OriginDestinationInput = ({
   const containerRef = useRef(null);
   const paperRef = useRef(null);
   const originRef = useRef(null);
+  
   const destinationRef = useRef(null);
 
   const classes = useStyles();

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
 import OriginDestinationInput from "../OriginDestinationInput/OriginDestinationInput";
+import CountInput from "../CountInput/CountInput";
 
 const useStyles = makeStyles((theme) => ({
   ToolbarContainer: {
@@ -25,29 +26,29 @@ const suggestions = [
 
 const routeSuggestions = [
   {
-    origin: {label: "تهران", id: 1},
-    destination:{label: "تبریز", id:1}  
+    origin: { label: "تهران", id: 1 },
+    destination: { label: "تبریز", id: 1 },
   },
   {
-    origin: {label: "تهران", id: 2},
-    destination:{label: "مشهد", id:2}  
+    origin: { label: "تهران", id: 2 },
+    destination: { label: "مشهد", id: 2 },
   },
   {
-    origin: {label: "تهران", id: 3},
-    destination:{label: "اهواز", id:3}  
+    origin: { label: "تهران", id: 3 },
+    destination: { label: "اهواز", id: 3 },
   },
   {
-    origin: {label: "تهران", id: 4},
-    destination:{label: "رشت", id:4}  
+    origin: { label: "تهران", id: 4 },
+    destination: { label: "رشت", id: 4 },
   },
   {
-    origin: {label: "تهران", id: 5},
-    destination:{label: "یزد", id:5}  
+    origin: { label: "تهران", id: 5 },
+    destination: { label: "یزد", id: 5 },
   },
   {
-    origin: {label: "تهران", id: 6},
-    destination:{label: "شیراز", id:6}  
-  }
+    origin: { label: "تهران", id: 6 },
+    destination: { label: "شیراز", id: 6 },
+  },
 ];
 
 const Toolbar = () => {
@@ -56,13 +57,15 @@ const Toolbar = () => {
   const [destinationItems, setDestinationItems] = useState(null);
   const [originValue, setOriginValue] = useState(null);
   const [destinationValue, setDestinationValue] = useState(null);
+  const [countValue, setCountValue] = useState(1);
 
   const [loading, setLoading] = useState(false);
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const onChangOriginInput = (text) => {   //show suggestions to user when typing in input
+  const onChangOriginInput = (text) => {
+    //show suggestions to user when typing in input
     setLoading(true);
     setTimeout(() => {
       setOriginItems(
@@ -79,8 +82,7 @@ const Toolbar = () => {
     }, 2000);
   };
 
-
-  const onChangDestinationInput = (text) => {   
+  const onChangDestinationInput = (text) => {
     setLoading(true);
     setTimeout(() => {
       setDestinationItems(
@@ -104,9 +106,10 @@ const Toolbar = () => {
   const onChangeDestination = (item) => {
     setDestinationValue(item);
   };
+
   return (
     <div className={classes.ToolbarContainer}>
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item xs={12} md={4} className={classes.travel}>
           <OriginDestinationInput
             suggestions={suggestions}
@@ -117,15 +120,16 @@ const Toolbar = () => {
             onChangOriginInput={onChangOriginInput}
             onChangDestinationInput={onChangDestinationInput}
             onChangeOrigin={onChangeOrigin}
-            onChangeDestination ={onChangeDestination}
+            onChangeDestination={onChangeDestination}
             originValue={originValue}
             destinationValue={destinationValue}
             useDialog={isMobile}
-            
           />
         </Grid>
         <Grid item xs={12} md={4}></Grid>
-        <Grid item xs={12} md={2}></Grid>
+        <Grid item xs={12} md={2}>
+          <CountInput onChange={setCountValue} value={countValue} />
+        </Grid>
         <Grid item xs={12} md={2}></Grid>
       </Grid>
     </div>
