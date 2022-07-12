@@ -16,97 +16,6 @@ import {
 import { useRef } from "react";
 import { Skeleton } from "@material-ui/lab";
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: "flex",
-  },
-
-  firstInputContainer: {
-    position: "relative",
-  },
-
-  firstInput: {
-    "& fieldset": {
-      borderTopLeftRadius: 0,
-      borderBottomLeftRadius: 0,
-    },
-  },
-
-  secondInput: {
-    "& fieldset": {
-      borderTopRightRadius: 0,
-      borderBottomRightRadius: 0,
-      borderRight: 0,
-    },
-  },
-
-  circle: {
-    position: "absolute",
-    left: -12,
-    display: "flex",
-    padding: theme.spacing(0.2),
-    borderRadius: "50%",
-    border: `2px solid ${theme.palette.divider}`,
-    top: "27%",
-    background: theme.palette.grey[100],
-    color: theme.palette.grey[600],
-    cursor: "pointer",
-    zIndex: 3,
-
-    "& svg": {
-      fontSize: 18,
-      fontWeight: "bold",
-    },
-  },
-
-  padding: {
-    padding: theme.spacing(2),
-  },
-  paper: {
-    marginTop: theme.spacing(),
-  },
-
-  title: {
-    margin: theme.spacing(0.5, 0.8, 0, 0),
-    width: "fit-content",
-    fontSize: 9,
-    color: theme.palette.error.main,
-    borderBottom: `1px solid ${theme.palette.divider}`,
-  },
-
-  firstDivContainer: {
-    padding: theme.spacing(),
-    borderLeft: `1px solid ${theme.palette.divider}`,
-  },
-
-  cityContainer: {
-    "& :not(:last-child)": {
-      borderBottom: `1px solid ${theme.palette.divider}`,
-    },
-  },
-  firstItems: {
-    fontSize: ".75rem",
-    fontWeight: 500,
-    padding: theme.spacing(0.8, 1),
-    cursor: "pointer",
-  },
-
-  secondDiv: {
-    padding: theme.spacing(),
-  },
-
-  btn: {
-    fontSize: ".62rem",
-    padding: theme.spacing(0.5, 1),
-    border: `1px solid ${theme.palette.divider}`,
-  },
-  btnContainer: {
-    "& > div": {
-      marginTop: theme.spacing(),
-    },
-  },
-}));
-
 const OriginDestinationInput = ({
   suggestions,
   routeSuggestions,
@@ -185,6 +94,14 @@ const OriginDestinationInput = ({
     } else {
       setFocusedInput(null);
     }
+  };
+
+  const onClickOriginDestination = (item) => {
+    onChangeOrigin(item.origin);
+    onChangeDestination(item.destination);
+    setOriginInput(item.origin.label);
+    setDestinationInput(item.destination.label);
+    setFocusedInput(null);
   };
 
   const swapHandler = () => {
@@ -270,13 +187,17 @@ const OriginDestinationInput = ({
           {Array.isArray(routeSuggestions) &&
             routeSuggestions.map((item) => {
               return (
-                <div key={item.id} title="routeSuggestions">
+                <div
+                  key={`${item.origin.id}-${item.destination.id}`}
+                  title="routeSuggestions"
+                >
                   <Button
+                    title="routeSuggestionsButton"
                     size="small"
                     className={classes.btn}
-                    onClick={() => onClickDestinationItem(item)}
+                    onClick={() => onClickOriginDestination(item)}
                   >
-                    {item.label}
+                    {item.origin.label} به {item.destination.label}
                   </Button>
                 </div>
               );
@@ -383,6 +304,97 @@ const OriginDestinationInput = ({
     </div>
   );
 };
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+  },
+
+  firstInputContainer: {
+    position: "relative",
+  },
+
+  firstInput: {
+    "& fieldset": {
+      borderTopLeftRadius: 0,
+      borderBottomLeftRadius: 0,
+    },
+  },
+
+  secondInput: {
+    "& fieldset": {
+      borderTopRightRadius: 0,
+      borderBottomRightRadius: 0,
+      borderRight: 0,
+    },
+  },
+
+  circle: {
+    position: "absolute",
+    left: -12,
+    display: "flex",
+    padding: theme.spacing(0.2),
+    borderRadius: "50%",
+    border: `2px solid ${theme.palette.divider}`,
+    top: "27%",
+    background: theme.palette.grey[100],
+    color: theme.palette.grey[600],
+    cursor: "pointer",
+    zIndex: 3,
+
+    "& svg": {
+      fontSize: 18,
+      fontWeight: "bold",
+    },
+  },
+
+  padding: {
+    padding: theme.spacing(2),
+  },
+  paper: {
+    marginTop: theme.spacing(),
+  },
+
+  title: {
+    margin: theme.spacing(0.5, 0.8, 0, 0),
+    width: "fit-content",
+    fontSize: 9,
+    color: theme.palette.error.main,
+    borderBottom: `1px solid ${theme.palette.divider}`,
+  },
+
+  firstDivContainer: {
+    padding: theme.spacing(),
+    borderLeft: `1px solid ${theme.palette.divider}`,
+  },
+
+  cityContainer: {
+    "& :not(:last-child)": {
+      borderBottom: `1px solid ${theme.palette.divider}`,
+    },
+  },
+  firstItems: {
+    fontSize: ".75rem",
+    fontWeight: 500,
+    padding: theme.spacing(0.8, 1),
+    cursor: "pointer",
+  },
+
+  secondDiv: {
+    padding: theme.spacing(),
+  },
+
+  btn: {
+    fontSize: ".62rem",
+    padding: theme.spacing(0.5, 1),
+    border: `1px solid ${theme.palette.divider}`,
+  },
+  btnContainer: {
+    "& > div": {
+      marginTop: theme.spacing(),
+    },
+  },
+}));
 
 OriginDestinationInput.defaultProps = {
   originPlaceholder: "مبدا",

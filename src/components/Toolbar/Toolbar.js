@@ -24,12 +24,30 @@ const suggestions = [
 ];
 
 const routeSuggestions = [
-  { label: "تهران به تبریز", id: 1 },
-  { label: "تهران به مشهد", id: 2 },
-  { label: "تهران به اهواز", id: 3 },
-  { label: "تهران به رشت", id: 4 },
-  { label: "تهران به یزد", id: 5 },
-  { label: "تهران به شیراز", id: 6 },
+  {
+    origin: {label: "تهران", id: 1},
+    destination:{label: "تبریز", id:1}  
+  },
+  {
+    origin: {label: "تهران", id: 2},
+    destination:{label: "مشهد", id:2}  
+  },
+  {
+    origin: {label: "تهران", id: 3},
+    destination:{label: "اهواز", id:3}  
+  },
+  {
+    origin: {label: "تهران", id: 4},
+    destination:{label: "رشت", id:4}  
+  },
+  {
+    origin: {label: "تهران", id: 5},
+    destination:{label: "یزد", id:5}  
+  },
+  {
+    origin: {label: "تهران", id: 6},
+    destination:{label: "شیراز", id:6}  
+  }
 ];
 
 const Toolbar = () => {

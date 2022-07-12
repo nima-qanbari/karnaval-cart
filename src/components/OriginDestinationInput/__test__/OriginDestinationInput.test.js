@@ -285,7 +285,12 @@ describe("OriginDestinationInput", () => {
       describe("given routeSuggestions", () => {
         test("when focused on destination input, should display routeSuggestions", () => {
           setup({
-            routeSuggestions: [{ label: "تهران به مشهد", id: 2 }],
+            routeSuggestions: [
+              {
+                origin: { label: "تهران", id: 1 },
+                destination: { label: "تبریز", id: 1 },
+              },
+            ],
             useDialog,
           });
 
@@ -293,6 +298,41 @@ describe("OriginDestinationInput", () => {
 
           const routeSuggestions = screen.getByTitle("routeSuggestions");
           expect(routeSuggestions).toBeInTheDocument();
+        });
+
+        test("when click on routeSuggestions", () => {
+          const onChangeOrigin = jest.fn();
+          const onChangeDestination = jest.fn();
+          const routeSuggestions = [
+            {
+              origin: { label: "تهران", id: 1 },
+              destination: { label: "تبریز", id: 1 },
+            },
+          ];
+          setup({
+            routeSuggestions: routeSuggestions,
+            useDialog,
+            onChangeOrigin: onChangeOrigin,
+            onChangeDestination: onChangeDestination,
+          });
+
+          const originInput = screen.getByPlaceholderText("مبدا");
+          const destinationInput = screen.getByPlaceholderText("مقصد");
+
+          fireEvent.focus(originInput);
+          const routeSuggestionsButton = screen.getByTitle(
+            "routeSuggestionsButton"
+          );
+          fireEvent.click(routeSuggestionsButton);
+
+          expect(originInput).toHaveValue(routeSuggestions[0].origin.label);
+          expect(destinationInput).toHaveValue(
+            routeSuggestions[0].destination.label
+          );
+          expect(onChangeOrigin).toBeCalledWith(routeSuggestions[0].origin);
+          expect(onChangeDestination).toBeCalledWith(
+            routeSuggestions[0].destination
+          );
         });
       });
 
@@ -314,7 +354,7 @@ describe("OriginDestinationInput", () => {
 
           const originInput = screen.getByPlaceholderText("مبدا");
           const destinationInput = screen.getByPlaceholderText("مقصد");
-     
+
           expect(onChangeOrigin).toBeCalledWith(destinationValue);
           expect(onChangeDestination).toBeCalledWith(originValue);
           expect(originInput).toHaveValue(destinationValue.label);
