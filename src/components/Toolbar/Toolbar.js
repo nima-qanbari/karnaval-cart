@@ -128,7 +128,7 @@ const Toolbar = () => {
         </Grid>
         <Grid item xs={12} md={4}></Grid>
         <Grid item xs={12} md={2}>
-          <CountInput onChange={setCountValue} value={countValue} />
+          <CountInput onChange={setCountValue} value={countValue} useDialog={isMobile} />
         </Grid>
         <Grid item xs={12} md={2}></Grid>
       </Grid>

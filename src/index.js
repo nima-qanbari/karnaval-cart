@@ -10,7 +10,6 @@ moment.loadPersian({ dialect: "persian-modern" });
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(  <ThemeProvider theme={theme}>
   <App />
-</ThemeProvider>,
-document.getElementById("root")
+</ThemeProvider>
 );
 

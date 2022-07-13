@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { makeStyles } from "@material-ui/styles";
+import CountInputModal from "../CountInputModal/CountInputModal";
 import {
   Button,
   IconButton,
@@ -16,101 +17,123 @@ import PeopleIcon from "@material-ui/icons/People";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 
-const CountInput = ({ onChange, value }) => {
+const CountInput = ({
+  onChange,
+  value,
+  useDialog,
+  countPlaceholder,
+  max,
+  min,
+}) => {
   const [focusInput, setFocusInput] = useState(false);
-
   const containerRef = useRef(null);
   const classes = useStyles();
   const focusHandler = () => {
     setFocusInput(true);
   };
   const plusCounter = () => {
-    onChange((prevState) => prevState + 1);
+    if (!max || value < max) {
+      onChange(value + 1);
+    }
   };
 
   const minusCounter = () => {
-    if (value >= 1) {
-      onChange((prevState) => prevState - 1);
+    if (value > min) {
+      onChange(value - 1);
     }
   };
 
   const closeHandler = () => {
     setFocusInput(false);
   };
-  return (
-    <ClickAwayListener onClickAway={closeHandler}>
-      <div className={classes.container} ref={containerRef}>
-        <TextField
-          variant="outlined"
-          InputProps={{
-            classes: {
-              input: clsx(classes.input, value >= 1 && classes.textAlign),
-            },
-          }}
-          value={value >= 1 ? `${value} نفر` : ""}
-          placeholder="مسافران"
-          onFocus={focusHandler}
-        />
-        <PeopleIcon className={classes.icon} color="action" />
-        {focusInput ? (
-          <Popper
-            open={Boolean(focusInput)}
-            anchorEl={containerRef.current}
-            style={{ zIndex: 1000 }}
-            transition
-          >
-            {({ TransitionProps }) => (
-              <Fade {...TransitionProps} timeout={350}>
-                <div>
-                <Paper
-                  className={classes.paper}
-                  style={{ width: containerRef.current?.offsetWidth }}
 
-                >
-                  <div className={classes.btnContainer}>
-                    <Typography className={classes.passengers}>
-                      مسافران
-                    </Typography>
-                    <div className={classes.plusMinusContainer}>
-                      <IconButton
-                        size="medium"
-                        className={classes.plusButton}
-                        onClick={plusCounter}
-                      >
-                        <AddIcon className={classes.btnSize} color="action" />
-                      </IconButton>
-                      <span className={classes.counter}>{value}</span>
-                      <IconButton
-                        size="medium"
-                        className={classes.minusButton}
-                        onClick={minusCounter}
-                      >
-                        <RemoveIcon
-                          className={classes.btnSize}
-                          color="action"
-                        />
-                      </IconButton>
-                    </div>
-                  </div>
-                  <div>
-                    <Button
-                      className={classes.agreeButton}
-                      color="primary"
-                      variant="outlined"
-                      onClick={closeHandler}
-                    >
-                      تایید
-                    </Button>
-                  </div>
-                </Paper>{" "}
-                </div>
-                
-              </Fade>
-            )}
-          </Popper>
-        ) : null}
+  const counterJSX = (
+    <div className={classes.paper} title="popper">
+      <div className={classes.btnContainer}>
+        <Typography className={classes.passengers}>مسافران</Typography>
+        <div className={classes.plusMinusContainer}>
+          <IconButton
+            size="medium"
+            className={classes.plusButton}
+            onClick={plusCounter}
+            title="plusButton"
+          >
+            <AddIcon className={classes.btnSize} color="action" />
+          </IconButton>
+          <span className={classes.counter}>{value}</span>
+          <IconButton
+            size="medium"
+            className={classes.minusButton}
+            onClick={minusCounter}
+            title="minusButton"
+          >
+            <RemoveIcon className={classes.btnSize} color="action" />
+          </IconButton>
+        </div>
       </div>
-    </ClickAwayListener>
+      <div>
+        <Button
+          className={classes.agreeButton}
+          color="primary"
+          variant="outlined"
+          onClick={closeHandler}
+          title="confirm"
+        >
+          تایید
+        </Button>
+      </div>
+    </div>
+  );
+
+  const JSX = (
+    <div className={classes.container} ref={containerRef} title="container">
+      <TextField
+        variant="outlined"
+        InputProps={{
+          classes: {
+            input: clsx(classes.input, value >= 1 && classes.textAlign),
+          },
+        }}
+        value={value >= 1 ? `${value} نفر` : ""}
+        placeholder={countPlaceholder}
+        onFocus={focusHandler}
+      />
+      <PeopleIcon className={classes.icon} color="action" />
+
+      {focusInput && !useDialog && (
+        <Popper
+          open={Boolean(focusInput)}
+          anchorEl={containerRef.current}
+          className={classes.marginTop}
+          style={{ zIndex: 1000 }}
+          transition
+        >
+          {({ TransitionProps }) => (
+            <Fade {...TransitionProps} timeout={350}>
+              <div>
+                <Paper style={{ width: containerRef.current?.offsetWidth }}>
+                  {counterJSX}
+                </Paper>
+              </div>
+            </Fade>
+          )}
+        </Popper>
+      )}
+      {useDialog && (
+        <CountInputModal open={focusInput} closeHandler={closeHandler}>
+          {counterJSX}
+        </CountInputModal>
+      )}
+    </div>
+  );
+  return (
+    <>
+      {useDialog ? (
+        JSX
+      ) : (
+        <ClickAwayListener onClickAway={closeHandler}>{JSX}</ClickAwayListener>
+      )}
+    </>
   );
 };
 
@@ -139,9 +162,12 @@ const useStyles = makeStyles((theme) => ({
     top: "27%",
     fontSize: 21,
   },
+  marginTop: {
+    marginTop: theme.spacing(1),
+  },
+
   paper: {
     padding: theme.spacing(2),
-    marginTop: theme.spacing(1),
   },
 
   btnContainer: {
@@ -182,5 +208,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1.5),
   },
 }));
+
+CountInput.defaultProps = {
+  countPlaceholder: "مسافران",
+  min: 0,
+};
 
 export default CountInput;
