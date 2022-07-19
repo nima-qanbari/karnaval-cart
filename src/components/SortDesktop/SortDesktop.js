@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   active: {},
-}));
+}), {flip: false});
 
 const SortDesktop = ({ sort, sortHandler, selectedSortItem }) => {
   const classes = useStyles();

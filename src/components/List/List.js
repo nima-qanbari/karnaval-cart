@@ -26,6 +26,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import ImportExportIcon from "@material-ui/icons/ImportExport";
 import { makeStyles } from "@material-ui/styles";
+import PassengerDetail from "../PassengerDetail/PassengerDetail";
 
 const seatData = [
   {
@@ -140,6 +141,7 @@ const List = ({
         </div>
       </Grid>
       <Grid item xs={12}>
+        <PassengerDetail />
         <BusSeatInput
           data={seatData}
           value={choice}
@@ -252,6 +254,6 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(0.5, 6),
     },
   },
-}));
+}), {flip: false});
 
 export default List;

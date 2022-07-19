@@ -399,7 +399,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(),
     },
   },
-}));
+}), {flip: false});
 
 OriginDestinationInput.defaultProps = {
   originPlaceholder: "مبدا",

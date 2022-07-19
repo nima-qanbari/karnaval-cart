@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   padding: {
     padding: theme.spacing(2),
   },
-}));
+}), {flip: false});
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;

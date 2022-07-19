@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   travel: {
     display: "flex",
   },
-}));
+}), {flip: false});
 
 const suggestions = [
   { label: "تبریز", id: 1 },

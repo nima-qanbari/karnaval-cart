@@ -79,6 +79,6 @@ const useStyles = makeStyles((theme) => ({
   childrenContainer: {
     padding: theme.spacing(0, 3),
   },
-}));
+}), {flip: false});
 
 export default CountInputModal;

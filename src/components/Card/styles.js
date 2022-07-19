@@ -379,5 +379,5 @@ export const useStyles = makeStyles(
       },
     };
   },
-  { index: 10 }
+  { index: 10, flip: false }
 );

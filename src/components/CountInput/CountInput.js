@@ -211,7 +211,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginTop: theme.spacing(1.5),
   },
-}));
+}),{flip: false});
 
 CountInput.defaultProps = {
   countPlaceholder: "مسافران",

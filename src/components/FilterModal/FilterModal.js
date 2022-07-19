@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     borderRadius: 0,
   },
-}));
+}), {flip: false});
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;

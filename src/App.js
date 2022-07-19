@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => {
       }
     }
   };
-});
+}, {flip: false});
 function App() {
   const classes = useStyles()
   return(

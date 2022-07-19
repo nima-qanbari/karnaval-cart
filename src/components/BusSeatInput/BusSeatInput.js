@@ -283,6 +283,6 @@ const useStyles = makeStyles((theme) => ({
     border: `2px solid ${theme.palette.grey[300]}`,
     cursor: "not-allowed",
   },
-}));
+}), {flip: false});
 
 export default BusSeatInput;
