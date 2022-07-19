@@ -36,7 +36,7 @@ const CountInputModal = ({ open, closeHandler, children }) => {
             color="inherit"
             onClick={closeHandler}
             className={classes.closeButton}
-            title="close"
+            data-testid="close"
           >
             <Close className={classes.close} />
           </IconButton>

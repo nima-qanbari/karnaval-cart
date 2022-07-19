@@ -18,7 +18,7 @@ const BusSeatInput = ({ data, value, onChange, vertical }) => {
   return (
     <div
       className={clsx(classes.container, { [classes.vertical]: vertical })}
-      title="container"
+      data-testid="container"
     >
       <div>
         <Grid container className={classes.seatContainer} alignItems="flex-end">
@@ -49,8 +49,7 @@ const BusSeatInput = ({ data, value, onChange, vertical }) => {
                             isUnavailable && classes.unavailable,
                             isActive && classes.active
                           )}
-                          title="seat"
-                          data-testid={isActive ? "active" : undefined}
+                          data-testid={`seat${isActive ? " active" : ""}`}
                           onClick={
                             isAvailable
                               ? () => onChange(item.seatNumber)

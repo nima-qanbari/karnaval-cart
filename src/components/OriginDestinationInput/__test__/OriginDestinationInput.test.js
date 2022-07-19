@@ -30,19 +30,19 @@ describe("OriginDestinationInput", () => {
         });
 
         it("should render", () => {
-          const containerDiv = screen.getByTitle("container");
+          const containerDiv = screen.getByTestId("container");
           expect(containerDiv).toBeInTheDocument();
         });
 
         it("when focus on origin input, should open popper", () => {
           focusOnInput();
-          const paper = screen.getByTitle("paper");
+          const paper = screen.getByTestId("paper");
           expect(paper).toBeInTheDocument();
         });
 
         it("when focus on destination input, should open popper", () => {
           focusOnInput("مقصد");
-          const paper = screen.getByTitle("paper");
+          const paper = screen.getByTestId("paper");
           expect(paper).toBeInTheDocument();
         });
       });
@@ -54,7 +54,7 @@ describe("OriginDestinationInput", () => {
 
         it("when focus on input, when loading should display loading", () => {
           focusOnInput();
-          const loading = screen.getByTitle("loading");
+          const loading = screen.getByTestId("loading");
           expect(loading).toBeInTheDocument();
         });
       });
@@ -75,7 +75,7 @@ describe("OriginDestinationInput", () => {
         });
         it("given origin items when focus, should display originItems", () => {
           focusOnInput();
-          const originItem = screen.getAllByTitle("originItem");
+          const originItem = screen.getAllByTestId("originItem");
           expect(originItem.length).toBeGreaterThan(0);
         });
       });
@@ -91,7 +91,7 @@ describe("OriginDestinationInput", () => {
         });
         it("when focus, should display destinationItem", () => {
           focusOnInput("مقصد");
-          const destinationItem = screen.getAllByTitle("destinationItem");
+          const destinationItem = screen.getAllByTestId("destinationItem");
           expect(destinationItem.length).toBeGreaterThan(0);
         });
       });
@@ -111,7 +111,7 @@ describe("OriginDestinationInput", () => {
           });
 
           focusOnInput();
-          const originItems = screen.getAllByTestId("id-1");
+          const originItems = screen.getAllByTestId("originItem");
           fireEvent.click(originItems[0]);
           expect(onChangeOrigin).toBeCalled();
         });
@@ -135,7 +135,7 @@ describe("OriginDestinationInput", () => {
             jest.spyOn(destinationInput, "focus");
             focusOnInput();
 
-            const originItems = screen.getAllByTestId("id-1");
+            const originItems = screen.getAllByTestId("originItem");
             fireEvent.click(originItems[0]);
 
             expect(destinationInput.focus).toHaveBeenCalled();
@@ -158,7 +158,7 @@ describe("OriginDestinationInput", () => {
 
             focusOnInput("مقصد");
 
-            const destinationItems = screen.getAllByTestId("id-2");
+            const destinationItems = screen.getAllByTestId("destinationItem");
             fireEvent.click(destinationItems[0]);
 
             expect(originInput.focus).toHaveBeenCalled();
@@ -185,7 +185,7 @@ describe("OriginDestinationInput", () => {
 
           focusOnInput();
 
-          const originItems = screen.getAllByTestId("id-1");
+          const originItems = screen.getAllByTestId("originItem");
           fireEvent.click(originItems[0]);
 
           expect(destinationInput.focus).not.toHaveBeenCalled();
@@ -209,7 +209,7 @@ describe("OriginDestinationInput", () => {
 
           focusOnInput("مقصد");
 
-          const destinationItems = screen.getAllByTestId("id-2");
+          const destinationItems = screen.getAllByTestId("destinationItem");
           fireEvent.click(destinationItems[0]);
 
           expect(originInput.focus).not.toHaveBeenCalled();
@@ -245,7 +245,7 @@ describe("OriginDestinationInput", () => {
           setup({ suggestions: [{ label: "تبریز", id: 1 }], useDialog });
           focusOnInput();
 
-          const suggestion = screen.getByTitle("suggestions");
+          const suggestion = screen.getByTestId("suggestions");
           expect(suggestion).toBeInTheDocument();
         });
 
@@ -259,7 +259,7 @@ describe("OriginDestinationInput", () => {
 
           focusOnInput();
 
-          const suggestion = screen.getByTitle("suggestions");
+          const suggestion = screen.getByTestId("suggestions");
           fireEvent.click(suggestion);
 
           expect(onChangeOrigin).toHaveBeenCalled();
@@ -275,7 +275,7 @@ describe("OriginDestinationInput", () => {
 
           focusOnInput("مقصد");
 
-          const suggestions = screen.getByTitle("suggestions");
+          const suggestions = screen.getByTestId("suggestions");
           fireEvent.click(suggestions);
 
           expect(onChangeDestination).toHaveBeenCalled();
@@ -296,7 +296,7 @@ describe("OriginDestinationInput", () => {
 
           focusOnInput("مقصد");
 
-          const routeSuggestions = screen.getByTitle("routeSuggestions");
+          const routeSuggestions = screen.getByTestId("routeSuggestions");
           expect(routeSuggestions).toBeInTheDocument();
         });
 
@@ -320,7 +320,7 @@ describe("OriginDestinationInput", () => {
           const destinationInput = screen.getByPlaceholderText("مقصد");
 
           fireEvent.focus(originInput);
-          const routeSuggestionsButton = screen.getByTitle(
+          const routeSuggestionsButton = screen.getByTestId(
             "routeSuggestionsButton"
           );
           fireEvent.click(routeSuggestionsButton);
@@ -349,7 +349,7 @@ describe("OriginDestinationInput", () => {
             onChangeOrigin: onChangeOrigin,
             onChangeDestination: onChangeDestination,
           });
-          const swapButton = screen.getByTitle("swapButton");
+          const swapButton = screen.getByTestId("swapButton");
           fireEvent.click(swapButton);
 
           const originInput = screen.getByPlaceholderText("مبدا");

@@ -51,10 +51,10 @@ const PaperModal = ({
       open={open}
       onClose={handleClose}
       TransitionComponent={Transition}
-      title="paper"
+      data-testid="paper"
     >
-      <AppBar  className={classes.appBar} color="primary">
-        <Toolbar className={classes.appBar} >
+      <AppBar className={classes.appBar} color="primary">
+        <Toolbar className={classes.appBar}>
           <Typography>{placeholder}</Typography>
           <IconButton onClick={handleClose} color="inherit">
             <Close />

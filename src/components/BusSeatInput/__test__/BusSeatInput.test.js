@@ -2,7 +2,6 @@ import { ThemeProvider } from "@material-ui/core";
 import { theme } from "../../../theme/default";
 import BusSeatInput from "../BusSeatInput";
 import { fireEvent, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 
 const setup = (props) => {
   render(
@@ -38,7 +37,7 @@ describe("BusSeatInput", () => {
           },
         ],
       });
-      const containerDiv = screen.getByTitle("container");
+      const containerDiv = screen.getByTestId("container");
       expect(containerDiv).toBeInTheDocument();
     });
 
@@ -54,7 +53,7 @@ describe("BusSeatInput", () => {
         onChange,
       });
 
-      const seat = screen.getByTitle("seat");
+      const seat = screen.getByTestId("seat");
       fireEvent.click(seat);
       expect(onChange).toBeCalled();
     });
@@ -70,7 +69,7 @@ describe("BusSeatInput", () => {
         onChange,
       });
 
-      const seat = screen.getByTitle("seat");
+      const seat = screen.getByTestId("seat");
       fireEvent.click(seat);
       expect(onChange).not.toBeCalled();
     });
@@ -86,7 +85,7 @@ describe("BusSeatInput", () => {
         onChange,
       });
 
-      const seat = screen.getByTitle("seat");
+      const seat = screen.getByTestId("seat");
       fireEvent.click(seat);
       expect(onChange).not.toBeCalled();
     });
@@ -104,7 +103,7 @@ describe("BusSeatInput", () => {
         value: 1,
       });
 
-      const seat = screen.queryByTestId("active");
+      const seat = screen.queryByTestId("seat active");
       expect(seat).not.toBeNull();
     });
   }

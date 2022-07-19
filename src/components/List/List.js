@@ -73,8 +73,6 @@ const seatData = [
   },
 ];
 
-
-
 const List = ({
   data,
   sidebar,
@@ -164,8 +162,8 @@ const List = ({
               <TicketCard
                 key={index}
                 logo={require("../../image/download.png")}
-                title={item.title}
-                subtitle={item.subtitle}
+                data-testid={item.title}
+                subdata-testid={item.subtitle}
                 departure={item.departure}
                 arrival={item.arrival}
                 origin={item.origin}

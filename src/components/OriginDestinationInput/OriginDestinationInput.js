@@ -3,7 +3,7 @@ import PaperModal from "../PaperModal/PaperModal";
 
 import SyncAltIcon from "@material-ui/icons/SyncAlt";
 
-import { makeStyles } from "@material-ui/styles"; 
+import { makeStyles } from "@material-ui/styles";
 import {
   Button,
   Grid,
@@ -40,7 +40,7 @@ const OriginDestinationInput = ({
   const containerRef = useRef(null);
   const paperRef = useRef(null);
   const originRef = useRef(null);
-  
+
   const destinationRef = useRef(null);
 
   const classes = useStyles();
@@ -112,7 +112,7 @@ const OriginDestinationInput = ({
     setDestinationInput(originValue?.label || "");
   };
   const loadingJSX = (
-    <div title={"loading"}>
+    <div data-testid={"loading"}>
       <MenuItem>
         <Skeleton width={200} height={20}></Skeleton>
       </MenuItem>
@@ -134,8 +134,8 @@ const OriginDestinationInput = ({
           <MenuItem
             onClick={() => onClickOriginItem(item)}
             key={item.id}
-            title="originItem"
-            data-testid={"id-1"}
+            data-testid="originItem"
+            
           >
             {item.label}
           </MenuItem>
@@ -147,8 +147,8 @@ const OriginDestinationInput = ({
     ? destinationItems.map((item) => {
         return (
           <MenuItem
-            title="destinationItem"
-            data-testid={"id-2"}
+            data-testid="destinationItem"
+            
             onClick={() => onClickDestinationItem(item)}
             key={item.id}
           >
@@ -172,7 +172,7 @@ const OriginDestinationInput = ({
                       ? onClickOriginItem(item)
                       : onClickDestinationItem(item)
                   }
-                  title={"suggestions"}
+                  data-testid={"suggestions"}
                   key={item.id}
                   className={classes.firstItems}
                 >
@@ -190,10 +190,10 @@ const OriginDestinationInput = ({
               return (
                 <div
                   key={`${item.origin.id}-${item.destination.id}`}
-                  title="routeSuggestions"
+                  data-testid="routeSuggestions"
                 >
                   <Button
-                    title="routeSuggestionsButton"
+                    data-testid="routeSuggestionsButton"
                     size="small"
                     className={classes.btn}
                     onClick={() => onClickOriginDestination(item)}
@@ -209,7 +209,11 @@ const OriginDestinationInput = ({
   );
 
   return (
-    <div className={classes.container} ref={containerRef} title="container">
+    <div
+      className={classes.container}
+      ref={containerRef}
+      data-testid="container"
+    >
       <div className={classes.firstInputContainer}>
         <TextField
           type="text"
@@ -228,7 +232,7 @@ const OriginDestinationInput = ({
         />
         <div
           onClick={swapHandler}
-          title="swapButton"
+          data-testid="swapButton"
           className={classes.circle}
         >
           <SyncAltIcon />
@@ -287,7 +291,7 @@ const OriginDestinationInput = ({
           style={{ zIndex: 1000 }}
         >
           <Paper
-            title="paper"
+            data-testid="paper"
             ref={paperRef}
             className={classes.paper}
             style={{ width: containerRef.current?.offsetWidth }}

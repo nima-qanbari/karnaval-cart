@@ -30,14 +30,14 @@ describe("CountInput", () => {
     describe(`given useDialog: ${useDialog}`, () => {
       test("should render", () => {
         setup();
-        const container = screen.getByTitle("container");
+        const container = screen.getByTestId("container");
         expect(container).toBeInTheDocument();
       });
 
       test("when focus on counter input, should open popper", () => {
         setup({ useDialog });
         focusOnInput();
-        const popper = screen.getByTitle("popper");
+        const popper = screen.getByTestId("popper");
         expect(popper).toBeInTheDocument();
       });
 
@@ -45,7 +45,7 @@ describe("CountInput", () => {
         const onChange = jest.fn();
         setup({ useDialog, onChange, value: 5 });
         focusOnInput();
-        const plusButton = screen.getByTitle("plusButton");
+        const plusButton = screen.getByTestId("plusButton");
         fireEvent.click(plusButton);
         expect(onChange).toHaveBeenCalledWith(6);
       });
@@ -54,7 +54,7 @@ describe("CountInput", () => {
         const onChange = jest.fn();
         setup({ useDialog, onChange, value: 5 });
         focusOnInput();
-        const minusButton = screen.getByTitle("minusButton");
+        const minusButton = screen.getByTestId("minusButton");
         fireEvent.click(minusButton);
         expect(onChange).toHaveBeenCalledWith(4);
       });
@@ -62,7 +62,7 @@ describe("CountInput", () => {
       test("when focus on input,when click on confirm button, should close popper or dialog", async () => {
         setup({ useDialog });
         focusOnInput();
-        const confirmButton = screen.getByTitle("confirm");
+        const confirmButton = screen.getByTestId("confirm");
         fireEvent.click(confirmButton);
         await sleep(300);
         const popper = screen.queryByTitle("popper");
@@ -74,7 +74,7 @@ describe("CountInput", () => {
     test("when useDialog is true, when focus input,when click on close button should close dialog", async () => {
       setup({ useDialog: true });
       focusOnInput();
-      const closeButton = screen.getByTitle("close");
+      const closeButton = screen.getByTestId("close");
       fireEvent.click(closeButton);
       await sleep(300);
       const popper = screen.queryByTitle("popper");
@@ -86,7 +86,7 @@ describe("CountInput", () => {
     const onChange = jest.fn();
     setup({ max: 5, value: 5, onChange });
     focusOnInput();
-    const plusButton = screen.getByTitle("plusButton");
+    const plusButton = screen.getByTestId("plusButton");
     fireEvent.click(plusButton);
     expect(onChange).not.toHaveBeenCalled();
   });
@@ -95,7 +95,7 @@ describe("CountInput", () => {
     const onChange = jest.fn();
     setup({ max: 0, value: 0, onChange });
     focusOnInput();
-    const minusButton = screen.getByTitle("minusButton");
+    const minusButton = screen.getByTestId("minusButton");
     fireEvent.click(minusButton);
     expect(onChange).not.toHaveBeenCalled();
   });

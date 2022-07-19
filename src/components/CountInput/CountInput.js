@@ -48,7 +48,7 @@ const CountInput = ({
   };
 
   const counterJSX = (
-    <div className={classes.paper} title="popper">
+    <div className={classes.paper} data-testid="popper">
       <div className={classes.btnContainer}>
         <Typography className={classes.passengers}>مسافران</Typography>
         <div className={classes.plusMinusContainer}>
@@ -56,7 +56,7 @@ const CountInput = ({
             size="medium"
             className={classes.plusButton}
             onClick={plusCounter}
-            title="plusButton"
+            data-testid="plusButton"
           >
             <AddIcon className={classes.btnSize} color="action" />
           </IconButton>
@@ -65,7 +65,7 @@ const CountInput = ({
             size="medium"
             className={classes.minusButton}
             onClick={minusCounter}
-            title="minusButton"
+            data-testid="minusButton"
           >
             <RemoveIcon className={classes.btnSize} color="action" />
           </IconButton>
@@ -77,7 +77,7 @@ const CountInput = ({
           color="primary"
           variant="outlined"
           onClick={closeHandler}
-          title="confirm"
+          data-testid="confirm"
         >
           تایید
         </Button>
@@ -86,7 +86,11 @@ const CountInput = ({
   );
 
   const JSX = (
-    <div className={classes.container} ref={containerRef} title="container">
+    <div
+      className={classes.container}
+      ref={containerRef}
+      data-testid="container"
+    >
       <TextField
         variant="outlined"
         InputProps={{
