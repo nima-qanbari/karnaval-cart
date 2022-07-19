@@ -16,7 +16,10 @@ const BusSeatInput = ({ data, value, onChange, vertical }) => {
   const classes = useStyles();
 
   return (
-    <div className={clsx(classes.container, { [classes.vertical]: vertical })}>
+    <div
+      className={clsx(classes.container, { [classes.vertical]: vertical })}
+      title="container"
+    >
       <div>
         <Grid container className={classes.seatContainer} alignItems="flex-end">
           <Grid item xs={vertical ? 12 : 1} className={classes.driverContainer}>
@@ -46,6 +49,8 @@ const BusSeatInput = ({ data, value, onChange, vertical }) => {
                             isUnavailable && classes.unavailable,
                             isActive && classes.active
                           )}
+                          title="seat"
+                          data-testid={isActive ? "active" : undefined}
                           onClick={
                             isAvailable
                               ? () => onChange(item.seatNumber)
@@ -98,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
       "& $driver": {
         transform: "rotate(0deg) translateY(0)",
         width: 150,
-        marginRight:"auto" ,
+        marginRight: "auto",
       },
     },
   },
