@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, Select } from "@material-ui/core";
+import { FormControl, FormHelperText, InputLabel, Select } from "@material-ui/core";
 import React from "react";
 
 const SelectField = ({
@@ -7,6 +7,8 @@ const SelectField = ({
   fullWidth,
   label,
   margin,
+  helperText,
+  error,
   ...props
 }) => {
   return (
@@ -15,6 +17,7 @@ const SelectField = ({
       margin={margin}
       fullWidth={fullWidth}
       variant={variant}
+      error={error}
     >
       <InputLabel>{label}</InputLabel>
       <Select
@@ -22,6 +25,9 @@ const SelectField = ({
         label={label}
         MenuProps={{ getContentAnchorEl: null}}
       />
+      {helperText && (
+        <FormHelperText error={error}>{helperText}</FormHelperText>
+      )}
     </FormControl>
   );
 };

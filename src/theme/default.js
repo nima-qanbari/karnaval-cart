@@ -1,4 +1,5 @@
 import { createTheme } from "@material-ui/core";
+import { orange } from "@material-ui/core/colors";
 import "../font/dana.css";
 
 let theme = createTheme({
@@ -18,6 +19,12 @@ let theme = createTheme({
       light: "#ff6161",
       main: "#ff6161",
       dark: "#ff6161",
+      contrastText: "#fff",
+    },
+    error: {
+      light: orange[300],
+      main: orange[500],
+      dark: orange[700],
       contrastText: "#fff",
     },
   },

@@ -108,8 +108,8 @@ const List = ({
               <TicketCard
                 key={index}
                 logo={require("../../image/download.png")}
-                data-testid={item.title}
-                subdata-testid={item.subtitle}
+                title={item.title}
+                subtitle={item.subtitle}
                 departure={item.departure}
                 arrival={item.arrival}
                 origin={item.origin}

@@ -13,6 +13,10 @@ import BusSeatInput from "../BusSeatInput/BusSeatInput";
 
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useEffect } from "react";
+
+import { nationalCode, required } from "../Validate/Validate";
+import Field from "../Field/Field";
 
 const seatData = [
   {
@@ -76,6 +80,7 @@ const PassengerDetail = ({ passenger }) => {
     const { value, name } = e.target;
     setData({ ...data, [name]: value });
   };
+
   const classes = useStyles();
   return (
     <Paper className={classes.container} data-testid="container">
@@ -103,10 +108,12 @@ const PassengerDetail = ({ passenger }) => {
           <Grid item>
             <Grid container spacing={2}>
               <Grid item xs={12} md={3}>
-                <TextField
-                    value={data.name}
+                <Field
+                  component={TextField}
+                  value={data.name}
                   name="name"
                   id="name"
+                  validate={[required("نام")]}
                   fullWidth
                   label="نام"
                   variant="outlined"
@@ -114,9 +121,11 @@ const PassengerDetail = ({ passenger }) => {
                 />
               </Grid>
               <Grid item xs={12} md={3}>
-                <TextField
+                <Field
+                  component={TextField}
                   value={data.family}
                   name="family"
+                  validate={[required("نام خانوادگی")]}
                   fullWidth
                   label="نام خانوادگی"
                   variant="outlined"
@@ -124,9 +133,11 @@ const PassengerDetail = ({ passenger }) => {
                 />
               </Grid>
               <Grid item xs={12} md={3}>
-                <SelectField
+                <Field
+                  component={SelectField}
                   fullWidth
                   label="جنسیت"
+                  validate={[required("جنسیت")]}
                   variant="outlined"
                   value={data.gender}
                   name="gender"
@@ -142,10 +153,12 @@ const PassengerDetail = ({ passenger }) => {
                       </MenuItem>
                     );
                   })}
-                </SelectField>
+                </Field>
               </Grid>
               <Grid item xs={12} md={3}>
-                <TextField
+                <Field
+                  component={TextField}
+                  validate={[required("کد ملی"), nationalCode]}
                   fullWidth
                   label="کد ملی"
                   variant="outlined"
@@ -157,12 +170,12 @@ const PassengerDetail = ({ passenger }) => {
             </Grid>
           </Grid>
           <Grid item>
-          <BusSeatInput
-          data={seatData}
-          value={choice}
-          onChange={setChoice}
-          vertical={isMobile}
-        />
+            <BusSeatInput
+              data={seatData}
+              value={choice}
+              onChange={setChoice}
+              vertical={isMobile}
+            />
           </Grid>
         </Grid>
       </div>

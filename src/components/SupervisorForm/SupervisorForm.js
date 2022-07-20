@@ -9,9 +9,11 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import { makeStyles } from "@material-ui/styles";
+
+import { email, phone, required } from "../Validate/Validate";
+import Field from "../Field/Field";
 
 const SupervisorForm = ({
   text,
@@ -25,7 +27,7 @@ const SupervisorForm = ({
     email: "",
   });
 
-const[checked, setChecked] = useState(true)
+  const [checked, setChecked] = useState(true);
 
   const classes = useStyles();
 
@@ -34,9 +36,9 @@ const[checked, setChecked] = useState(true)
     setData({ ...data, [name]: value });
   };
 
-  const checkboxChange = () =>  {
-    setChecked(!checked)
-  }
+  const checkboxChange = () => {
+    setChecked(!checked);
+  };
 
   return (
     <Paper className={classes.paper}>
@@ -47,8 +49,10 @@ const[checked, setChecked] = useState(true)
           <Typography className={classes.notice}>{changeDetail}</Typography>
         </Grid>
         <Grid item md={7} xs={12} className={classes.inputContainer}>
-          <TextField
+          <Field
+            component={TextField}
             fullWidth
+            validate={[required("موبایل"), phone("موبایل")]}
             className={classes.mobileInput}
             label="موبایل"
             variant="outlined"
@@ -57,9 +61,11 @@ const[checked, setChecked] = useState(true)
             onChange={onChangeHandler}
           />
 
-          <TextField
+          <Field
+            component={TextField}
+            validate={[email]}
             fullWidth
-            label="کد ملی"
+            label="ایمیل (اختیاری)"
             variant="outlined"
             value={data.email}
             name="email"
@@ -69,7 +75,18 @@ const[checked, setChecked] = useState(true)
         <Grid item xs={12} className={classes.checkboxContainer}>
           <FormControlLabel
             control={<Checkbox disableRipple />}
-            label={<><a href="/#" className={classes.link}>{rules1}</a> و <a href="/#" className={classes.link}>{rules2}</a> را پذیرفته‌ام و تایید می‌کنم.</>}
+            label={
+              <>
+                <a href="/#" className={classes.link}>
+                  {rules1}
+                </a>{" "}
+                و{" "}
+                <a href="/#" className={classes.link}>
+                  {rules2}
+                </a>{" "}
+                را پذیرفته‌ام و تایید می‌کنم.
+              </>
+            }
             className={classes.checkbox}
             checked={checked}
             onChange={checkboxChange}
@@ -80,11 +97,11 @@ const[checked, setChecked] = useState(true)
             className={classes.btn}
             variant="contained"
             color="primary"
-            
             size="large"
             disabled={!checked}
           >
-            ادامه فرآیند خرید<KeyboardBackspaceIcon className={classes.icon}/>
+            ادامه فرآیند خرید
+            <KeyboardBackspaceIcon className={classes.icon} />
           </Button>
         </Grid>
       </Grid>
@@ -136,7 +153,7 @@ const useStyles = makeStyles(
 
       [theme.breakpoints.down("sm")]: {
         flexDirection: "column",
-        alignItems: "unset"
+        alignItems: "unset",
       },
     },
 
@@ -146,7 +163,7 @@ const useStyles = makeStyles(
     },
 
     link: {
-        color: theme.palette.primary.main
+      color: theme.palette.primary.main,
     },
 
     btn: {
@@ -154,13 +171,13 @@ const useStyles = makeStyles(
       fontWeight: "500",
 
       [theme.breakpoints.down("sm")]: {
-        marginTop: theme.spacing(2)
+        marginTop: theme.spacing(2),
       },
     },
 
     icon: {
-        marginRight: theme.spacing(.5)
-    }
+      marginRight: theme.spacing(0.5),
+    },
   }),
   { flip: false }
 );
