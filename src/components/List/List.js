@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 
 import { Button, Grid, Typography } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+
+//supervisorForm
+import SupervisorForm from "../SupervisorForm/SupervisorForm";
 
 //Toolbar
 import Toolbar from "../Toolbar/Toolbar";
 
-//sort dekstop
+//sort desktop
 import SortDesktop from "../SortDesktop/SortDesktop";
 
 //modal
 import FilterModal from "../FilterModal/FilterModal";
 import SortModal from "../SortModal/SortModal";
-
-//BusSeatInput
-import BusSeatInput from "../BusSeatInput/BusSeatInput";
 
 //cart
 import TicketCard from "../Card/TicketCard";
@@ -28,51 +26,6 @@ import ImportExportIcon from "@material-ui/icons/ImportExport";
 import { makeStyles } from "@material-ui/styles";
 import PassengerDetail from "../PassengerDetail/PassengerDetail";
 
-const seatData = [
-  {
-    seats: [
-      { seatNumber: 1, status: "male" },
-      { seatNumber: 4, status: "available" },
-      { seatNumber: 7, status: "available" },
-      { seatNumber: 10, status: "available" },
-      null,
-      null,
-      { seatNumber: 15, status: "unavailable" },
-      { seatNumber: 18, status: "available" },
-      { seatNumber: 21, status: "available" },
-      { seatNumber: 24, status: "available" },
-    ],
-  },
-  {
-    seats: [
-      { seatNumber: 2, status: "male" },
-      { seatNumber: 5, status: "available" },
-      { seatNumber: 8, status: "available" },
-      { seatNumber: 11, status: "available" },
-      null,
-      null,
-      { seatNumber: 16, status: "available" },
-      { seatNumber: 19, status: "available" },
-      { seatNumber: 22, status: "female" },
-      { seatNumber: 25, status: "available" },
-    ],
-  },
-  { seats: [null, null, null, null, null, null, null, null, null, null] },
-  {
-    seats: [
-      { seatNumber: 3, status: "male" },
-      { seatNumber: 6, status: "available" },
-      { seatNumber: 9, status: "available" },
-      { seatNumber: 12, status: "available" },
-      { seatNumber: 13, status: "available" },
-      { seatNumber: 14, status: "available" },
-      { seatNumber: 17, status: "female" },
-      { seatNumber: 20, status: "available" },
-      { seatNumber: 23, status: "available" },
-      { seatNumber: 26, status: "available" },
-    ],
-  },
-];
 
 const List = ({
   data,
@@ -89,10 +42,6 @@ const List = ({
   const classes = useStyles();
   const [openFilter, setOpenFilter] = useState(false);
   const [openSort, setOpenSort] = useState(false);
-  const [choice, setChoice] = useState(null);
-
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const openFilterHandler = () => {
     setOpenFilter(true);
@@ -142,12 +91,7 @@ const List = ({
       </Grid>
       <Grid item xs={12}>
         <PassengerDetail />
-        <BusSeatInput
-          data={seatData}
-          value={choice}
-          onChange={setChoice}
-          vertical={isMobile}
-        />
+        <SupervisorForm />
       </Grid>
       <Grid item md={3} className={classes.none}>
         {sidebarJSX}

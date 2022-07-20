@@ -9,14 +9,68 @@ import {
   Typography,
 } from "@material-ui/core";
 import SelectField from "../SelectField/SelectField";
+import BusSeatInput from "../BusSeatInput/BusSeatInput";
+
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+
+const seatData = [
+  {
+    seats: [
+      { seatNumber: 1, status: "male" },
+      { seatNumber: 4, status: "available" },
+      { seatNumber: 7, status: "available" },
+      { seatNumber: 10, status: "available" },
+      null,
+      null,
+      { seatNumber: 15, status: "unavailable" },
+      { seatNumber: 18, status: "available" },
+      { seatNumber: 21, status: "available" },
+      { seatNumber: 24, status: "available" },
+    ],
+  },
+  {
+    seats: [
+      { seatNumber: 2, status: "male" },
+      { seatNumber: 5, status: "available" },
+      { seatNumber: 8, status: "available" },
+      { seatNumber: 11, status: "available" },
+      null,
+      null,
+      { seatNumber: 16, status: "available" },
+      { seatNumber: 19, status: "available" },
+      { seatNumber: 22, status: "female" },
+      { seatNumber: 25, status: "available" },
+    ],
+  },
+  { seats: [null, null, null, null, null, null, null, null, null, null] },
+  {
+    seats: [
+      { seatNumber: 3, status: "male" },
+      { seatNumber: 6, status: "available" },
+      { seatNumber: 9, status: "available" },
+      { seatNumber: 12, status: "available" },
+      { seatNumber: 13, status: "available" },
+      { seatNumber: 14, status: "available" },
+      { seatNumber: 17, status: "female" },
+      { seatNumber: 20, status: "available" },
+      { seatNumber: 23, status: "available" },
+      { seatNumber: 26, status: "available" },
+    ],
+  },
+];
 
 const PassengerDetail = ({ passenger }) => {
+  const [choice, setChoice] = useState(null);
   const [data, setData] = useState({
     name: "",
     family: "",
     nationalCode: "",
     gender: "",
   });
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const onChangeHandler = (e) => {
     const { value, name } = e.target;
@@ -101,6 +155,14 @@ const PassengerDetail = ({ passenger }) => {
                 />
               </Grid>
             </Grid>
+          </Grid>
+          <Grid item>
+          <BusSeatInput
+          data={seatData}
+          value={choice}
+          onChange={setChoice}
+          vertical={isMobile}
+        />
           </Grid>
         </Grid>
       </div>

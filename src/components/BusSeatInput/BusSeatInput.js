@@ -95,194 +95,198 @@ const BusSeatInput = ({ data, value, onChange, vertical }) => {
   );
 };
 
-const useStyles = makeStyles((theme) => ({
-  vertical: {},
-  container: {
-    "&$vertical": {
-      "& $driver": {
-        transform: "rotate(0deg) translateY(0)",
-        width: 150,
-        marginRight: "auto",
+const useStyles = makeStyles(
+  (theme) => ({
+    vertical: {},
+    container: {
+      marginTop: theme.spacing(2),
+      "&$vertical": {
+        "& $driver": {
+          transform: "rotate(0deg) translateY(0)",
+          width: 150,
+          marginRight: "auto",
+        },
       },
     },
-  },
-  seatContainer: {
-    background: theme.palette.background.paper,
-    borderRadius: theme.shape.borderRadius,
-    border: `3px solid ${theme.palette.grey[400]}`,
-    padding: theme.spacing(2),
-    direction: "ltr",
+    seatContainer: {
+      background: theme.palette.background.paper,
+      borderRadius: theme.shape.borderRadius,
+      border: `3px solid ${theme.palette.grey[400]}`,
+      padding: theme.spacing(2),
+      direction: "ltr",
 
-    [theme.breakpoints.down("sm")]: {
-      direction: "rtl",
+      [theme.breakpoints.down("sm")]: {
+        direction: "rtl",
+      },
     },
-  },
 
-  row: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
+    row: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
 
-  null: {
-    width: 25,
-    height: 25,
-    padding: theme.spacing(1.9),
-  },
+    null: {
+      width: 25,
+      height: 25,
+      padding: theme.spacing(1.9),
+    },
 
-  seat: {
-    margin: theme.spacing(1, 0),
-    width: 25,
-    height: 25,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: 13,
-    borderRadius: theme.shape.borderRadius,
-    border: `2px solid ${theme.palette.primary.main}`,
-    padding: theme.spacing(1.9),
-    cursor: "pointer",
-    userSelect: "none",
-  },
+    seat: {
+      margin: theme.spacing(1, 0),
+      width: 25,
+      height: 25,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: 13,
+      borderRadius: theme.shape.borderRadius,
+      border: `2px solid ${theme.palette.primary.main}`,
+      padding: theme.spacing(1.9),
+      cursor: "pointer",
+      userSelect: "none",
+    },
 
-  active: {
-    background: theme.palette.primary.main,
-    color: theme.palette.background.paper,
-  },
+    active: {
+      background: theme.palette.primary.main,
+      color: theme.palette.background.paper,
+    },
 
-  driverContainer: {
-    width: "100%",
-    height: "100%",
-  },
-  driver: {
-    width: "90%",
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: theme.shape.borderRadius,
-    padding: theme.spacing(1, 0),
-    fontSize: 12,
-    fontWeight: 500,
-    background: theme.palette.grey[200],
-    border: `2px solid ${theme.palette.grey[300]}`,
-    transform: "rotate(270deg) translateY(-25px)",
-    userSelect: "none",
-    marginBottom: 30,
-  },
-
-  detailsContainer: {
-    marginTop: theme.spacing(2),
-  },
-
-  circleContainer: {
-    display: "flex",
-    alignItems: "center",
-
-    "& > p": {
+    driverContainer: {
+      width: "100%",
+      height: "100%",
+    },
+    driver: {
+      width: "90%",
+      height: "100%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: theme.shape.borderRadius,
+      padding: theme.spacing(1, 0),
       fontSize: 12,
       fontWeight: 500,
-      marginRight: theme.spacing(),
+      background: theme.palette.grey[200],
+      border: `2px solid ${theme.palette.grey[300]}`,
+      transform: "rotate(270deg) translateY(-25px)",
+      userSelect: "none",
+      marginBottom: 30,
     },
-  },
 
-  selectable: {
-    cursor: "pointer",
-    padding: theme.spacing(1.9),
-    width: 25,
-    height: 25,
-    borderRadius: theme.shape.borderRadius,
-    border: `2px solid ${theme.palette.primary.main}`,
-
-    [theme.breakpoints.down("sm")]: {
-      padding: theme.spacing(1.5),
-      width: 20,
-      height: 20,
+    detailsContainer: {
+      marginTop: theme.spacing(2),
     },
-  },
 
-  myChoice: {
-    cursor: "pointer",
-    padding: theme.spacing(1.9),
-    width: 25,
-    height: 25,
-    borderRadius: theme.shape.borderRadius,
-    border: `2px solid ${theme.palette.primary.main}`,
-    background: theme.palette.primary.main,
+    circleContainer: {
+      display: "flex",
+      alignItems: "center",
 
-    [theme.breakpoints.down("sm")]: {
-      padding: theme.spacing(1.5),
-      width: 20,
-      height: 20,
-      margin: theme.spacing(2, 0),
+      "& > p": {
+        fontSize: 12,
+        fontWeight: 500,
+        marginRight: theme.spacing(),
+      },
     },
-  },
 
-  MrSelect: {
-    padding: theme.spacing(1.9),
-    cursor: "not-allowed",
-    width: 25,
-    height: 25,
-    borderRadius: theme.shape.borderRadius,
-    border: `2px solid ${theme.palette.grey[300]}`,
-    background: BLUE[50],
-    [theme.breakpoints.down("sm")]: {
-      padding: theme.spacing(1.5),
-      width: 20,
-      height: 20,
+    selectable: {
+      cursor: "pointer",
+      padding: theme.spacing(1.9),
+      width: 25,
+      height: 25,
+      borderRadius: theme.shape.borderRadius,
+      border: `2px solid ${theme.palette.primary.main}`,
+
+      [theme.breakpoints.down("sm")]: {
+        padding: theme.spacing(1.5),
+        width: 20,
+        height: 20,
+      },
     },
-  },
 
-  MissSelect: {
-    padding: theme.spacing(1.9),
-    cursor: "not-allowed",
-    width: 25,
-    height: 25,
-    borderRadius: theme.shape.borderRadius,
-    background: RED[50],
-    border: `2px solid ${theme.palette.grey[300]}`,
+    myChoice: {
+      cursor: "pointer",
+      padding: theme.spacing(1.9),
+      width: 25,
+      height: 25,
+      borderRadius: theme.shape.borderRadius,
+      border: `2px solid ${theme.palette.primary.main}`,
+      background: theme.palette.primary.main,
 
-    [theme.breakpoints.down("sm")]: {
-      margin: theme.spacing(2, 0),
-      padding: theme.spacing(1.5),
-      width: 20,
-      height: 20,
+      [theme.breakpoints.down("sm")]: {
+        padding: theme.spacing(1.5),
+        width: 20,
+        height: 20,
+        margin: theme.spacing(2, 0),
+      },
     },
-  },
 
-  disable: {
-    padding: theme.spacing(1.9),
-    cursor: "not-allowed",
-    width: 25,
-    height: 25,
-    borderRadius: theme.shape.borderRadius,
-    background: theme.palette.action.disabledBackground,
-    border: `2px solid ${theme.palette.grey[300]}`,
-
-    [theme.breakpoints.down("sm")]: {
-      padding: theme.spacing(1.5),
-      width: 20,
-      height: 20,
+    MrSelect: {
+      padding: theme.spacing(1.9),
+      cursor: "not-allowed",
+      width: 25,
+      height: 25,
+      borderRadius: theme.shape.borderRadius,
+      border: `2px solid ${theme.palette.grey[300]}`,
+      background: BLUE[50],
+      [theme.breakpoints.down("sm")]: {
+        padding: theme.spacing(1.5),
+        width: 20,
+        height: 20,
+      },
     },
-  },
 
-  male: {
-    background: BLUE[50],
-    border: `2px solid ${theme.palette.grey[300]}`,
-    cursor: "not-allowed",
-  },
+    MissSelect: {
+      padding: theme.spacing(1.9),
+      cursor: "not-allowed",
+      width: 25,
+      height: 25,
+      borderRadius: theme.shape.borderRadius,
+      background: RED[50],
+      border: `2px solid ${theme.palette.grey[300]}`,
 
-  female: {
-    background: RED[50],
-    border: `2px solid ${theme.palette.grey[300]}`,
-    cursor: "not-allowed",
-  },
+      [theme.breakpoints.down("sm")]: {
+        margin: theme.spacing(2, 0),
+        padding: theme.spacing(1.5),
+        width: 20,
+        height: 20,
+      },
+    },
 
-  unavailable: {
-    background: theme.palette.action.disabledBackground,
-    border: `2px solid ${theme.palette.grey[300]}`,
-    cursor: "not-allowed",
-  },
-}), {flip: false});
+    disable: {
+      padding: theme.spacing(1.9),
+      cursor: "not-allowed",
+      width: 25,
+      height: 25,
+      borderRadius: theme.shape.borderRadius,
+      background: theme.palette.action.disabledBackground,
+      border: `2px solid ${theme.palette.grey[300]}`,
+
+      [theme.breakpoints.down("sm")]: {
+        padding: theme.spacing(1.5),
+        width: 20,
+        height: 20,
+      },
+    },
+
+    male: {
+      background: BLUE[50],
+      border: `2px solid ${theme.palette.grey[300]}`,
+      cursor: "not-allowed",
+    },
+
+    female: {
+      background: RED[50],
+      border: `2px solid ${theme.palette.grey[300]}`,
+      cursor: "not-allowed",
+    },
+
+    unavailable: {
+      background: theme.palette.action.disabledBackground,
+      border: `2px solid ${theme.palette.grey[300]}`,
+      cursor: "not-allowed",
+    },
+  }),
+  { flip: false }
+);
 
 export default BusSeatInput;
