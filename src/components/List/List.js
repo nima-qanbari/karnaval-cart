@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { Button, Grid, Typography } from "@material-ui/core";
+import Form from "../../Context/FormContext";
 
 //supervisorForm
 import SupervisorForm from "../SupervisorForm/SupervisorForm";
@@ -25,7 +26,6 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import ImportExportIcon from "@material-ui/icons/ImportExport";
 import { makeStyles } from "@material-ui/styles";
 import PassengerDetail from "../PassengerDetail/PassengerDetail";
-
 
 const List = ({
   data,
@@ -90,8 +90,10 @@ const List = ({
         </div>
       </Grid>
       <Grid item xs={12}>
-        <PassengerDetail />
-        <SupervisorForm />
+        <Form initialValues={{mobile:"09911365952"}}>
+          <PassengerDetail />
+          <SupervisorForm />
+        </Form>
       </Grid>
       <Grid item md={3} className={classes.none}>
         {sidebarJSX}
@@ -140,64 +142,67 @@ const List = ({
   );
 };
 
-const useStyles = makeStyles((theme) => ({
-  paddingContainer: {
-    padding: theme.spacing(),
-  },
-  none: {
-    [theme.breakpoints.down("sm")]: {
+const useStyles = makeStyles(
+  (theme) => ({
+    paddingContainer: {
+      padding: theme.spacing(),
+    },
+    none: {
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+      },
+    },
+
+    alignment: {
+      display: "flex",
+      alignItems: "center",
+      fontSize: 13,
+      fontWeight: 500,
+      cursor: "pointer",
+
+      "& svg": {
+        marginLeft: theme.spacing(0.7),
+        color: theme.palette.text.secondary,
+        fontSize: 20,
+        fontWeight: "bold",
+      },
+    },
+
+    mobileFilter: {
       display: "none",
+      borderRadius: theme.shape.borderRadius,
+      background: theme.palette.background.paper,
+
+      "& p": {
+        display: "flex",
+        justifyContent: "center",
+        width: "48%",
+        padding: theme.spacing(2, 0),
+      },
+      [theme.breakpoints.down("sm")]: {
+        display: "flex",
+        justifyContent: "space-around",
+      },
     },
-  },
 
-  alignment: {
-    display: "flex",
-    alignItems: "center",
-    fontSize: 13,
-    fontWeight: 500,
-    cursor: "pointer",
-
-    "& svg": {
-      marginLeft: theme.spacing(0.7),
-      color: theme.palette.text.secondary,
-      fontSize: 20,
-      fontWeight: "bold",
+    items: {
+      "& > :not(:last-child)": {
+        marginBottom: theme.spacing(2),
+      },
     },
-  },
 
-  mobileFilter: {
-    display: "none",
-    borderRadius: theme.shape.borderRadius,
-    background: theme.palette.background.paper,
+    hasMoreBtn: {
+      textAlign: "center",
+      margin: theme.spacing(2, 0, 0),
 
-    "& p": {
-      display: "flex",
-      justifyContent: "center",
-      width: "48%",
-      padding: theme.spacing(2, 0),
+      "& > button": {
+        fontSize: 20,
+        fontWeight: "bold",
+        padding: theme.spacing(0.5, 6),
+      },
     },
-    [theme.breakpoints.down("sm")]: {
-      display: "flex",
-      justifyContent: "space-around",
-    },
-  },
-
-  items: {
-    "& > :not(:last-child)": {
-      marginBottom: theme.spacing(2),
-    },
-  },
-
-  hasMoreBtn: {
-    textAlign: "center",
-    margin: theme.spacing(2, 0, 0),
-
-    "& > button": {
-      fontSize: 20,
-      fontWeight: "bold",
-      padding: theme.spacing(0.5, 6),
-    },
-  },
-}), {flip: false});
+  }),
+  { flip: false }
+);
 
 export default List;

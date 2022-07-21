@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/styles";
 import {
   Button,
@@ -17,6 +17,7 @@ import { useEffect } from "react";
 
 import { nationalCode, required } from "../Validate/Validate";
 import Field from "../Field/Field";
+
 
 const seatData = [
   {
@@ -66,20 +67,8 @@ const seatData = [
 
 const PassengerDetail = ({ passenger }) => {
   const [choice, setChoice] = useState(null);
-  const [data, setData] = useState({
-    name: "",
-    family: "",
-    nationalCode: "",
-    gender: "",
-  });
-
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const onChangeHandler = (e) => {
-    const { value, name } = e.target;
-    setData({ ...data, [name]: value });
-  };
 
   const classes = useStyles();
   return (
@@ -110,26 +99,22 @@ const PassengerDetail = ({ passenger }) => {
               <Grid item xs={12} md={3}>
                 <Field
                   component={TextField}
-                  value={data.name}
                   name="name"
                   id="name"
                   validate={[required("نام")]}
                   fullWidth
                   label="نام"
                   variant="outlined"
-                  onChange={onChangeHandler}
                 />
               </Grid>
               <Grid item xs={12} md={3}>
                 <Field
                   component={TextField}
-                  value={data.family}
                   name="family"
                   validate={[required("نام خانوادگی")]}
                   fullWidth
                   label="نام خانوادگی"
                   variant="outlined"
-                  onChange={onChangeHandler}
                 />
               </Grid>
               <Grid item xs={12} md={3}>
@@ -139,9 +124,7 @@ const PassengerDetail = ({ passenger }) => {
                   label="جنسیت"
                   validate={[required("جنسیت")]}
                   variant="outlined"
-                  value={data.gender}
                   name="gender"
-                  onChange={onChangeHandler}
                 >
                   {[
                     { label: "مرد", value: "male" },
@@ -162,9 +145,7 @@ const PassengerDetail = ({ passenger }) => {
                   fullWidth
                   label="کد ملی"
                   variant="outlined"
-                  value={data.nationalCode}
                   name="nationalCode"
-                  onChange={onChangeHandler}
                 />
               </Grid>
             </Grid>

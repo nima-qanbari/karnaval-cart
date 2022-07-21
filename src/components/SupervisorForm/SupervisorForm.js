@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Button,
   Checkbox,
@@ -15,26 +15,19 @@ import { makeStyles } from "@material-ui/styles";
 import { email, phone, required } from "../Validate/Validate";
 import Field from "../Field/Field";
 
+//context
+import { FormContext } from "../../Context/FormContext";
+
 const SupervisorForm = ({
   text,
   changeDetail,
-  initialValue,
   rules1,
   rules2,
 }) => {
-  const [data, setData] = useState({
-    mobile: initialValue,
-    email: "",
-  });
-
   const [checked, setChecked] = useState(true);
 
   const classes = useStyles();
 
-  const onChangeHandler = (e) => {
-    const { name, value } = e.target;
-    setData({ ...data, [name]: value });
-  };
 
   const checkboxChange = () => {
     setChecked(!checked);
@@ -56,9 +49,7 @@ const SupervisorForm = ({
             className={classes.mobileInput}
             label="موبایل"
             variant="outlined"
-            value={data.mobile}
             name="mobile"
-            onChange={onChangeHandler}
           />
 
           <Field
@@ -67,9 +58,7 @@ const SupervisorForm = ({
             fullWidth
             label="ایمیل (اختیاری)"
             variant="outlined"
-            value={data.email}
             name="email"
-            onChange={onChangeHandler}
           />
         </Grid>
         <Grid item xs={12} className={classes.checkboxContainer}>
@@ -99,6 +88,7 @@ const SupervisorForm = ({
             color="primary"
             size="large"
             disabled={!checked}
+            type="submit"
           >
             ادامه فرآیند خرید
             <KeyboardBackspaceIcon className={classes.icon} />
