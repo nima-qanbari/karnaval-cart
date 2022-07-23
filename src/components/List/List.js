@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 
 import { Button, Grid, Typography } from "@material-ui/core";
-import Form from "../../Context/FormContext";
 
+import { Form } from "react-final-form";
+import { FieldArray } from "react-final-form-arrays";
+import arrayMutators from "final-form-arrays";
 //supervisorForm
 import SupervisorForm from "../SupervisorForm/SupervisorForm";
 
@@ -57,6 +59,15 @@ const List = ({
   const closeSortHandler = () => {
     setOpenSort(false);
   };
+
+  const onSubmit = (data) => {
+    console.log("ddfdsfd");
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 2000);
+    });
+  };
   const sidebarJSX = (
     <Sidebar data={sidebar} onChange={onChangeCheckbox} isChecked={isChecked} />
   );
@@ -90,10 +101,30 @@ const List = ({
         </div>
       </Grid>
       <Grid item xs={12}>
-        <Form initialValues={{mobile:"09911365952"}}>
-          <PassengerDetail />
-          <SupervisorForm />
-        </Form>
+        <Form
+          initialValues={{ mobile: "09911339988", passengers: [{}] }}
+          onSubmit={onSubmit}
+          mutators={{
+            ...arrayMutators,
+          }}
+          render={({
+            handleSubmit,
+            form: {
+              mutators: { push, pop },
+            },
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <FieldArray name="passengers">
+                {({ fields }) =>
+                  fields.map((name, index) => {
+                    return <PassengerDetail name={name} key={index} />;
+                  })
+                }
+              </FieldArray>
+              <SupervisorForm />
+            </form>
+          )}
+        />
       </Grid>
       <Grid item md={3} className={classes.none}>
         {sidebarJSX}

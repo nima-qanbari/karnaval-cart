@@ -1,23 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
-import {
-  Button,
-  Grid,
-  MenuItem,
-  Paper,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import SelectField from "../SelectField/SelectField";
+import { Button, Grid, MenuItem, Paper, Typography } from "@material-ui/core";
 import BusSeatInput from "../BusSeatInput/BusSeatInput";
-
+import TextField from "../../react-final-form-field/TextField";
+import SelectField from "../../react-final-form-field/SelectField";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useEffect } from "react";
 
-import { nationalCode, required } from "../Validate/Validate";
-import Field from "../Field/Field";
-
+import {
+  composeValidators,
+  nationalCode,
+  required,
+} from "../Validate/Validate";
+import { Field } from "react-final-form";
 
 const seatData = [
   {
@@ -65,7 +60,7 @@ const seatData = [
   },
 ];
 
-const PassengerDetail = ({ passenger }) => {
+const PassengerDetail = ({ passenger, name }) => {
   const [choice, setChoice] = useState(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -99,9 +94,9 @@ const PassengerDetail = ({ passenger }) => {
               <Grid item xs={12} md={3}>
                 <Field
                   component={TextField}
-                  name="name"
+                  name={`${name}.name`}
                   id="name"
-                  validate={[required("نام")]}
+                  validate={required("نام")}
                   fullWidth
                   label="نام"
                   variant="outlined"
@@ -110,8 +105,8 @@ const PassengerDetail = ({ passenger }) => {
               <Grid item xs={12} md={3}>
                 <Field
                   component={TextField}
-                  name="family"
-                  validate={[required("نام خانوادگی")]}
+                  name={`${name}.family`}
+                  validate={required("نام خانوادگی")}
                   fullWidth
                   label="نام خانوادگی"
                   variant="outlined"
@@ -122,9 +117,9 @@ const PassengerDetail = ({ passenger }) => {
                   component={SelectField}
                   fullWidth
                   label="جنسیت"
-                  validate={[required("جنسیت")]}
+                  validate={required("جنسیت")}
                   variant="outlined"
-                  name="gender"
+                  name={`${name}.gender`}
                 >
                   {[
                     { label: "مرد", value: "male" },
@@ -141,11 +136,11 @@ const PassengerDetail = ({ passenger }) => {
               <Grid item xs={12} md={3}>
                 <Field
                   component={TextField}
-                  validate={[required("کد ملی"), nationalCode]}
+                  validate={composeValidators(required("کد ملی"), nationalCode)}
                   fullWidth
                   label="کد ملی"
                   variant="outlined"
-                  name="nationalCode"
+                  name={`${name}.nationalCode`}
                 />
               </Grid>
             </Grid>

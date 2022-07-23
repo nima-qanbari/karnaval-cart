@@ -1,14 +1,20 @@
 import React, { createContext, useState } from "react";
-
 export const FormContext = createContext({});
 
-const Form = ({ children, initialValues }) => {
+const Form = ({ children, initialValues, onSubmit }) => {
   const [values, setValues] = useState(initialValues || {});
   const [errors, setErrors] = useState({});
+  console.log("errors", errors);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("form context", e);
+    if (!Object.values(errors).filter((item) => !!item).length) {
+      if (onSubmit) {
+        console.log(onSubmit, "dsdsd");
+      } else {
+        console.log("errors");
+      }
+    }
   };
 
   const onError = (name) => (err) => {

@@ -1,33 +1,29 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Checkbox,
   FormControlLabel,
   Grid,
   Paper,
-  TextField,
   Typography,
 } from "@material-ui/core";
 
+import TextField from "../../react-final-form-field/TextField";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import { makeStyles } from "@material-ui/styles";
 
-import { email, phone, required } from "../Validate/Validate";
-import Field from "../Field/Field";
+import {
+  composeValidators,
+  email,
+  phone,
+  required,
+} from "../Validate/Validate";
+import { Field, FormSpy } from "react-final-form";
 
-//context
-import { FormContext } from "../../Context/FormContext";
-
-const SupervisorForm = ({
-  text,
-  changeDetail,
-  rules1,
-  rules2,
-}) => {
+const SupervisorForm = ({ text, changeDetail, rules1, rules2 }) => {
   const [checked, setChecked] = useState(true);
 
   const classes = useStyles();
-
 
   const checkboxChange = () => {
     setChecked(!checked);
@@ -45,7 +41,7 @@ const SupervisorForm = ({
           <Field
             component={TextField}
             fullWidth
-            validate={[required("موبایل"), phone("موبایل")]}
+            validate={composeValidators(required("موبایل"), phone("موبایل"))}
             className={classes.mobileInput}
             label="موبایل"
             variant="outlined"
@@ -54,7 +50,7 @@ const SupervisorForm = ({
 
           <Field
             component={TextField}
-            validate={[email]}
+            validate={email}
             fullWidth
             label="ایمیل (اختیاری)"
             variant="outlined"
@@ -81,18 +77,21 @@ const SupervisorForm = ({
             onChange={checkboxChange}
             classes={{ label: classes.commonText }}
           />
-
-          <Button
-            className={classes.btn}
-            variant="contained"
-            color="primary"
-            size="large"
-            disabled={!checked}
-            type="submit"
-          >
-            ادامه فرآیند خرید
-            <KeyboardBackspaceIcon className={classes.icon} />
-          </Button>
+          <FormSpy subscription={{ submitting: true }}>
+            {(props) => (
+              <Button
+                className={classes.btn}
+                variant="contained"
+                color="primary"
+                size="large"
+                disabled={!checked || props.submitting}
+                type="submit"
+              >
+                ادامه فرآیند خرید
+                <KeyboardBackspaceIcon className={classes.icon} />
+              </Button>
+            )}
+          </FormSpy>
         </Grid>
       </Grid>
     </Paper>
