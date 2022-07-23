@@ -30,7 +30,7 @@ const SupervisorForm = ({ text, changeDetail, rules1, rules2 }) => {
   };
 
   return (
-    <Paper className={classes.paper}>
+    <Paper className={classes.paper} data-testid="supervisorContainer">
       <Grid container>
         <Grid item xs={12}>
           <Typography className={classes.title}>گیرنده رسید بلیط</Typography>

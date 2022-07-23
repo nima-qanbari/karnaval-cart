@@ -67,7 +67,7 @@ const PassengerDetail = ({ passenger, name }) => {
 
   const classes = useStyles();
   return (
-    <Paper className={classes.container} data-testid="container">
+    <Paper className={classes.container} data-testid="PaperContainer">
       <div className={classes.dashed}>
         <Grid container direction="column">
           <Grid item className={classes.borderBottom}>
