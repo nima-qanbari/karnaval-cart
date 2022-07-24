@@ -75,7 +75,6 @@ const SupervisorForm = ({ text, changeDetail, rules1, rules2 }) => {
             className={classes.checkbox}
             checked={checked}
             onChange={checkboxChange}
-            classes={{ label: classes.commonText }}
           />
           <FormSpy subscription={{ submitting: true }}>
             {(props) => (
@@ -156,8 +155,8 @@ const useStyles = makeStyles(
     },
 
     btn: {
-      fontSize: 16,
-      fontWeight: "500",
+      fontSize: 13,
+      fontWeight: "bold",
 
       [theme.breakpoints.down("sm")]: {
         marginTop: theme.spacing(2),

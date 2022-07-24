@@ -28,6 +28,7 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import ImportExportIcon from "@material-ui/icons/ImportExport";
 import { makeStyles } from "@material-ui/styles";
 import PassengerDetail from "../PassengerDetail/PassengerDetail";
+import Checkout from "../Checkout/Checkout";
 
 const List = ({
   data,
@@ -88,7 +89,42 @@ const List = ({
       />
       <Grid item xs={12}>
         <Toolbar />
+        <Checkout
+          data={[
+            { label: "نام تعاونی", value: "شرکت زاگرس" },
+            { label: "مبدا", value: "مشهد" },
+            { label: "مقصد", value: "تهران" },
+            { label: "تاریخ حرکت", value: "یکشنبه ۱۲ تیر ۱۴۰۱" },
+            { label: "ساعت حرکت", value: "۲۳:۳۰" },
+          ]}
 
+          passengers={[
+            {
+              name: "نیما",
+              family: "قنبری",
+              gender:  "male",
+              nationalCode: "3242047672",
+              seatNumber: "8",
+              price: 169000,
+            },
+            {
+              name: "ییسب",
+              family: "یسیسیسر",
+              gender:  "female",
+              nationalCode: "3242047672",
+              seatNumber: "9",
+              price: 169000,
+            }
+          ]}
+
+          cancellationRules={[
+            "از زمان صدور تا ۹۰ دقیقه قبل از حرکت | استرداد آنلاین",
+            "کمتر از یک ساعت قبل از حرکت تا بعد از حرکت | استرداد حضوری در پایانه مسافربری"
+          ]}
+          ticketInformation="اطلاعات اتوبوس"
+          totalPrice= {998000}
+          passengersInformation= "اطلاعات مسافران"
+        />
         <div className={classes.mobileFilter}>
           <Typography className={classes.alignment} onClick={openFilterHandler}>
             <FilterListIcon />

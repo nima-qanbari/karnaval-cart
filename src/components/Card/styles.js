@@ -215,7 +215,7 @@ export const useStyles = makeStyles(
         right: -1,
         top: -4,
         zIndex: 2,
-        transition: `all ${theme.transitions.duration.shortest} ${theme.transitions.easing.easeInOut}  0ms`,
+        transition: `all ${theme.transitions.duration.shortest}ms ${theme.transitions.easing.easeInOut}  0ms`,
       },
       circle2: {
         display: "flex",
@@ -227,7 +227,7 @@ export const useStyles = makeStyles(
         left: -1,
         top: -4,
         zIndex: 2,
-        transition: `all ${theme.transitions.duration.shortest} ${theme.transitions.easing.easeInOut}  0ms`,
+        transition: `all ${theme.transitions.duration.shortest}ms ${theme.transitions.easing.easeInOut}  0ms`,
       },
 
       line: {
