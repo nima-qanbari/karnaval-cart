@@ -23,7 +23,7 @@ const Checkout = ({ data, passengers, totalPrice, cancellationRules }) => {
   };
 
   return (
-    <Paper className={classes.container}>
+    <Paper className={classes.container} data-testid={"checkoutContainer"}>
       <Typography className={classes.title}>اطلاعات مسیر</Typography>
       <div className={classes.table}>
         <table className="table">
@@ -214,7 +214,7 @@ const Checkout = ({ data, passengers, totalPrice, cancellationRules }) => {
       <div className={classes.checkboxContainer}>
         <div className={classes.conformationContainer}>
           <FormControlLabel
-            control={<Checkbox disableRipple />}
+            control={<Checkbox disableRipple data-testid= {"checkbox"}/>}
             label={"اطلاعات جدول های فوق مورد تایید است."}
             className={classes.checkbox}
             checked={checked}
@@ -228,6 +228,7 @@ const Checkout = ({ data, passengers, totalPrice, cancellationRules }) => {
             size="large"
             disabled={!checked}
             type="submit"
+            data-testid= {"button"}
           >
             صدور فاکتور و پرداخت
             <KeyboardBackspaceIcon className={classes.icon} />
@@ -273,8 +274,8 @@ const useStyles = makeStyles(
       display: "none",
       [theme.breakpoints.down("sm")]: {
         display: "block",
-        margin: theme.spacing(2,0)
-      }
+        margin: theme.spacing(2, 0),
+      },
     },
 
     title: {
