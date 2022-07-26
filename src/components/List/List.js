@@ -29,6 +29,7 @@ import ImportExportIcon from "@material-ui/icons/ImportExport";
 import { makeStyles } from "@material-ui/styles";
 import PassengerDetail from "../PassengerDetail/PassengerDetail";
 import Checkout from "../Checkout/Checkout";
+import CardCarousel from "../CardCarousel/CardCarousel";
 
 const List = ({
   data,
@@ -87,6 +88,45 @@ const List = ({
         }}
         selectedSortItem={selectedSortItem}
       />
+
+      <Grid item xs={12}>
+        <CardCarousel
+          title="شهرهای خنک ایران برای سفرهای تابستانی"
+          subtitle="مقاصد تابستانی جذاب ایران برای سفر"
+          data={[
+            {
+              id: 1,
+              img: require("../../image/manzare.jpg"),
+              label: "خراسان شمالی",
+            },
+            {
+              id: 2,
+              img: require("../../image/manzare.jpg"),
+              label: "رشت",
+            },
+            {
+              id: 3,
+              img: require("../../image/manzare.jpg"),
+              label: "یزد",
+            },
+            {
+              id: 4,
+              img: require("../../image/manzare.jpg"),
+              label: "کیش",
+            },
+            {
+              id: 5,
+              img: require("../../image/manzare.jpg"),
+              label: "قشم",
+            },
+            {
+              id: 6,
+              img: require("../../image/manzare.jpg"),
+              label: "اصفهان",
+            },
+          ]}
+        />
+      </Grid>
       <Grid item xs={12}>
         <Toolbar />
         <Checkout
@@ -97,12 +137,11 @@ const List = ({
             { label: "تاریخ حرکت", value: "یکشنبه ۱۲ تیر ۱۴۰۱" },
             { label: "ساعت حرکت", value: "۲۳:۳۰" },
           ]}
-
           passengers={[
             {
               name: "نیما",
               family: "قنبری",
-              gender:  "male",
+              gender: "male",
               nationalCode: "3242047672",
               seatNumber: "8",
               price: 169000,
@@ -110,20 +149,19 @@ const List = ({
             {
               name: "ییسب",
               family: "یسیسیسر",
-              gender:  "female",
+              gender: "female",
               nationalCode: "3242047672",
               seatNumber: "9",
               price: 169000,
-            }
+            },
           ]}
-
           cancellationRules={[
             "از زمان صدور تا ۹۰ دقیقه قبل از حرکت | استرداد آنلاین",
-            "کمتر از یک ساعت قبل از حرکت تا بعد از حرکت | استرداد حضوری در پایانه مسافربری"
+            "کمتر از یک ساعت قبل از حرکت تا بعد از حرکت | استرداد حضوری در پایانه مسافربری",
           ]}
           ticketInformation="اطلاعات اتوبوس"
-          totalPrice= {998000}
-          passengersInformation= "اطلاعات مسافران"
+          totalPrice={998000}
+          passengersInformation="اطلاعات مسافران"
         />
         <div className={classes.mobileFilter}>
           <Typography className={classes.alignment} onClick={openFilterHandler}>

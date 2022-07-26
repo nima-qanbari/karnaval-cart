@@ -2,6 +2,7 @@ import React from "react";
 import MuiSelectField from "../components/SelectField/SelectField";
 
 const SelectField = ({ meta, input, ...props }) => {
+  console.log("input", input, "meta", meta );
   const { error, touched } = meta;
   return (
     <MuiSelectField
