@@ -101,7 +101,7 @@ export const useStyles = makeStyles(
         justifyContent: "flex-start",
         fontWeight: "bold",
       },
-
+      
       mobilePrice: {
         fontSize: 14,
         fontWeight: 400,
@@ -360,8 +360,6 @@ export const useStyles = makeStyles(
         fontSize: 11,
         fontWeight: "bold",
       },
-
-      cartBreakpoints: {},
 
       detailsBreakpoints: {
         alignContent: "center",

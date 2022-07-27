@@ -30,6 +30,7 @@ import { makeStyles } from "@material-ui/styles";
 import PassengerDetail from "../PassengerDetail/PassengerDetail";
 import Checkout from "../Checkout/Checkout";
 import CardCarousel from "../CardCarousel/CardCarousel";
+import Blog from "../Blog/Blog";
 
 const List = ({
   data,
@@ -91,6 +92,8 @@ const List = ({
 
       <Grid item xs={12}>
         <CardCarousel
+          width={190}
+          height={200}
           title="شهرهای خنک ایران برای سفرهای تابستانی"
           subtitle="مقاصد تابستانی جذاب ایران برای سفر"
           data={[
@@ -123,6 +126,40 @@ const List = ({
               id: 6,
               img: require("../../image/manzare.jpg"),
               label: "اصفهان",
+            },
+          ]}
+        />
+      </Grid>
+
+      <Grid item xs={12}>
+        <Blog
+          title="بلاگ"
+          subtitle="تازه های کارناوال"
+          data={[
+            {
+              label: "معرفی شهر های توریستی",
+              subtitle: "معرفی شهر ماسال",
+              img: require("../../image/img.jpg"),
+            },
+            {
+              label: "معرفی شهر های توریستی",
+              subtitle: "معرفی شهر ماسال",
+              img: require("../../image/img.jpg"),
+            },
+            {
+              label: "معرفی شهر های توریستی",
+              subtitle: "معرفی شهر ماسال",
+              img: require("../../image/img.jpg"),
+            },
+            {
+              label: "معرفی شهر های توریستی",
+              subtitle: "معرفی شهر ماسال",
+              img: require("../../image/img.jpg"),
+            },
+            {
+              label: "معرفی شهر های توریستی",
+              subtitle: "معرفی شهر ماسال",
+              img: require("../../image/img.jpg"),
             },
           ]}
         />

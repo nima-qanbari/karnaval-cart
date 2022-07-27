@@ -1,31 +1,59 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { makeStyles } from "@material-ui/styles";
 import useEmblaCarousel from "embla-carousel-react";
-import { Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
-const CardCarousel = ({ title, subtitle, data }) => {
-  const [viewportRef] = useEmblaCarousel({
+const CardCarousel = ({ title, subtitle, data, width, height }) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    
     loop: false,
     direction: "rtl",
-    containScroll: " ",
+    dragFree: true,
+    containScroll: "trimSnaps",
   });
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
 
   const classes = useStyles();
   return (
     <div>
-      <div>
-        <Typography variant="h3" className={classes.title}>
-          {title}
-        </Typography>
-        <Typography variant="h2" className={classes.subtitle}>
-          {subtitle}
-        </Typography>
+      <div className={classes.titleBtn}>
+        <div>
+          <Typography variant="h3" className={classes.title}>
+            {title}
+          </Typography>
+          <Typography variant="h2" className={classes.subtitle}>
+            {subtitle}
+          </Typography>
+        </div>
+        <div className={classes.btnContainer}>
+          <Button className={classes.btn} onClick={scrollPrev}>
+            <ChevronRightIcon />
+          </Button>
+          <Button className={classes.btn} onClick={scrollNext}>
+            <ChevronLeftIcon />
+          </Button>
+        </div>
       </div>
-      <div className={classes.embla} ref={viewportRef}>
+
+      <div className={classes.embla} ref={emblaRef}>
         <div className={classes.embla_container}>
           {data.map((item) => {
             return (
-              <div key={item.id} className={classes.embla_slide}>
+              <div
+                key={item.id}
+                className={classes.embla_slide}
+                style={{ width: width, height: height, minWidth: 200 }}
+              >
                 <a href="#">
                   <img src={item.img} alt="عکس" />
                   <div className={classes.labelContainer}>
@@ -45,13 +73,26 @@ const CardCarousel = ({ title, subtitle, data }) => {
 
 const useStyles = makeStyles(
   (theme) => ({
+    titleBtn: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+
+    btnContainer: {
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+      },
+    },
+
     title: {
       fontSize: 22,
       marginBottom: theme.spacing(1),
       fontWeight: "bold",
+      lineHeight: 1.5,
 
       [theme.breakpoints.down("sm")]: {
-        fontSize: 18,
+        fontSize: 19,
       },
     },
 
@@ -61,7 +102,7 @@ const useStyles = makeStyles(
       color: theme.palette.text.secondary,
 
       [theme.breakpoints.down("sm")]: {
-        fontSize: 12,
+        fontSize: 14,
       },
     },
 
@@ -70,22 +111,12 @@ const useStyles = makeStyles(
     },
     embla_container: {
       display: "flex",
-      height: 200,
+      minHeight: 1,
       zIndex: 1,
-      [theme.breakpoints.down("sm")]: {
-        height: 170,
-        width: 135,
-      },
     },
     embla_slide: {
       position: "relative",
-      height: "100%",
       overflow: "hidden",
-      minWidth: 136,
-
-      [theme.breakpoints.down("sm")]: {
-        height: 170,
-      },
 
       "&:not(:last-child)": {
         marginLeft: theme.spacing(3),
@@ -121,6 +152,19 @@ const useStyles = makeStyles(
       fontSize: 16,
       color: theme.palette.background.paper,
       fontWeight: "bold",
+    },
+
+    btn: {
+      border: `2px solid ${theme.palette.divider}`,
+      width: 32,
+      height: 32,
+      minWidth: 0,
+      marginLeft: theme.spacing(0.3),
+      backgroundColor: theme.palette.background.paper,
+
+      "&:hover": {
+        backgroundColor: theme.palette.background.paper,
+      },
     },
   }),
   { flip: false }

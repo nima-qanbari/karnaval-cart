@@ -37,7 +37,6 @@ const TicketCard = ({
           spacing={2}
           justifyContent="space-around"
           alignItems="center"
-          className={classes.cartBreakpoints}
         >
           <Grid item md xs={12} className={classes.detailContainerBreakpoints}>
             <Grid container spacing={1} className={classes.detailsBreakpoints}>
@@ -100,7 +99,7 @@ const TicketCard = ({
                       variant="body2"
                       className={clsx(classes.bold, classes.direction)}
                     >
-                      {arrival ? moment(arrival).format("hh : mm") : "a"}
+                      {arrival ? moment(arrival).format("hh : mm") : <pre> </pre>}
                     </Typography>
                     <Typography
                       variant="body2"
