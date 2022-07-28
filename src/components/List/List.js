@@ -19,7 +19,7 @@ import FilterModal from "../FilterModal/FilterModal";
 import SortModal from "../SortModal/SortModal";
 
 //cart
-import TicketCard from "../Card/TicketCard";
+import TicketCard from "../TicketCard/TicketCard";
 
 //sidebar
 import Sidebar from "../Sidebar/Sidebar";
@@ -29,8 +29,10 @@ import ImportExportIcon from "@material-ui/icons/ImportExport";
 import { makeStyles } from "@material-ui/styles";
 import PassengerDetail from "../PassengerDetail/PassengerDetail";
 import Checkout from "../Checkout/Checkout";
-import CardCarousel from "../CardCarousel/CardCarousel";
+import Carousel from "../Carousel/Carousel";
 import Blog from "../Blog/Blog";
+import FullCard from "../Card/FullCard";
+import PaperCard from "../Card/PaperCard";
 
 const List = ({
   data,
@@ -91,9 +93,8 @@ const List = ({
       />
 
       <Grid item xs={12}>
-        <CardCarousel
-          width={190}
-          height={200}
+        <Carousel
+          card={PaperCard}
           title="شهرهای خنک ایران برای سفرهای تابستانی"
           subtitle="مقاصد تابستانی جذاب ایران برای سفر"
           data={[
@@ -101,35 +102,79 @@ const List = ({
               id: 1,
               img: require("../../image/manzare.jpg"),
               label: "خراسان شمالی",
+              subtitle: "مقاصد تابستانی جذاب",
             },
             {
               id: 2,
               img: require("../../image/manzare.jpg"),
               label: "رشت",
+              subtitle: "مقاصد تابستانی جذاب",
             },
             {
               id: 3,
               img: require("../../image/manzare.jpg"),
               label: "یزد",
+              subtitle: "مقاصد تابستانی جذاب",
             },
             {
               id: 4,
               img: require("../../image/manzare.jpg"),
               label: "کیش",
+              subtitle: "مقاصد تابستانی جذاب",
             },
             {
               id: 5,
               img: require("../../image/manzare.jpg"),
               label: "قشم",
+              subtitle: "مقاصد تابستانی جذاب",
             },
             {
               id: 6,
               img: require("../../image/manzare.jpg"),
               label: "اصفهان",
+              subtitle: "مقاصد تابستانی جذاب",
             },
           ]}
         />
       </Grid>
+
+      <Carousel
+        card={FullCard}
+        title="شهرهای خنک ایران برای سفرهای تابستانی"
+        subtitle="مقاصد تابستانی جذاب ایران برای سفر"
+        data={[
+          {
+            id: 1,
+            img: require("../../image/manzare.jpg"),
+            label: "خراسان شمالی",
+          },
+          {
+            id: 2,
+            img: require("../../image/manzare.jpg"),
+            label: "رشت",
+          },
+          {
+            id: 3,
+            img: require("../../image/manzare.jpg"),
+            label: "یزد",
+          },
+          {
+            id: 4,
+            img: require("../../image/manzare.jpg"),
+            label: "کیش",
+          },
+          {
+            id: 5,
+            img: require("../../image/manzare.jpg"),
+            label: "قشم",
+          },
+          {
+            id: 6,
+            img: require("../../image/manzare.jpg"),
+            label: "اصفهان",
+          },
+        ]}
+      />
 
       <Grid item xs={12}>
         <Blog
@@ -140,26 +185,31 @@ const List = ({
               label: "معرفی شهر های توریستی",
               subtitle: "معرفی شهر ماسال",
               img: require("../../image/img.jpg"),
+              md: 6,
             },
             {
               label: "معرفی شهر های توریستی",
               subtitle: "معرفی شهر ماسال",
               img: require("../../image/img.jpg"),
+              md: 6,
             },
             {
               label: "معرفی شهر های توریستی",
               subtitle: "معرفی شهر ماسال",
               img: require("../../image/img.jpg"),
+              md: 4,
             },
             {
               label: "معرفی شهر های توریستی",
               subtitle: "معرفی شهر ماسال",
               img: require("../../image/img.jpg"),
+              md: 4,
             },
             {
               label: "معرفی شهر های توریستی",
               subtitle: "معرفی شهر ماسال",
               img: require("../../image/img.jpg"),
+              md: 4,
             },
           ]}
         />

@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/styles";
 import { Button, Typography } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
-const Cart = ({ label, subtitle, image }) => {
+const BlogCart = ({ label, subtitle, image }) => {
   const classes = useStyles();
   return (
     <div className={classes.cartContainer}>
@@ -121,4 +121,4 @@ const useStyles = makeStyles(
   { flip: false }
 );
 
-export default Cart;
+export default BlogCart;

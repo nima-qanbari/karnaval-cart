@@ -1,6 +1,6 @@
 import { Grid, Typography } from "@material-ui/core";
 import React from "react";
-import Cart from "../Cart/Cart";
+import BlogCart from "../Card/BlogCart";
 import { makeStyles } from "@material-ui/styles";
 
 const Blog = ({ title, subtitle, data }) => {
@@ -18,8 +18,8 @@ const Blog = ({ title, subtitle, data }) => {
       <Grid container spacing={1}>
         {data.map((item, index) => {
           return (
-            <Grid item key={index} xs={12} md={4}>
-              <Cart
+            <Grid item key={index} xs={12} md={item.md}>
+              <BlogCart
                 label={item.label}
                 subtitle={item.subtitle}
                 image={item.img}

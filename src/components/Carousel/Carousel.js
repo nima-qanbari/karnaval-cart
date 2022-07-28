@@ -5,9 +5,8 @@ import { Button, Typography } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
-const CardCarousel = ({ title, subtitle, data, width, height }) => {
+const Carousel = ({ title, subtitle, data, width, card: Card }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
-    
     loop: false,
     direction: "rtl",
     dragFree: true,
@@ -18,7 +17,6 @@ const CardCarousel = ({ title, subtitle, data, width, height }) => {
     if (emblaApi) emblaApi.scrollPrev();
   }, [emblaApi]);
 
-  
   const scrollNext = useCallback(() => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
@@ -49,19 +47,12 @@ const CardCarousel = ({ title, subtitle, data, width, height }) => {
         <div className={classes.embla_container}>
           {data.map((item) => {
             return (
-              <div
-                key={item.id}
-                className={classes.embla_slide}
-                style={{ width: width, height: height, minWidth: 200 }}
-              >
-                <a href="#">
-                  <img src={item.img} alt="عکس" />
-                  <div className={classes.labelContainer}>
-                    <Typography className={classes.label}>
-                      {item.label}
-                    </Typography>
-                  </div>
-                </a>
+              <div key={item.id} className={classes.embla_slide}>
+                <Card
+                  image={item.img}
+                  title={item.label}
+                  subtitle={item.subtitle}
+                />
               </div>
             );
           })}
@@ -116,7 +107,7 @@ const useStyles = makeStyles(
     },
     embla_slide: {
       position: "relative",
-      overflow: "hidden",
+      flex: "0 0 175px",
 
       "&:not(:last-child)": {
         marginLeft: theme.spacing(3),
@@ -125,35 +116,7 @@ const useStyles = makeStyles(
           marginLeft: theme.spacing(2),
         },
       },
-      borderRadius: theme.shape.borderRadius,
-      "& img": {
-        width: "100%",
-        height: "100%",
-        objectFit: "cover",
-        verticalAlign: "bottom",
-      },
     },
-
-    labelContainer: {
-      height: "60%",
-      width: "100%",
-      position: "absolute",
-      bottom: 0,
-      right: 0,
-      backgroundImage:
-        "linear-gradient(-180deg, rgba(0, 0, 0, 0) 3%, rgb(0, 0, 0, 0.78) 100%)",
-    },
-
-    label: {
-      flexWrap: "wrap",
-      position: "absolute",
-      bottom: 15,
-      right: 15,
-      fontSize: 16,
-      color: theme.palette.background.paper,
-      fontWeight: "bold",
-    },
-
     btn: {
       border: `2px solid ${theme.palette.divider}`,
       width: 32,
@@ -170,4 +133,4 @@ const useStyles = makeStyles(
   { flip: false }
 );
 
-export default CardCarousel;
+export default Carousel;
