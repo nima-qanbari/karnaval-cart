@@ -98,9 +98,9 @@ describe("OriginDestinationInput", () => {
 
       describe("when click on item", () => {
         test("should call onChange prop", () => {
-          const onChangeOrigin = jest.fn();
+          const onChange = jest.fn();
           setup({
-            onChangeOrigin: onChangeOrigin,
+            onChange,
             originItems: [
               { label: "مشهد", id: 2 },
               { label: "اهواز", id: 3 },
@@ -113,15 +113,15 @@ describe("OriginDestinationInput", () => {
           focusOnInput();
           const originItems = screen.getAllByTestId("originItem");
           fireEvent.click(originItems[0]);
-          expect(onChangeOrigin).toBeCalled();
+          expect(onChange).toBeCalled();
         });
 
         if (!useDialog) {
           test("when destination input don't have value should focus on destination input", () => {
-            const onChangeOrigin = jest.fn();
+            const onChange = jest.fn();
 
             setup({
-              onChangeOrigin: onChangeOrigin,
+              onChange,
               originItems: [
                 { label: "مشهد", id: 2 },
                 { label: "اهواز", id: 3 },
@@ -141,14 +141,14 @@ describe("OriginDestinationInput", () => {
             expect(destinationInput.focus).toHaveBeenCalled();
           });
 
-          test("when origin input don't have value should focus on origin input", () => {
-            const onChangeDestination = jest.fn();
+          test("when origin input don't have value, should focus on origin input", () => {
+            const onChange = jest.fn();
 
             setup({
-              onChangeDestination: onChangeDestination,
+              onChange,
               destinationItems: [
-                { label: "اهواز", id: 3 },
-                { label: "مشهد", id: 2 },
+                { label: "رشت", id: 3 },
+                { label: "مشهد", id: 3 },
               ],
               useDialog,
             });
@@ -165,12 +165,15 @@ describe("OriginDestinationInput", () => {
           });
         }
 
-        test("when destination input has value don't focused on destination input", () => {
-          const onChangeOrigin = jest.fn();
+        test("when destination input has value, don't focused on destination input", () => {
+          const onChange = jest.fn();
 
           setup({
-            destinationValue: [{ label: "اهواز", id: 3 }],
-            onChangeOrigin: onChangeOrigin,
+            value: [
+              { label: "اهواز", id: 3 },
+              { label: "مشهد", id: 3 },
+            ],
+            onChange,
             originItems: [
               { label: "مشهد", id: 2 },
               { label: "اهواز", id: 3 },
@@ -191,16 +194,16 @@ describe("OriginDestinationInput", () => {
           expect(destinationInput.focus).not.toHaveBeenCalled();
         });
 
-        test("when origin input has value don't focused on origin input", () => {
-          const onChangeDestination = jest.fn();
+        test("when origin input has value, don't focused on origin input", () => {
+          const onChange = jest.fn();
 
           setup({
-            onChangeDestination: onChangeDestination,
+            onChange,
             destinationItems: [
               { label: "اهواز", id: 3 },
               { label: "مشهد", id: 2 },
             ],
-            originValue: { label: "مشهد", id: 2 },
+            value: [{ label: "مشهد", id: 2 }],
             useDialog,
           });
 
@@ -219,7 +222,7 @@ describe("OriginDestinationInput", () => {
       describe("given onChangOriginInput when type in input,  should call onChangOriginInput", () => {
         test("should call onChangeOriginInput", () => {
           const onChangOriginInput = jest.fn();
-          setup({ onChangOriginInput: onChangOriginInput, useDialog });
+          setup({ onChangOriginInput, useDialog });
 
           const originInput = screen.getByPlaceholderText("مبدا");
           userEvent.type(originInput, "Hello,{enter}World!");
@@ -230,7 +233,7 @@ describe("OriginDestinationInput", () => {
           const onChangDestinationInput = jest.fn();
 
           setup({
-            onChangDestinationInput: onChangDestinationInput,
+            onChangDestinationInput,
             useDialog,
           });
 
@@ -250,10 +253,10 @@ describe("OriginDestinationInput", () => {
         });
 
         test("when origin focused,when click on item, should choose item", () => {
-          const onChangeOrigin = jest.fn();
+          const onChange = jest.fn();
           setup({
             suggestions: [{ label: "تبریز", id: 1 }],
-            onChangeOrigin: onChangeOrigin,
+            onChange,
             useDialog,
           });
 
@@ -262,14 +265,14 @@ describe("OriginDestinationInput", () => {
           const suggestion = screen.getByTestId("suggestions");
           fireEvent.click(suggestion);
 
-          expect(onChangeOrigin).toHaveBeenCalled();
+          expect(onChange).toHaveBeenCalled();
         });
 
         test("when destination focused, when click on item, should choose item", () => {
-          const onChangeDestination = jest.fn();
+          const onChange = jest.fn();
           setup({
             suggestions: [{ label: "تبریز", id: 1 }],
-            onChangeDestination: onChangeDestination,
+            onChange,
             useDialog,
           });
 
@@ -278,7 +281,7 @@ describe("OriginDestinationInput", () => {
           const suggestions = screen.getByTestId("suggestions");
           fireEvent.click(suggestions);
 
-          expect(onChangeDestination).toHaveBeenCalled();
+          expect(onChange).toHaveBeenCalled();
         });
       });
 
@@ -301,8 +304,7 @@ describe("OriginDestinationInput", () => {
         });
 
         test("when click on routeSuggestions", () => {
-          const onChangeOrigin = jest.fn();
-          const onChangeDestination = jest.fn();
+          const onChange = jest.fn();
           const routeSuggestions = [
             {
               origin: { label: "تهران", id: 1 },
@@ -312,8 +314,7 @@ describe("OriginDestinationInput", () => {
           setup({
             routeSuggestions: routeSuggestions,
             useDialog,
-            onChangeOrigin: onChangeOrigin,
-            onChangeDestination: onChangeDestination,
+            onChange,
           });
 
           const originInput = screen.getByPlaceholderText("مبدا");
@@ -329,25 +330,24 @@ describe("OriginDestinationInput", () => {
           expect(destinationInput).toHaveValue(
             routeSuggestions[0].destination.label
           );
-          expect(onChangeOrigin).toBeCalledWith(routeSuggestions[0].origin);
-          expect(onChangeDestination).toBeCalledWith(
-            routeSuggestions[0].destination
-          );
+          expect(onChange).toBeCalledWith([
+            routeSuggestions[0].origin,
+            routeSuggestions[0].destination,
+          ]);
         });
       });
 
       describe("when click on swap button", () => {
         test("should swap inputs", () => {
-          const onChangeOrigin = jest.fn();
-          const onChangeDestination = jest.fn();
-          const originValue = { label: "تبریز", id: 1 };
-          const destinationValue = { label: "مشهد", id: 2 };
+          const onChange = jest.fn();
+          const value = [
+            { label: "تبریز", id: 1 },
+            { label: "مشهد", id: 2 },
+          ];
 
           setup({
-            originValue: originValue,
-            destinationValue: destinationValue,
-            onChangeOrigin: onChangeOrigin,
-            onChangeDestination: onChangeDestination,
+            value,
+            onChange,
           });
           const swapButton = screen.getByTestId("swapButton");
           fireEvent.click(swapButton);
@@ -355,10 +355,10 @@ describe("OriginDestinationInput", () => {
           const originInput = screen.getByPlaceholderText("مبدا");
           const destinationInput = screen.getByPlaceholderText("مقصد");
 
-          expect(onChangeOrigin).toBeCalledWith(destinationValue);
-          expect(onChangeDestination).toBeCalledWith(originValue);
-          expect(originInput).toHaveValue(destinationValue.label);
-          expect(destinationInput).toHaveValue(originValue.label);
+          expect(onChange).toBeCalledWith([value[1], value[0]]);
+
+          expect(originInput).toHaveValue(value[1].label);
+          expect(destinationInput).toHaveValue(value[0].label);
         });
       });
     });

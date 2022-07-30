@@ -2,20 +2,12 @@ import React, { useState } from "react";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-import { Grid } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
-import OriginDestinationInput from "../OriginDestinationInput/OriginDestinationInput";
-import CountInput from "../CountInput/CountInput";
-
-const useStyles = makeStyles((theme) => ({
-  ToolbarContainer: {
-    background: theme.palette.background.paper,
-  },
-  travel: {
-    display: "flex",
-  },
-}), {flip: false});
+import OriginDestinationInput from "../../react-final-form-field/OriginDestinationInput";
+import CountInput from "../../react-final-form-field/CountInput";
+import { Field, Form } from "react-final-form";
 
 const suggestions = [
   { label: "تبریز", id: 1 },
@@ -51,15 +43,10 @@ const routeSuggestions = [
   },
 ];
 
-
 const Toolbar = () => {
   const classes = useStyles();
   const [originItems, setOriginItems] = useState(null);
   const [destinationItems, setDestinationItems] = useState(null);
-  const [originValue, setOriginValue] = useState(null);
-  const [destinationValue, setDestinationValue] = useState(null);
-  const [countValue, setCountValue] = useState(1);
-
   const [loading, setLoading] = useState(false);
 
   const theme = useTheme();
@@ -100,42 +87,68 @@ const Toolbar = () => {
     }, 2000);
   };
 
-  const onChangeOrigin = (item) => {
-    setOriginValue(item);
-  };
 
-  const onChangeDestination = (item) => {
-    setDestinationValue(item);
+  const onSubmit = (data) => {
+    console.log("originDestination form", data);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 2000);
+    });
   };
 
   return (
     <div className={classes.ToolbarContainer}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={4} className={classes.travel}>
-          <OriginDestinationInput
-            suggestions={suggestions}
-            routeSuggestions={routeSuggestions}
-            originItems={originItems}
-            loading={loading}
-            destinationItems={destinationItems}
-            onChangOriginInput={onChangOriginInput}
-            onChangDestinationInput={onChangDestinationInput}
-            onChangeOrigin={onChangeOrigin}
-            onChangeDestination={onChangeDestination}
-            originValue={originValue}
-            destinationValue={destinationValue}
-            useDialog={isMobile}
-          />
-        </Grid>
-        <Grid item xs={12} md={4}></Grid>
-        <Grid item xs={12} md={2}>
-          <CountInput onChange={setCountValue} value={countValue} useDialog={isMobile} />
-        </Grid>
-        <Grid item xs={12} md={2}></Grid>
-      </Grid>
-   
+      <Form
+        onSubmit={onSubmit}
+        render={({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={4} className={classes.travel}>
+                <Field
+                  name="originDestination"
+                  component={OriginDestinationInput}
+                  suggestions={suggestions}
+                  routeSuggestions={routeSuggestions}
+                  originItems={originItems}
+                  loading={loading}
+                  destinationItems={destinationItems}
+                  onChangOriginInput={onChangOriginInput}
+                  onChangDestinationInput={onChangDestinationInput}
+                  useDialog={isMobile}
+                />
+              </Grid>
+              <Grid item xs={12} md={4}></Grid>
+              <Grid item xs={12} md={2}>
+                <Field
+                  name="count"
+                  component={CountInput}
+                  useDialog={isMobile}
+                />
+              </Grid>
+              <Grid item xs={12} md={2}>
+                <Button variant="primary" type="submit">
+                  جستجو
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        )}
+      />
     </div>
   );
 };
+
+const useStyles = makeStyles(
+  (theme) => ({
+    ToolbarContainer: {
+      background: theme.palette.background.paper,
+    },
+    travel: {
+      display: "flex",
+    },
+  }),
+  { flip: false }
+);
 
 export default Toolbar;

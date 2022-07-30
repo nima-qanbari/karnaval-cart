@@ -34,7 +34,6 @@ import Blog from "../Blog/Blog";
 import FullCard from "../Card/FullCard";
 import PaperCard from "../Card/PaperCard";
 
-
 const List = ({
   data,
   sidebar,
@@ -235,6 +234,8 @@ const List = ({
         </Grid>
         <Grid item xs={12}>
           <Toolbar />
+        </Grid>
+        <Grid item xs={12}>
           <Checkout
             data={[
               { label: "نام تعاونی", value: "شرکت زاگرس" },

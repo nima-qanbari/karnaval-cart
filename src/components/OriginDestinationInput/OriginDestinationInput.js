@@ -27,10 +27,8 @@ const OriginDestinationInput = ({
   onChangOriginInput,
   onChangDestinationInput,
   loading,
-  onChangeOrigin,
-  onChangeDestination,
-  originValue,
-  destinationValue,
+  onChange,
+  value,
   useDialog,
 }) => {
   const [originInput, setOriginInput] = useState("");
@@ -42,6 +40,17 @@ const OriginDestinationInput = ({
   const originRef = useRef(null);
 
   const destinationRef = useRef(null);
+
+  const originValue = value?.[0];
+  const destinationValue = value?.[1];
+
+  const onChangeOrigin = (origin) => {
+    onChange([origin, destinationValue]);
+  };
+
+  const onChangeDestination = (destination) => {
+    onChange([originValue, destination]);
+  };
 
   const classes = useStyles();
 
@@ -98,16 +107,14 @@ const OriginDestinationInput = ({
   };
 
   const onClickOriginDestination = (item) => {
-    onChangeOrigin(item.origin);
-    onChangeDestination(item.destination);
+    onChange([item.origin, item.destination]);
     setOriginInput(item.origin.label);
     setDestinationInput(item.destination.label);
     setFocusedInput(null);
   };
 
   const swapHandler = () => {
-    onChangeOrigin(destinationValue);
-    onChangeDestination(originValue);
+    onChange([destinationValue, originValue]);
     setOriginInput(destinationValue?.label || "");
     setDestinationInput(originValue?.label || "");
   };
@@ -135,7 +142,6 @@ const OriginDestinationInput = ({
             onClick={() => onClickOriginItem(item)}
             key={item.id}
             data-testid="originItem"
-            
           >
             {item.label}
           </MenuItem>
@@ -148,7 +154,6 @@ const OriginDestinationInput = ({
         return (
           <MenuItem
             data-testid="destinationItem"
-            
             onClick={() => onClickDestinationItem(item)}
             key={item.id}
           >
@@ -310,96 +315,99 @@ const OriginDestinationInput = ({
   );
 };
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: "flex",
-  },
-
-  firstInputContainer: {
-    position: "relative",
-  },
-
-  firstInput: {
-    "& fieldset": {
-      borderTopLeftRadius: 0,
-      borderBottomLeftRadius: 0,
+const useStyles = makeStyles(
+  (theme) => ({
+    container: {
+      display: "flex",
     },
-  },
 
-  secondInput: {
-    "& fieldset": {
-      borderTopRightRadius: 0,
-      borderBottomRightRadius: 0,
-      borderRight: 0,
+    firstInputContainer: {
+      position: "relative",
     },
-  },
 
-  circle: {
-    position: "absolute",
-    left: -12,
-    display: "flex",
-    padding: theme.spacing(0.2),
-    borderRadius: "50%",
-    border: `2px solid ${theme.palette.divider}`,
-    top: "27%",
-    background: theme.palette.grey[100],
-    color: theme.palette.grey[600],
-    cursor: "pointer",
-    zIndex: 3,
-
-    "& svg": {
-      fontSize: 18,
-      fontWeight: "bold",
+    firstInput: {
+      "& fieldset": {
+        borderTopLeftRadius: 0,
+        borderBottomLeftRadius: 0,
+      },
     },
-  },
 
-  padding: {
-    padding: theme.spacing(2),
-  },
-  paper: {
-    marginTop: theme.spacing(),
-  },
-
-  title: {
-    margin: theme.spacing(0.5, 0.8, 0, 0),
-    width: "fit-content",
-    fontSize: 9,
-    color: theme.palette.error.main,
-    borderBottom: `1px solid ${theme.palette.divider}`,
-  },
-
-  firstDivContainer: {
-    padding: theme.spacing(),
-    borderLeft: `1px solid ${theme.palette.divider}`,
-  },
-
-  cityContainer: {
-    "& :not(:last-child)": {
-      borderBottom: `1px solid ${theme.palette.divider}`,
+    secondInput: {
+      "& fieldset": {
+        borderTopRightRadius: 0,
+        borderBottomRightRadius: 0,
+        borderRight: 0,
+      },
     },
-  },
-  firstItems: {
-    fontSize: ".75rem",
-    fontWeight: 500,
-    padding: theme.spacing(0.8, 1),
-    cursor: "pointer",
-  },
 
-  secondDiv: {
-    padding: theme.spacing(),
-  },
+    circle: {
+      position: "absolute",
+      left: -12,
+      display: "flex",
+      padding: theme.spacing(0.2),
+      borderRadius: "50%",
+      border: `2px solid ${theme.palette.divider}`,
+      top: "27%",
+      background: theme.palette.grey[100],
+      color: theme.palette.grey[600],
+      cursor: "pointer",
+      zIndex: 3,
 
-  btn: {
-    fontSize: ".62rem",
-    padding: theme.spacing(0.5, 1),
-    border: `1px solid ${theme.palette.divider}`,
-  },
-  btnContainer: {
-    "& > div": {
+      "& svg": {
+        fontSize: 18,
+        fontWeight: "bold",
+      },
+    },
+
+    padding: {
+      padding: theme.spacing(2),
+    },
+    paper: {
       marginTop: theme.spacing(),
     },
-  },
-}), {flip: false});
+
+    title: {
+      margin: theme.spacing(0.5, 0.8, 0, 0),
+      width: "fit-content",
+      fontSize: 9,
+      color: theme.palette.error.main,
+      borderBottom: `1px solid ${theme.palette.divider}`,
+    },
+
+    firstDivContainer: {
+      padding: theme.spacing(),
+      borderLeft: `1px solid ${theme.palette.divider}`,
+    },
+
+    cityContainer: {
+      "& :not(:last-child)": {
+        borderBottom: `1px solid ${theme.palette.divider}`,
+      },
+    },
+    firstItems: {
+      fontSize: ".75rem",
+      fontWeight: 500,
+      padding: theme.spacing(0.8, 1),
+      cursor: "pointer",
+    },
+
+    secondDiv: {
+      padding: theme.spacing(),
+    },
+
+    btn: {
+      fontSize: ".62rem",
+      padding: theme.spacing(0.5, 1),
+      border: `1px solid ${theme.palette.divider}`,
+    },
+    btnContainer: {
+      "& > div": {
+        marginTop: theme.spacing(),
+      },
+    },
+  }),
+  { flip: false }
+);
 
 OriginDestinationInput.defaultProps = {
   originPlaceholder: "مبدا",
