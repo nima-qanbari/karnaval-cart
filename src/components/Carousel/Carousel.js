@@ -5,7 +5,7 @@ import { Button, Typography } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
-const Carousel = ({ title, subtitle, data, width, card: Card }) => {
+const Carousel = ({ title, subtitle, data, width, cardHeight, card: Card }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     direction: "rtl",
@@ -23,7 +23,7 @@ const Carousel = ({ title, subtitle, data, width, card: Card }) => {
 
   const classes = useStyles();
   return (
-    <div>
+    <div data-testid="carousel">
       <div className={classes.titleBtn}>
         <div>
           <Typography variant="h3" className={classes.title}>
@@ -34,10 +34,18 @@ const Carousel = ({ title, subtitle, data, width, card: Card }) => {
           </Typography>
         </div>
         <div className={classes.btnContainer}>
-          <Button className={classes.btn} onClick={scrollPrev}>
+          <Button
+            className={classes.btn}
+            onClick={scrollPrev}
+            data-testid="prevButton"
+          >
             <ChevronRightIcon />
           </Button>
-          <Button className={classes.btn} onClick={scrollNext}>
+          <Button
+            className={classes.btn}
+            onClick={scrollNext}
+            data-testid="nextButton"
+          >
             <ChevronLeftIcon />
           </Button>
         </div>
@@ -52,6 +60,8 @@ const Carousel = ({ title, subtitle, data, width, card: Card }) => {
                   image={item.img}
                   title={item.label}
                   subtitle={item.subtitle}
+                  width={width}
+                  cardHeight={cardHeight}
                 />
               </div>
             );

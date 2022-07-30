@@ -2,13 +2,16 @@ import React from "react";
 import { makeStyles } from "@material-ui/styles";
 import { Typography } from "@material-ui/core";
 
-const FullCard = ({ title, width, image }) => {
+const FullCard = ({ title, width, cardHeight, image }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.container}>
-      <div className={classes.innerContainer}>
-        <a href="#" >
+    <div className={classes.container} data-testid="fullCard">
+      <div
+        className={classes.innerContainer}
+        style={{ width: width, height: cardHeight }}
+      >
+        <a href="#">
           <img src={image} alt="عکس" />
           <div className={classes.description}>
             <Typography className={classes.label}>{title}</Typography>

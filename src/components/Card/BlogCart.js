@@ -6,7 +6,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 const BlogCart = ({ label, subtitle, image }) => {
   const classes = useStyles();
   return (
-    <div className={classes.cartContainer}>
+    <div className={classes.cartContainer} data-testid="blog">
       <img className={classes.img} src={image} alt="" />
 
       <div className={classes.gradient}>
@@ -78,6 +78,7 @@ const useStyles = makeStyles(
       borderRadius: theme.shape.borderRadius,
       marginBottom: theme.spacing(1),
       width: "fit-content",
+      background: "rgba(255,255,255,.15)",
       "& p": {
         fontSize: 11,
         fontWeight: 500,

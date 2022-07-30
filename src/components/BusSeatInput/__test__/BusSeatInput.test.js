@@ -1,7 +1,7 @@
+import { fireEvent, render, screen } from "@testing-library/react";
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from "../../../theme/default";
 import BusSeatInput from "../BusSeatInput";
-import { fireEvent, render, screen } from "@testing-library/react";
 
 const setup = (props) => {
   render(

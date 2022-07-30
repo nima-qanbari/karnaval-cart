@@ -2,12 +2,15 @@ import React from "react";
 import { makeStyles } from "@material-ui/styles";
 import { Typography } from "@material-ui/core";
 
-const PaperCard = ({ title, subtitle, width, image }) => {
+const PaperCard = ({ title, subtitle, width, cardHeight, image }) => {
   const classes = useStyles();
   return (
-    <div className={classes.container}>
+    <div className={classes.container} data-testid="paperCard">
       <a href="#">
-        <div className={classes.innerContainer}>
+        <div
+          className={classes.innerContainer}
+          style={{ width: width, height: cardHeight }}
+        >
           <img src={image} alt="عکس" />
           <div className={classes.description}>
             <Typography variant="h3" className={classes.title}>
@@ -43,11 +46,7 @@ const useStyles = makeStyles(
       "& img": {
         objectFit: "cover",
         width: "100%",
-        height: 200,
-
-        [theme.breakpoints.down("sm")]: {
-          height: 170,
-        },
+        height: "100%",
       },
     },
 
