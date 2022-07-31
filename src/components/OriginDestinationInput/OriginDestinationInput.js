@@ -33,6 +33,7 @@ const OriginDestinationInput = ({
   useDialog,
   error,
   helperText,
+  readOnly,
 }) => {
   const [originInput, setOriginInput] = useState("");
   const [destinationInput, setDestinationInput] = useState("");
@@ -58,12 +59,16 @@ const OriginDestinationInput = ({
   const classes = useStyles();
 
   const focusHandlerOrigin = () => {
-    setFocusedInput("origin");
-    setOriginInput("");
+    if (!readOnly) {
+      setFocusedInput("origin");
+      setOriginInput("");
+    }
   };
   const focusHandlerDestination = () => {
-    setFocusedInput("destination");
-    setDestinationInput("");
+    if (!readOnly) {
+      setFocusedInput("destination");
+      setDestinationInput("");
+    }
   };
 
   const onCloseHandler = () => {
@@ -237,6 +242,7 @@ const OriginDestinationInput = ({
               onChangOriginInput(e.target.value);
             }}
             onFocus={focusHandlerOrigin}
+            inputProps={{ readOnly }}
           />
           <div
             onClick={swapHandler}
@@ -259,6 +265,7 @@ const OriginDestinationInput = ({
             onChangDestinationInput(e.target.value);
           }}
           onFocus={focusHandlerDestination}
+          inputProps={{ readOnly }}
         />
 
         {useDialog === true ? (

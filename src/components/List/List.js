@@ -1,30 +1,16 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/styles";
-
 import { Button, Grid, Typography } from "@material-ui/core";
-
 import { Form } from "react-final-form";
 import { FieldArray } from "react-final-form-arrays";
 import arrayMutators from "final-form-arrays";
-//supervisorForm
 import SupervisorForm from "../SupervisorForm/SupervisorForm";
-
-//Toolbar
 import Toolbar from "../Toolbar/Toolbar";
-
-//sort desktop
 import SortDesktop from "../SortDesktop/SortDesktop";
-
-//modal
 import FilterModal from "../FilterModal/FilterModal";
 import SortModal from "../SortModal/SortModal";
-
-//cart
 import TicketCard from "../TicketCard/TicketCard";
-
-//sidebar
 import Sidebar from "../Sidebar/Sidebar";
-
 import FilterListIcon from "@material-ui/icons/FilterList";
 import ImportExportIcon from "@material-ui/icons/ImportExport";
 import PassengerDetail from "../PassengerDetail/PassengerDetail";
@@ -33,6 +19,8 @@ import Carousel from "../Carousel/Carousel";
 import Blog from "../Blog/Blog";
 import FullCard from "../Card/FullCard";
 import PaperCard from "../Card/PaperCard";
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const List = ({
   data,
@@ -49,6 +37,8 @@ const List = ({
   const classes = useStyles();
   const [openFilter, setOpenFilter] = useState(false);
   const [openSort, setOpenSort] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const openFilterHandler = () => {
     setOpenFilter(true);
@@ -77,7 +67,7 @@ const List = ({
     <Sidebar data={sidebar} onChange={onChangeCheckbox} isChecked={isChecked} />
   );
   return (
-    <div style={{ maxWidth: 1100 }}>
+    <div style={{ maxWidth: 1100, margin: "auto" }}>
       <Grid container spacing={2} className={classes.paddingContainer}>
         <FilterModal handleClose={closeFilterHandler} open={openFilter}>
           {sidebarJSX}
@@ -233,7 +223,7 @@ const List = ({
           />
         </Grid>
         <Grid item xs={12}>
-          <Toolbar />
+          <Toolbar useMinimize={isMobile} />
         </Grid>
         <Grid item xs={12}>
           <Checkout

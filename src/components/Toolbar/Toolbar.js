@@ -48,11 +48,12 @@ const routeSuggestions = [
   },
 ];
 
-const Toolbar = () => {
+const Toolbar = ({ useMinimize }) => {
   const classes = useStyles();
   const [originItems, setOriginItems] = useState(null);
   const [destinationItems, setDestinationItems] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [minimize, setMinimize] = useState(true);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -101,49 +102,92 @@ const Toolbar = () => {
     });
   };
 
+  const JSX = (
+    <>
+      <Grid item xs={12} md={4} className={classes.travel}>
+        <Field
+          name="originDestination"
+          component={OriginDestinationInput}
+          suggestions={suggestions}
+          routeSuggestions={routeSuggestions}
+          originItems={originItems}
+          loading={loading}
+          destinationItems={destinationItems}
+          onChangOriginInput={onChangOriginInput}
+          onChangDestinationInput={onChangDestinationInput}
+          useDialog={isMobile}
+          validate={originDestinationValidation}
+        />
+      </Grid>
+      <Grid item xs={12} md={4}></Grid>
+      <Grid item xs={12} md={2}>
+        <Field
+          name="count"
+          component={CountInput}
+          useDialog={isMobile}
+          validate={countValidation}
+        />
+      </Grid>
+      <Grid item xs={12} md={2}>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          className={classes.btn}
+        >
+          جستجو
+          <KeyboardBackspaceIcon className={classes.icon} />
+        </Button>
+      </Grid>
+    </>
+  );
+
   return (
     <Paper className={classes.ToolbarContainer}>
       <Form
         onSubmit={onSubmit}
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={4} className={classes.travel}>
-                <Field
-                  name="originDestination"
-                  component={OriginDestinationInput}
-                  suggestions={suggestions}
-                  routeSuggestions={routeSuggestions}
-                  originItems={originItems}
-                  loading={loading}
-                  destinationItems={destinationItems}
-                  onChangOriginInput={onChangOriginInput}
-                  onChangDestinationInput={onChangDestinationInput}
-                  useDialog={isMobile}
-                  validate={originDestinationValidation}
-                />
+            {useMinimize ? (
+              minimize === true ? (
+                <Grid container spacing={2} onClick={() => setMinimize(false)}>
+                  <Grid item xs className={classes.travel}>
+                    <Field
+                      name="originDestination"
+                      component={OriginDestinationInput}
+                      suggestions={suggestions}
+                      routeSuggestions={routeSuggestions}
+                      originItems={originItems}
+                      loading={loading}
+                      destinationItems={destinationItems}
+                      onChangOriginInput={onChangOriginInput}
+                      onChangDestinationInput={onChangDestinationInput}
+                      useDialog={isMobile}
+                      validate={originDestinationValidation}
+                      readOnly={minimize}
+                      key={"minimize"}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.ChangeBtn}
+                    >
+                      تغییر جستجو
+                    </Button>
+                  </Grid>
+                </Grid>
+              ) : (
+                <Grid container spacing={2}>
+                  {JSX}
+                </Grid>
+              )
+            ) : (
+              <Grid container spacing={2}>
+                {JSX}
               </Grid>
-              <Grid item xs={12} md={4}></Grid>
-              <Grid item xs={12} md={2}>
-                <Field
-                  name="count"
-                  component={CountInput}
-                  useDialog={isMobile}
-                  validate={countValidation}
-                />
-              </Grid>
-              <Grid item xs={12} md={2}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  className={classes.btn}
-                >
-                  جستجو
-                  <KeyboardBackspaceIcon className={classes.icon} />
-                </Button>
-              </Grid>
-            </Grid>
+            )}
           </form>
         )}
       />
@@ -167,6 +211,11 @@ const useStyles = makeStyles(
       height: 53.28,
       fontSize: 16,
       fontWeight: "bold",
+    },
+
+    ChangeBtn: {
+      height: 53.28,
+      fontSize: 14,
     },
 
     icon: {
