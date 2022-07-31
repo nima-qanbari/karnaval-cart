@@ -361,6 +361,26 @@ describe("OriginDestinationInput", () => {
           expect(destinationInput).toHaveValue(value[0].label);
         });
       });
+
+      describe("readOnly", () => {
+        test("when readOnly is true, should not focus on originInput", () => {
+          setup({ readOnly: true });
+          const originInput = screen.getByPlaceholderText("مبدا");
+          jest.spyOn(originInput, "focus");
+          focusOnInput();
+          expect(originInput).toHaveAttribute("readOnly");
+          expect(originInput.focus).not.toBeCalled();
+        });
+
+        test("when readOnly is true, should not focus on destinationInput", () => {
+          setup({ readOnly: true });
+          const destinationInput = screen.getByPlaceholderText("مقصد");
+          jest.spyOn(destinationInput, "focus");
+          focusOnInput("مقصد");
+          expect(destinationInput).toHaveAttribute("readOnly");
+          expect(destinationInput.focus).not.toBeCalled();
+        });
+      });
     });
   }
 });

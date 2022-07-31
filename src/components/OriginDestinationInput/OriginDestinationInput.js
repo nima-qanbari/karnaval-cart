@@ -13,6 +13,7 @@ import {
   Popper,
   TextField,
   Typography,
+  ClickAwayListener,
 } from "@material-ui/core";
 import { useRef } from "react";
 import { Skeleton } from "@material-ui/lab";
@@ -84,13 +85,6 @@ const OriginDestinationInput = ({
 
       default:
         break;
-    }
-  };
-
-  const blurHandler = (event) => {
-    //close
-    if (paperRef.current && !paperRef.current.contains(event.relatedTarget)) {
-      onCloseHandler();
     }
   };
 
@@ -221,7 +215,7 @@ const OriginDestinationInput = ({
     </Grid>
   );
 
-  return (
+  const JSX = (
     <div
       className={classes.container}
       ref={containerRef}
@@ -234,7 +228,6 @@ const OriginDestinationInput = ({
             variant="outlined"
             placeholder={originPlaceholder}
             className={classes.firstInput}
-            onBlur={blurHandler}
             value={originInput}
             inputRef={originRef}
             onChange={(e) => {
@@ -257,7 +250,6 @@ const OriginDestinationInput = ({
           variant="outlined"
           placeholder={destinationPlaceholder}
           className={classes.secondInput}
-          onBlur={blurHandler}
           value={destinationInput}
           inputRef={destinationRef}
           onChange={(e) => {
@@ -329,6 +321,17 @@ const OriginDestinationInput = ({
         </FormHelperText>
       )}
     </div>
+  );
+  return (
+    <>
+      {useDialog ? (
+        JSX
+      ) : (
+        <ClickAwayListener onClickAway={onCloseHandler}>
+          {JSX}
+        </ClickAwayListener>
+      )}
+    </>
   );
 };
 
