@@ -12,7 +12,6 @@
 
 // const add2 = (a) => (b) => a + b;
 
-
 // const increment3 = (i) => {
 //   return add(i, 3);
 // };
@@ -21,8 +20,13 @@
 
 // console.log(increment3(1));
 // console.log(increment4(9));
-export const composeValidators = (...validators) => value =>
-  validators.reduce((error, validator) => error || validator(value), undefined)
+export const composeValidators =
+  (...validators) =>
+  (value) =>
+    validators.reduce(
+      (error, validator) => error || validator(value),
+      undefined
+    );
 
 export const required = (name) => (value) => {
   if (value) return undefined;
@@ -58,3 +62,13 @@ export const email = (value) =>
   value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
     ? "ایمیل نامعتبر است"
     : undefined;
+
+export const countValidation = (value) => {
+  if (value > 0) return undefined;
+  else return "وارد کردن مسافران الزامی است";
+};
+
+export const originDestinationValidation = (value) =>
+  Array.isArray(value) && value[0] && value[1]
+    ? undefined
+    : "وارد کردن این فیلد اجباری است";

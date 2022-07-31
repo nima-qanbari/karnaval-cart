@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 
-import { Button, Grid } from "@material-ui/core";
+import { Button, Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
 import OriginDestinationInput from "../../react-final-form-field/OriginDestinationInput";
 import CountInput from "../../react-final-form-field/CountInput";
 import { Field, Form } from "react-final-form";
+import {
+  countValidation,
+  originDestinationValidation,
+} from "../Validate/Validate";
 
 const suggestions = [
   { label: "تبریز", id: 1 },
@@ -87,7 +92,6 @@ const Toolbar = () => {
     }, 2000);
   };
 
-
   const onSubmit = (data) => {
     console.log("originDestination form", data);
     return new Promise((resolve) => {
@@ -98,7 +102,7 @@ const Toolbar = () => {
   };
 
   return (
-    <div className={classes.ToolbarContainer}>
+    <Paper className={classes.ToolbarContainer}>
       <Form
         onSubmit={onSubmit}
         render={({ handleSubmit }) => (
@@ -116,6 +120,7 @@ const Toolbar = () => {
                   onChangOriginInput={onChangOriginInput}
                   onChangDestinationInput={onChangDestinationInput}
                   useDialog={isMobile}
+                  validate={originDestinationValidation}
                 />
               </Grid>
               <Grid item xs={12} md={4}></Grid>
@@ -124,18 +129,25 @@ const Toolbar = () => {
                   name="count"
                   component={CountInput}
                   useDialog={isMobile}
+                  validate={countValidation}
                 />
               </Grid>
               <Grid item xs={12} md={2}>
-                <Button variant="primary" type="submit">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  className={classes.btn}
+                >
                   جستجو
+                  <KeyboardBackspaceIcon className={classes.icon} />
                 </Button>
               </Grid>
             </Grid>
           </form>
         )}
       />
-    </div>
+    </Paper>
   );
 };
 
@@ -143,9 +155,23 @@ const useStyles = makeStyles(
   (theme) => ({
     ToolbarContainer: {
       background: theme.palette.background.paper,
+      borderRadius: theme.shape.borderRadius,
+      padding: theme.spacing(2),
     },
     travel: {
       display: "flex",
+    },
+
+    btn: {
+      width: "100%",
+      height: 53.28,
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+
+    icon: {
+      marginRight: theme.spacing(),
+      fontSize: 24,
     },
   }),
   { flip: false }

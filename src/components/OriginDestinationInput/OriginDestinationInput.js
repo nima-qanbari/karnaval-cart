@@ -6,6 +6,7 @@ import SyncAltIcon from "@material-ui/icons/SyncAlt";
 import { makeStyles } from "@material-ui/styles";
 import {
   Button,
+  FormHelperText,
   Grid,
   MenuItem,
   Paper,
@@ -30,6 +31,8 @@ const OriginDestinationInput = ({
   onChange,
   value,
   useDialog,
+  error,
+  helperText,
 }) => {
   const [originInput, setOriginInput] = useState("");
   const [destinationInput, setDestinationInput] = useState("");
@@ -219,97 +222,104 @@ const OriginDestinationInput = ({
       ref={containerRef}
       data-testid="container"
     >
-      <div className={classes.firstInputContainer}>
+      <div className={classes.innerContainer}>
+        <div className={classes.firstInputContainer}>
+          <TextField
+            type="text"
+            variant="outlined"
+            placeholder={originPlaceholder}
+            className={classes.firstInput}
+            onBlur={blurHandler}
+            value={originInput}
+            inputRef={originRef}
+            onChange={(e) => {
+              setOriginInput(e.target.value);
+              onChangOriginInput(e.target.value);
+            }}
+            onFocus={focusHandlerOrigin}
+          />
+          <div
+            onClick={swapHandler}
+            data-testid="swapButton"
+            className={classes.circle}
+          >
+            <SyncAltIcon />
+          </div>
+        </div>
         <TextField
           type="text"
           variant="outlined"
-          placeholder={originPlaceholder}
-          className={classes.firstInput}
+          placeholder={destinationPlaceholder}
+          className={classes.secondInput}
           onBlur={blurHandler}
-          InputProps={{ classes: { input: classes.padding } }}
-          value={originInput}
-          inputRef={originRef}
+          value={destinationInput}
+          inputRef={destinationRef}
           onChange={(e) => {
-            setOriginInput(e.target.value);
-            onChangOriginInput(e.target.value);
+            setDestinationInput(e.target.value);
+            onChangDestinationInput(e.target.value);
           }}
-          onFocus={focusHandlerOrigin}
+          onFocus={focusHandlerDestination}
         />
-        <div
-          onClick={swapHandler}
-          data-testid="swapButton"
-          className={classes.circle}
-        >
-          <SyncAltIcon />
-        </div>
+
+        {useDialog === true ? (
+          <>
+            <PaperModal
+              value={originInput}
+              setOriginInput={setOriginInput}
+              onChangOriginInput={onChangOriginInput}
+              placeholder={originPlaceholder}
+              open={focusedInput === "origin"}
+              handleClose={onCloseHandler}
+            >
+              {loading
+                ? loadingJSX
+                : originItems && focusedInput === "origin"
+                ? originItemsJSX
+                : suggestionJSX}
+            </PaperModal>
+            <PaperModal
+              value={destinationInput}
+              setOriginInput={setDestinationInput}
+              onChangOriginInput={onChangDestinationInput}
+              placeholder={destinationPlaceholder}
+              open={focusedInput === "destination"}
+              handleClose={onCloseHandler}
+            >
+              {loading
+                ? loadingJSX
+                : destinationItems && focusedInput === "destination"
+                ? destinationItemsJSX
+                : suggestionJSX}
+            </PaperModal>
+          </>
+        ) : (
+          <Popper
+            open={Boolean(focusedInput)}
+            anchorEl={containerRef.current}
+            style={{ zIndex: 1000 }}
+          >
+            <Paper
+              data-testid="paper"
+              ref={paperRef}
+              className={classes.paper}
+              style={{ width: containerRef.current?.offsetWidth }}
+            >
+              {loading
+                ? loadingJSX
+                : originItems && focusedInput === "origin"
+                ? originItemsJSX
+                : destinationItems && focusedInput === "destination"
+                ? destinationItemsJSX
+                : suggestionJSX}
+            </Paper>
+          </Popper>
+        )}
       </div>
-      <TextField
-        type="text"
-        variant="outlined"
-        placeholder={destinationPlaceholder}
-        className={classes.secondInput}
-        InputProps={{ classes: { input: classes.padding } }}
-        onBlur={blurHandler}
-        value={destinationInput}
-        inputRef={destinationRef}
-        onChange={(e) => {
-          setDestinationInput(e.target.value);
-          onChangDestinationInput(e.target.value);
-        }}
-        onFocus={focusHandlerDestination}
-      />
-      {useDialog === true ? (
-        <>
-          <PaperModal
-            value={originInput}
-            setOriginInput={setOriginInput}
-            onChangOriginInput={onChangOriginInput}
-            placeholder={originPlaceholder}
-            open={focusedInput === "origin"}
-            handleClose={onCloseHandler}
-          >
-            {loading
-              ? loadingJSX
-              : originItems && focusedInput === "origin"
-              ? originItemsJSX
-              : suggestionJSX}
-          </PaperModal>
-          <PaperModal
-            value={destinationInput}
-            setOriginInput={setDestinationInput}
-            onChangOriginInput={onChangDestinationInput}
-            placeholder={destinationPlaceholder}
-            open={focusedInput === "destination"}
-            handleClose={onCloseHandler}
-          >
-            {loading
-              ? loadingJSX
-              : destinationItems && focusedInput === "destination"
-              ? destinationItemsJSX
-              : suggestionJSX}
-          </PaperModal>
-        </>
-      ) : (
-        <Popper
-          open={Boolean(focusedInput)}
-          anchorEl={containerRef.current}
-          style={{ zIndex: 1000 }}
-        >
-          <Paper
-            data-testid="paper"
-            ref={paperRef}
-            className={classes.paper}
-            style={{ width: containerRef.current?.offsetWidth }}
-          >
-            {loading
-              ? loadingJSX
-              : originItems && focusedInput === "origin"
-              ? originItemsJSX
-              : destinationItems && focusedInput === "destination"
-              ? destinationItemsJSX
-              : suggestionJSX}
-          </Paper>
-        </Popper>
+
+      {helperText && (
+        <FormHelperText className={classes.helperText} error={error}>
+          {helperText}
+        </FormHelperText>
       )}
     </div>
   );
@@ -319,10 +329,18 @@ const useStyles = makeStyles(
   (theme) => ({
     container: {
       display: "flex",
+      flexDirection: "column",
+      width: "100%",
+    },
+
+    innerContainer: {
+      display: "flex",
+      width: "100%",
     },
 
     firstInputContainer: {
       position: "relative",
+      width: "50%",
     },
 
     firstInput: {
@@ -330,6 +348,7 @@ const useStyles = makeStyles(
         borderTopLeftRadius: 0,
         borderBottomLeftRadius: 0,
       },
+      width: "100%",
     },
 
     secondInput: {
@@ -338,6 +357,7 @@ const useStyles = makeStyles(
         borderBottomRightRadius: 0,
         borderRight: 0,
       },
+      width: "50%",
     },
 
     circle: {
@@ -359,9 +379,6 @@ const useStyles = makeStyles(
       },
     },
 
-    padding: {
-      padding: theme.spacing(2),
-    },
     paper: {
       marginTop: theme.spacing(),
     },
@@ -404,6 +421,10 @@ const useStyles = makeStyles(
       "& > div": {
         marginTop: theme.spacing(),
       },
+    },
+
+    helperText: {
+      marginRight: theme.spacing(0.5),
     },
   }),
   { flip: false }

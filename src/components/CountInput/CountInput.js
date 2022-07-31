@@ -10,6 +10,8 @@ import {
   Typography,
   ClickAwayListener,
   Fade,
+  FormHelperText,
+  InputAdornment,
 } from "@material-ui/core";
 import clsx from "clsx";
 
@@ -24,6 +26,8 @@ const CountInput = ({
   countPlaceholder,
   max,
   min,
+  error,
+  helperText,
 }) => {
   const [focusInput, setFocusInput] = useState(false);
   const containerRef = useRef(null);
@@ -95,14 +99,21 @@ const CountInput = ({
         variant="outlined"
         InputProps={{
           classes: {
-            input: clsx(classes.input, value >= 1 && classes.textAlign),
+            input: value >= 1 && classes.textAlign,
           },
+          startAdornment: (
+            <InputAdornment position="start">
+              <PeopleIcon className={classes.icon} color="action" />
+            </InputAdornment>
+          ),
         }}
         value={value >= 1 ? `${value} نفر` : ""}
         placeholder={countPlaceholder}
         onFocus={focusHandler}
+        helperText={helperText}
+        className={classes.countInput}
+        error={error}
       />
-      <PeopleIcon className={classes.icon} color="action" />
 
       {focusInput && !useDialog && (
         <Popper
@@ -141,77 +152,80 @@ const CountInput = ({
   );
 };
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    position: "relative",
-    display: "flex",
-  },
-  input: {
-    padding: theme.spacing(2, 4.6, 2, 0),
-    fontSize: 14,
-    fontWeight: 500,
-
-    "&::placeholder": {
+const useStyles = makeStyles(
+  (theme) => ({
+    container: {
+      display: "flex",
+    },
+    input: {
+      padding: theme.spacing(2),
       fontSize: 14,
       fontWeight: 500,
+
+      "&::placeholder": {
+        fontSize: 14,
+        fontWeight: 500,
+      },
     },
-  },
 
-  textAlign: {
-    textAlign: "center",
-  },
-  icon: {
-    position: "absolute",
-    right: 14,
-    top: "27%",
-    fontSize: 21,
-  },
-  marginTop: {
-    marginTop: theme.spacing(1),
-  },
+    countInput: {
+      width: "100%",
+    },
 
-  paper: {
-    padding: theme.spacing(2),
-  },
+    textAlign: {
+      textAlign: "center",
+    },
+    icon: {
+      fontSize: 21,
+    },
+    marginTop: {
+      marginTop: theme.spacing(1),
+    },
 
-  btnContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  plusMinusContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  passengers: {
-    fontSize: 12,
-    fontWeight: 500,
-  },
-  btnSize: {
-    fontSize: 20,
-  },
-  counter: {
-    fontSize: 14,
-    userSelect: "none",
-  },
+    paper: {
+      padding: theme.spacing(2),
+    },
 
-  plusButton: {
-    padding: theme.spacing(0.3),
-    background: theme.palette.grey[200],
-    margin: theme.spacing(0, 0, 0, 1.5),
-  },
-  minusButton: {
-    padding: theme.spacing(0.3),
-    background: theme.palette.grey[200],
-    margin: theme.spacing(0, 1.5, 0, 0),
-  },
+    btnContainer: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    plusMinusContainer: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    passengers: {
+      fontSize: 12,
+      fontWeight: 500,
+    },
+    btnSize: {
+      fontSize: 20,
+    },
+    counter: {
+      fontSize: 14,
+      userSelect: "none",
+    },
 
-  agreeButton: {
-    width: "100%",
-    marginTop: theme.spacing(1.5),
-  },
-}),{flip: false});
+    plusButton: {
+      padding: theme.spacing(0.3),
+      background: theme.palette.grey[200],
+      margin: theme.spacing(0, 0, 0, 1.5),
+    },
+    minusButton: {
+      padding: theme.spacing(0.3),
+      background: theme.palette.grey[200],
+      margin: theme.spacing(0, 1.5, 0, 0),
+    },
+
+    agreeButton: {
+      width: "100%",
+      marginTop: theme.spacing(1.5),
+    },
+  }),
+  { flip: false }
+);
 
 CountInput.defaultProps = {
   countPlaceholder: "مسافران",

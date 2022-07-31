@@ -1,5 +1,10 @@
 import React from "react";
-import { FormControl, FormHelperText, InputLabel, Select } from "@material-ui/core";
+import {
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  Select,
+} from "@material-ui/core";
 
 const SelectField = ({
   className,
@@ -23,7 +28,7 @@ const SelectField = ({
       <Select
         {...props}
         label={label}
-        MenuProps={{ getContentAnchorEl: null}}
+        MenuProps={{ getContentAnchorEl: null }}
       />
       {helperText && (
         <FormHelperText error={error}>{helperText}</FormHelperText>
